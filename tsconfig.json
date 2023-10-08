@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     "target": "ES2020",
@@ -25,7 +25,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/*.tsx",
+    "src/*.vue",
+    "src/**/*.vue"
+  ],
   "exclude": ["dist", "**/*.js", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
