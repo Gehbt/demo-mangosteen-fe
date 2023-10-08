@@ -1,0 +1,22 @@
+RESTful API::
+/welcome/1
+/welcome/2
+/welcome/3
+/welcome/4
+/start
+/items/new
+/tags/new
+/tags/:id
+/items
+/sessions/new  <=>/sign_in
+/statistics
+
+Components::
+overlay
+layout/welcome
+layout/main
+tabs
+button
+封装echarts/pie
+封装echarts/line
+/// 排期越细越好
