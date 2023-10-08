@@ -12,19 +12,19 @@ export const routes: RouteRecordRaw[] = [
     component: Welcome,
     children: [
       {
-        path: "/1",
+        path: "1",
         component: W1,
       },
       {
-        path: "/2",
+        path: "2",
         component: W2,
       },
       {
-        path: "/3",
+        path: "3",
         component: W3,
       },
       {
-        path: "/4",
+        path: "4",
         component: W4,
       },
     ],

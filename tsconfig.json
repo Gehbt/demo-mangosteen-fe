@@ -4,6 +4,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": [
+      "vite/client"
+    ],
 
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -33,6 +36,7 @@
     "src/*.vue",
     "src/**/*.vue"
   ],
+  
   "exclude": ["dist", "**/*.js", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

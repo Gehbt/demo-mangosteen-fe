@@ -3,6 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { resolve } from "path";
 import Inspect from 'vite-plugin-inspect'
+// import svg from 'vite-plugin-svgo'
+
 const pathResolve = (dir: string): string => {
   return resolve(__dirname, ".", dir);
 };
@@ -21,7 +23,9 @@ export default defineConfig({
       transformOn: true,
       mergeProps: true,
     }),
-    Inspect()
+    Inspect(),
+    // svg({
+    // })
   ],
   resolve: {
     alias,

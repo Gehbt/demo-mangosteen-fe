@@ -1,6 +1,6 @@
 import { createApp } from "vue";
-import "./style.css";
 import { App } from "./App";
+import "./App.scss";
 import { createRouter } from "vue-router";
 import { routes } from "@/routes";
 import { history } from "@/shared/history";
