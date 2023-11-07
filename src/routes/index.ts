@@ -3,7 +3,7 @@ import { Foo } from "@/components/Foo";
 import { W1, W2, W3, W4 } from "@/components/welcome";
 import { Welcome } from "@/views/Welcome";
 import { RouteRecordRaw } from "vue-router";
-
+// import { Ur } from "@/components/usedRender";
 export const routes: RouteRecordRaw[] = [
   { path: "/", component: Foo },
   { path: "/about", component: Bar },
@@ -29,4 +29,5 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // { path: "/r", component: Ur , name:"useRender"},
 ];

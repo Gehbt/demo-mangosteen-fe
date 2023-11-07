@@ -1,18 +1,34 @@
+// @debug adjust-color($color: #000000, $red: 1, $green: 2, $blue: 3, $hue: 0, $saturation: 0%, $lightness: 0%, $alpha: 1.0);
+// @use "bootstrap" as b;
+@use 'sass:color';
+$color: #000000;
+
 .wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    background-image: linear-gradient(to bottom, #7556bd 0%, #b942ff 60%, #b841ff 100%);
     > header {
+        padding-top: 66px;
         flex-shrink: 0; /* 不被压缩 */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: #d4d4d4;
     }
     > main {
         flex-grow: 1; /* 伸缩 */
+        display: flex;
+        flex-direction: column;
     }
     > footer {
         flex-shrink: 0;
     }
 }
+.main_svg_container{
+  width: 96px;
+}
+// .keep-d{
+//     // color: adjust-color($color: #000000, $red: 1, $green: 2, $blue: 3, $hue: 0, $saturation: 0%, $lightness: 0%, $alpha: 1.0);
+// }
