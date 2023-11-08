@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { FunctionalComponent, defineComponent } from "vue";
 import s from "./index.module.scss";
 import pig from "@/assets/piggy2.svg";
 import charts from "@/assets/charts2.svg";
@@ -59,19 +59,15 @@ export const W2 = defineComponent({
     return <WTemplates v-slots={this.slots} />;
   },
 });
-export const W3 = defineComponent({
-  // 写法0
-  setup() {
-    return () => (
-      <div class={s.wrapper}>
-        <div class={s.card}>
-          <img class={s.svg_contain} src={charts} />
-        </div>
-        <div class={s.actions}>{...TipsComponent(3)}</div>
-      </div>
-    );
-  },
-});
+export const W3: FunctionalComponent = (_props, _ctx) => (
+  <div class={s.wrapper}>
+    <div class={s.card}>
+      <img class={s.svg_contain} src={charts} />
+    </div>
+    <div class={s.actions}>{...TipsComponent(3)}</div>
+  </div>
+);
+W3.displayName = "W3";
 export const W4 = defineComponent({
   // 非重复
   setup() {
@@ -93,7 +89,7 @@ export const W4 = defineComponent({
   },
 });
 const WTemplates = defineComponent({
-  setup(props, { slots }) {
+  setup(_, { slots }) {
     return { slots: slots as unknown as WSlotType };
   },
   render() {

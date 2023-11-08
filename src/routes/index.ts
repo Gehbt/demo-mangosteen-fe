@@ -14,22 +14,27 @@ export const routes: RouteRecordRaw[] = [
         redirect: "/welcome/1",
       },
       {
+        name:"hiding",
         path: "0",
         component: Dsetup,
       },
       {
+        name:"w1",
         path: "1",
         component: W1,
       },
       {
+        name:"w2",
         path: "2",
         component: W2,
       },
       {
+        name:"w3",
         path: "3",
         component: W3,
       },
       {
+        name:"w4",
         path: "4",
         component: W4,
       },
