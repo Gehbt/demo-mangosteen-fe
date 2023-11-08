@@ -43,7 +43,7 @@ export const W2 = defineComponent({
             也要会省钱
           </h2>
         </div>
-        <div class={s.actions}></div>
+        <div class={s.actions}>{...TipsComponent(2)}</div>
       </div>
     );
   },
@@ -55,7 +55,7 @@ export const W3 = defineComponent({
         <div class={s.card}>
           <img class={s.svg_contain} src={cloud} />
         </div>
-        <div class={s.actions}></div>
+        <div class={s.actions}>{...TipsComponent(3)}</div>
       </div>
     );
   },
@@ -67,7 +67,11 @@ export const W4 = defineComponent({
         <div class={s.card}>
           <img class={s.svg_contain} src={clock} />
         </div>
-        <div class={s.actions}></div>
+        <div class={s.actions}>
+          <RouterLink to={`/welcome/3`}>上页</RouterLink>
+          <RouterLink to={`/welcome`}>下一页</RouterLink>
+          <RouterLink to="/start">跳过</RouterLink>
+        </div>
       </div>
     );
   },
