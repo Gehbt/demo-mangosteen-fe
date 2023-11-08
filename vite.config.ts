@@ -22,7 +22,10 @@ const alias: Record<string, string> = {
 export default defineConfig({
   // base:"/mangosteen-fe/dist/", // build path in github
   plugins: [
-    VueRouter(),
+    VueRouter({
+      routesFolder:"src/views",
+      extensions: ['.vue','.tsx'],
+    }),
     vueMacros({
       plugins: {
         vue: vue({
@@ -32,7 +35,7 @@ export default defineConfig({
           transformOn: true,
           mergeProps: true,
         }), // if needed
-        
+
       },
     }),
     // vueJsx({

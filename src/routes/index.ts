@@ -1,3 +1,4 @@
+import { Dsetup } from "@/components/Dsetup";
 import { W1, W2, W3, W4 } from "@/components/welcome";
 import { Welcome } from "@/views/Welcome";
 import { RouteRecordRaw } from "vue-router";
@@ -11,6 +12,10 @@ export const routes: RouteRecordRaw[] = [
       {
         path: "",
         redirect: "/welcome/1",
+      },
+      {
+        path: "0",
+        component: Dsetup,
       },
       {
         path: "1",
