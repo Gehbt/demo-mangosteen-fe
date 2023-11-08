@@ -2,6 +2,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding-bottom: var(--welcome-nav-gap);
   > .card {
     flex-grow: 1;
     display: flex;
@@ -14,7 +15,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    > h2{
+    > h2 {
       margin-top: 40px;
     }
   }
@@ -24,9 +25,16 @@
     align-items: center;
     font-size: 32px;
     color: var(--welcome-text);
-    margin: 0 16px;
-    padding: 24px 0;
-    > :first-child{
+    padding: 0 16px;
+    height: var(--welcome-nav-height);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: var(--z-index-bottom-nav);
+    background-color: var(--welcome-bg-end);
+    padding: var(--welcome-nav-gap);
+    > :first-child {
       visibility: hidden;
     }
   }

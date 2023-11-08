@@ -14,7 +14,6 @@ export const Welcome = defineComponent({
         <main class={s.main}>
           <RouterView />
         </main>
-        {/* <footer>跳过</footer> hard */}
       </div>
     );
   },
