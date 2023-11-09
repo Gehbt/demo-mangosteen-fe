@@ -8,3 +8,6 @@ body {
         sans-serif;/* via:fonts.css */
     color: #252525;
 }
+::webkit-scrollbar {
+  visibility: hidden;
+}

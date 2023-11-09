@@ -1,7 +1,34 @@
 import { Dsetup } from "@/components/Dsetup";
-import { W1, W2, W3, W4 } from "@/components/welcome";
+import { W1, WFooter, W2, W3, W4, WEndFooter } from "@/components/welcome";
 import { Welcome } from "@/views/Welcome";
 import { RouteRecordRaw } from "vue-router";
+const WelcomeTable: RouteRecordRaw[] = [
+  {
+    name: "hiding",
+    path: "0",
+    component: { main: Dsetup },
+  },
+  {
+    name: "w1",
+    path: "1",
+    components: { main: W1, footer: WFooter(1) },
+  },
+  {
+    name: "w2",
+    path: "2",
+    components: { main: W2, footer: WFooter(2) },
+  },
+  {
+    name: "w3",
+    path: "3",
+    components: { main: W3, footer: WFooter(3) },
+  },
+  {
+    name: "w4",
+    path: "4",
+    components: { main: W4, footer: WEndFooter },
+  },
+];
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
   // { path: "/about", component: Bar },
@@ -13,31 +40,7 @@ export const routes: RouteRecordRaw[] = [
         path: "",
         redirect: "/welcome/1",
       },
-      {
-        name:"hiding",
-        path: "0",
-        component: Dsetup,
-      },
-      {
-        name:"w1",
-        path: "1",
-        component: W1,
-      },
-      {
-        name:"w2",
-        path: "2",
-        component: W2,
-      },
-      {
-        name:"w3",
-        path: "3",
-        component: W3,
-      },
-      {
-        name:"w4",
-        path: "4",
-        component: W4,
-      },
+      ...WelcomeTable
     ],
   },
   // { path: "/r", component: Ur , name:"useRender"},

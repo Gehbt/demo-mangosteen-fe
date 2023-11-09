@@ -50,9 +50,9 @@ export default defineConfig({
       dts: true,
       imports: [
         VueRouterAutoImports,
-        {
-          'vue-router/auto': ['./src/views',"./src/components"]
-        }
+        // {
+          // 'vue-router/auto': ['./src/views',"./src/components"]
+        // }
       ],
     })
   ],
