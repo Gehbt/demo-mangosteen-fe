@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@views/*": ["./src/views/*"],
+      "@svg_map": ["./src/assets/jsons/svg_map.json"]
     },
     "types": [
       "vite/client",
@@ -38,7 +41,7 @@
     "src/**/*.vue",
     "*.d.ts"
   ],
-  
+
   "exclude": ["dist", "**/*.js", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

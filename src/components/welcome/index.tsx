@@ -1,10 +1,9 @@
-import { Component, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import s from "./index.module.scss";
-import pig from "@/assets/piggy2.svg";
-import charts from "@/assets/charts2.svg";
-import cloud from "@/assets/cloud2.svg";
-import clock from "@/assets/clock.svg";
+import svg from "@svg_map"
+import SvgIcon from "../SvgIcon";
 import { RouterLink } from "vue-router";
+
 export const WFooter = (metadata_ith: number) =>
   defineComponent({
     render: () => (
@@ -20,7 +19,7 @@ export const WFooter = (metadata_ith: number) =>
 export const W1 = defineComponent({
   render: () => (
     <div class={s.card}>
-      <img src={pig} class={s.svg_contain} />
+      <SvgIcon src={svg.piggy2} class={s.svg_contain}/>
       <h2>
         会赚钱,
         <br />
@@ -33,7 +32,7 @@ export const W1 = defineComponent({
 export const W2 = defineComponent({
   render: () => (
     <div class={s.card}>
-      <img src={clock} class={s.svg_contain} />
+      <SvgIcon src={svg.clock} w="112px" />
       <h2>
         每日提醒
         <br />
@@ -45,7 +44,7 @@ export const W2 = defineComponent({
 export const W3 = defineComponent({
   render: () => (
     <div class={s.card}>
-      <img src={charts} class={s.svg_contain} />
+      <SvgIcon src={svg.charts2} w="112px" />
       <h2>
         33
         <br />3
@@ -57,7 +56,7 @@ export const W4 = defineComponent({
   render: () => {
     return (
       <div class={s.card}>
-        <img src={cloud} class={s.svg_contain} />
+        <SvgIcon src={svg.cloud2} class={s.svg_contain} />
         <h2>
           11
           <br />1

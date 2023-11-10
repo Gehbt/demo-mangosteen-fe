@@ -21,7 +21,7 @@
   font-size: 32px;
   color: var(--welcome-text);
   // padding: 0 16px;
-  height: var(--welcome-nav-height);
+  height: calc(1px + var(--welcome-nav-height));
   position: fixed;
   left: 0;
   bottom: 0;

@@ -1,15 +1,15 @@
 import { Transition, VNode, defineComponent } from "vue";
 import { RouterView } from "vue-router";
 import s from "./Welcome.module.scss";
-import logo from "@/assets/blueberry2.svg";
 import { RouteLocationNormalizedLoaded } from "vue-router";
-console.log("logo :>> ", logo);
+import svg from "@svg_map"
+import SvgIcon from "@components/SvgIcon";
 export const Welcome = defineComponent({
-  setup() {
-    return () => (
+  render() {
+    return (
       <div class={s.wrapper}>
         <header>
-          <img src={logo} class={s.main_svg_container} />
+          <SvgIcon name={svg.blueberry2} class={s.main_svg_container}/>
           <h2>蓝莓记账</h2>
         </header>
         <main class={s.main}>

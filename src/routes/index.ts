@@ -1,12 +1,12 @@
-import { Dsetup } from "@/components/Dsetup";
-import { W1, WFooter, W2, W3, W4, WEndFooter } from "@/components/welcome";
-import { Welcome } from "@/views/Welcome";
+import { Dsetup } from "@components/Dsetup";
+import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
+import { Welcome } from "@views/Welcome";
 import { RouteRecordRaw } from "vue-router";
 const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",
     path: "0",
-    component: { main: Dsetup },
+    components: { main: Dsetup, footer: Dsetup },
   },
   {
     name: "w1",
@@ -40,7 +40,7 @@ export const routes: RouteRecordRaw[] = [
         path: "",
         redirect: "/welcome/1",
       },
-      ...WelcomeTable
+      ...WelcomeTable,
     ],
   },
   // { path: "/r", component: Ur , name:"useRender"},
