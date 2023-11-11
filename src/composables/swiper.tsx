@@ -2,11 +2,11 @@ import { Ref, computed, onMounted, onUnmounted, ref } from "vue";
 import { throttle } from "lodash";
 type Point = { x: number; y: number };
 export enum Direction {
-  o = 0,
-  r = "→", //
-  l = "←", //
-  d = "↓", //
-  u = "↑", //
+  o = "0",
+  r = "→",
+  l = "←",
+  d = "↓",
+  u = "↑",
 }
 export const useSwiper = (el: Ref<HTMLElement | null>) => {
   const start = ref<Point>({ x: 0, y: 0 });
@@ -51,7 +51,7 @@ export const useSwiper = (el: Ref<HTMLElement | null>) => {
     };
   };
   const onTouching_Throttle = throttle(onTouching, 100, { trailing: false });
-  const onTouchEnd = (e: TouchEvent) => {
+  const onTouchEnd = (_e: TouchEvent) => {
     isSwipping.value = false;
   };
   onMounted(() => {

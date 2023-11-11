@@ -32,7 +32,7 @@ export const Welcome = defineComponent({
           <RouterView name="main">
             {({
               Component: P,
-              route: R,
+              route: _R,
             }: {
               Component: VNode;
               route: RouteLocationNormalizedLoaded;
