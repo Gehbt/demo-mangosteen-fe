@@ -30,9 +30,10 @@ export const svgstore = (options = {}) => {
             { name: "removeAttrs", params: { attrs: "(data-name|data-xxx)" } }
           ]
         })
-        return (/* js */`const div = document.createElement('div')
-div.innerHTML = \`${code}\`
-const svg = div.getElementsByTagName('svg')[0]
+        return (
+/* ts */`const div = document.createElement('div')
+div.innerHTML = `+ code +
+/* ts */`const svg = div.getElementsByTagName('svg')[0]
 if (svg) {
   svg.style.position = 'absolute'
   svg.style.width = 0

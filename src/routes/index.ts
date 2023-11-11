@@ -6,7 +6,7 @@ const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",
     path: "0",
-    components: { main: Dsetup, footer: Dsetup },
+    components: { main: Dsetup, footer: WFooter(0) },
   },
   {
     name: "w1",

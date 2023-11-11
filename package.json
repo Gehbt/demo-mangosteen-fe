@@ -13,6 +13,8 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vueuse/core": "^10.6.0",
+    "lodash": "^4.17.21",
     "sass": "^1.69.0",
     "svgo": "^3.0.3",
     "svgstore": "^3.0.1",
@@ -25,6 +27,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.201",
     "@types/node": "^20.8.3",
     "@vitejs/plugin-vue": "^4.3.4",
     "typescript": "^5.0.2",

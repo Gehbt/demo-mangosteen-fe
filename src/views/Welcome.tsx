@@ -1,18 +1,34 @@
-import { Transition, VNode, defineComponent } from "vue";
+import {
+  Transition,
+  VNode,
+  VNodeRef,
+  defineComponent,
+  ref,
+  watchEffect,
+} from "vue";
 import { RouterView } from "vue-router";
 import s from "./Welcome.module.scss";
 import { RouteLocationNormalizedLoaded } from "vue-router";
-import svg from "@svg_map"
+import svg from "@svg_map";
 import SvgIcon from "@components/SvgIcon";
+import { useSwiper } from "@/composables/swiper";
+
 export const Welcome = defineComponent({
-  render() {
-    return (
+  setup() {
+    const main: VNodeRef = ref<HTMLElement | null>(null);
+    const { direction } = useSwiper(main);
+    watchEffect(() => {
+      if(direction.value){
+        console.log("direction :>> ", direction.value);
+      }
+    });
+    return () => (
       <div class={s.wrapper}>
         <header>
-          <SvgIcon name={svg.blueberry2} class={s.main_svg_container}/>
+          <SvgIcon name={svg.blueberry2} class={s.main_svg_container} />
           <h2>蓝莓记账</h2>
         </header>
-        <main class={s.main}>
+        <main ref={main} class={s.main}>
           <RouterView name="main">
             {({
               Component: P,
@@ -38,4 +54,7 @@ export const Welcome = defineComponent({
       </div>
     );
   },
+  // mounted() {
+  // useSwiper(this.main)
+  // },
 });

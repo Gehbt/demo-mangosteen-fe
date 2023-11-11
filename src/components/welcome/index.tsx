@@ -19,7 +19,7 @@ export const WFooter = (metadata_ith: number) =>
 export const W1 = defineComponent({
   render: () => (
     <div class={s.card}>
-      <SvgIcon src={svg.piggy2} class={s.svg_contain}/>
+      <SvgIcon src={svg.piggy2} w="134px"/>
       <h2>
         会赚钱,
         <br />
