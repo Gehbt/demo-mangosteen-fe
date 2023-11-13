@@ -10,7 +10,7 @@ export const W1 = defineComponent({
       <div class={s.card}>
         <SvgIcon src={svg.piggy2} w="134px" />
         <h2>
-          会赚钱,
+          会赚钱
           <br />
           也要会省钱
         </h2>
@@ -36,8 +36,9 @@ export const W3 = defineComponent({
     <div class={s.card}>
       <SvgIcon src={svg.charts2} w="112px" />
       <h2>
-        33
-        <br />3
+        数据可视化
+        <br />
+        收支一目了然
       </h2>
     </div>
   ),
@@ -48,8 +49,9 @@ export const W4 = defineComponent({
       <div class={s.card}>
         <SvgIcon src={svg.cloud2} class={s.svg_contain} />
         <h2>
-          11
-          <br />1
+          云备份
+          <br />
+          不怕数据丢失
         </h2>
       </div>
     );

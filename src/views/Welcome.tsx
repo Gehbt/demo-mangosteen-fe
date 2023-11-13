@@ -17,24 +17,28 @@ export const Welcome = defineComponent({
     });
     // 还可以使用 对象(对象替代switch同样的思路)
     const replace = throttle(
-      () => {
+      (dire_effect: number) => {
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
         );
         if (index <= 3 && index >= 1) {
-          router.replace(`/welcome/${index + 1}`);
+          router.replace(`/welcome/${index + dire_effect}`);
         } else if (index === 4) {
           router.replace("/start");
         } else {
-          router.replace(`/welcome/${index + 1}`);
+          router.replace(`/welcome/${index + dire_effect}`);
         }
       },
       500,
       { trailing: false }
     );
     watchEffect(() => {
-      if (isSwiping.value && direction.value === Direction.l) {
-        replace();
+      if (isSwiping.value) {
+        if (direction.value === Direction.l) {
+          replace(1);
+        } else if (direction.value === Direction.r) {
+          replace(-1);
+        }
       }
     });
     return () => (

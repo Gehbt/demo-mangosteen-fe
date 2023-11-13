@@ -39,9 +39,10 @@ export const useSwiper = (
     } else if (distance.value.x === 0 && distance.value.y === 0) {
       return Direction.o;
     } else if (Math.abs(distance.value.x) > Math.abs(distance.value.y)) {
-      return distance.value.x > 30 ? Direction.r : Direction.l;
+      // 这里应该是(-inf,-30],[30,inf) ,但直接设置为(-inf,30],[30,inf)
+      return distance.value.x > 0 ? Direction.r : Direction.l;
     } else {
-      return distance.value.y > 30 ? Direction.d : Direction.u;
+      return distance.value.y > 0 ? Direction.d : Direction.u;
     }
   });
   const onTouchStart = (e: TouchEvent) => {
