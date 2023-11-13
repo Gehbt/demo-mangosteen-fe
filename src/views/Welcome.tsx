@@ -5,7 +5,7 @@ import { RouteLocationNormalizedLoaded } from "vue-router";
 import svg from "@svg_map";
 import SvgIcon from "@components/SvgIcon";
 import { Direction, useSwiper } from "@/composables/swiper";
-import { throttle } from "@/shared/throttle";
+import { throttle } from "lodash";
 
 export const Welcome = defineComponent({
   setup() {
@@ -16,16 +16,22 @@ export const Welcome = defineComponent({
       beforeStart: (e) => e.preventDefault(),
     });
     // 还可以使用 对象(对象替代switch同样的思路)
-    const replace = throttle(() => {
-      const index = parseInt(route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0");
-      if (index <= 3 && index >= 1) {
-        router.replace(`/welcome/${index + 1}`);
-      } else if (index === 4) {
-        router.replace("/start");
-      } else {
-        router.replace(`/welcome/${index + 1}`);
-      }
-    }, 500);
+    const replace = throttle(
+      () => {
+        const index = parseInt(
+          route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
+        );
+        if (index <= 3 && index >= 1) {
+          router.replace(`/welcome/${index + 1}`);
+        } else if (index === 4) {
+          router.replace("/start");
+        } else {
+          router.replace(`/welcome/${index + 1}`);
+        }
+      },
+      500,
+      { trailing: false }
+    );
     watchEffect(() => {
       if (isSwiping.value && direction.value === Direction.l) {
         replace();
