@@ -8,11 +8,22 @@ export enum Direction {
   d = "↓",
   u = "↑",
 }
-export const useSwiper = (el: Ref<HTMLElement | null>) => {
+interface Options {
+  beforeStart: (e: TouchEvent) => void;
+  afterStart: (e: TouchEvent) => void;
+  beforeMove: (e: TouchEvent) => void;
+  afterMove: (e: TouchEvent) => void;
+  beforeEnd: (e: TouchEvent) => void;
+  afterEnd: (e: TouchEvent) => void;
+}
+export const useSwiper = (
+  el: Ref<HTMLElement | undefined>,
+  options?: Partial<Options>
+) => {
   const start = ref<Point>({ x: 0, y: 0 });
   const end = ref<Point>();
   // exportd
-  const isSwipping = ref(false);
+  const isSwiping = ref(false);
   const distance = computed(() => {
     if (!end.value) {
       return undefined;
@@ -28,12 +39,13 @@ export const useSwiper = (el: Ref<HTMLElement | null>) => {
     } else if (distance.value.x === 0 && distance.value.y === 0) {
       return Direction.o;
     } else if (Math.abs(distance.value.x) > Math.abs(distance.value.y)) {
-      return distance.value.x > 0 ? Direction.r : Direction.l;
+      return distance.value.x > 30 ? Direction.r : Direction.l;
     } else {
-      return distance.value.y > 0 ? Direction.d : Direction.u;
+      return distance.value.y > 30 ? Direction.d : Direction.u;
     }
   });
   const onTouchStart = (e: TouchEvent) => {
+    options?.beforeStart?.(e);
     start.value = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
@@ -42,17 +54,22 @@ export const useSwiper = (el: Ref<HTMLElement | null>) => {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     };
-    isSwipping.value = true;
+    isSwiping.value = true;
+    options?.afterStart?.(e);
   };
   const onTouching = (e: TouchEvent) => {
+    options?.beforeMove?.(e);
     end.value = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     };
+    options?.afterMove?.(e);
   };
-  const onTouching_Throttle = throttle(onTouching, 100, { trailing: false });
-  const onTouchEnd = (_e: TouchEvent) => {
-    isSwipping.value = false;
+  const onTouching_Throttle = throttle(onTouching, 1000, { trailing: false });
+  const onTouchEnd = (e: TouchEvent) => {
+    options?.beforeEnd?.(e);
+    isSwiping.value = false;
+    options?.afterEnd?.(e);
   };
   onMounted(() => {
     if (!el.value) {
@@ -72,7 +89,7 @@ export const useSwiper = (el: Ref<HTMLElement | null>) => {
     }
   });
   return {
-    isSwipping,
+    isSwiping,
     direction,
     lengthX: distance.value?.x,
     lengthY: distance.value?.y,

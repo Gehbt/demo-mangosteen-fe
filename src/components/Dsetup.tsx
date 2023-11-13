@@ -1,15 +1,14 @@
-import { ref } from 'vue'
+import { ref } from "vue";
 
 export const Dsetup: SetupFC = () => {
-  const count = ref(0)
-
+  const count = ref(0);
   const props = withDefaults(
     defineProps<{
-      foo?: string
-      bar?: number
+      foo?: string;
+      bar?: number;
     }>(),
-    { bar: 0 },
-  )
+    { bar: 0 }
+  );
 
   // const emit = defineEmits<{
   //   increment: [value: number]
@@ -17,6 +16,9 @@ export const Dsetup: SetupFC = () => {
   // }>()
   // emit('increment', 1)
   // emit('decrement')
-
-  defineRender(<div>hello marcos!{count.value}</div>)
-}
+  definePage({
+    name: "/welcome/hidings",
+    meta: {},
+  });
+  defineRender(<div>hello marcos!{count.value}</div>);
+};

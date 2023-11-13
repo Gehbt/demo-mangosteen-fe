@@ -16,7 +16,8 @@ export default defineComponent({
       required: false,
       default: "empty_img",
     },
-    src: {// alias name;from `img`;
+    src: {
+      // alias name;from `img`;
       type: String,
       required: false,
     },

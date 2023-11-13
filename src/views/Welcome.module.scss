@@ -43,7 +43,7 @@ $color: #000000;
   top: 0;
   width: 100%;
   height: 100%;
-  transition: all 0.5s ease-out;
+  transition: all var(--animation-direction) ease-in-out;
 }
 
 .slide_fade_enter_from {

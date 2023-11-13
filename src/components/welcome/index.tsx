@@ -1,32 +1,36 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch, watchEffect } from "vue";
 import s from "./index.module.scss";
-import svg from "@svg_map"
+import svg from "@svg_map";
 import SvgIcon from "../SvgIcon";
 import { RouterLink } from "vue-router";
-
-export const WFooter = (metadata_ith: number) =>
-  defineComponent({
-    render: () => (
-      <div class={s.actions}>
-        <RouterLink class={s.fake} to={`/welcome/${metadata_ith - 1}`}>
-          上页
-        </RouterLink>
-        <RouterLink to={`/welcome/${metadata_ith + 1}`}>下一页</RouterLink>
-        <RouterLink to="/start">跳过</RouterLink>
-      </div>
-    ),
+import { Direction, useSwiper } from "@/composables/swiper";
+// proximal
+const useSwiperWrapper = (ith: number) => {
+  const div = ref<HTMLDivElement>();
+  const router = useRouter();
+  const { isSwiping, direction } = useSwiper(div, {
+    beforeStart: (e) => e.preventDefault(),
   });
+  watchEffect(() => {
+    if (isSwiping.value && direction.value === Direction.l) {
+      router.push(`/welcome/${ith}`);
+    }
+  });
+  return { div };
+};
 export const W1 = defineComponent({
-  render: () => (
-    <div class={s.card}>
-      <SvgIcon src={svg.piggy2} w="134px"/>
-      <h2>
-        会赚钱,
-        <br />
-        也要会省钱
-      </h2>
-    </div>
-  ),
+  setup: () => {
+    return () => (
+      <div class={s.card}>
+        <SvgIcon src={svg.piggy2} w="134px" />
+        <h2>
+          会赚钱,
+          <br />
+          也要会省钱
+        </h2>
+      </div>
+    );
+  },
 });
 
 export const W2 = defineComponent({
@@ -65,6 +69,18 @@ export const W4 = defineComponent({
     );
   },
 });
+export const WFooter = (metadata_ith: number) =>
+  defineComponent({
+    render: () => (
+      <div class={s.actions}>
+        <RouterLink class={s.fake} to={`/welcome/${metadata_ith - 1}`}>
+          上页
+        </RouterLink>
+        <RouterLink to={`/welcome/${metadata_ith + 1}`}>下一页</RouterLink>
+        <RouterLink to="/start">跳过</RouterLink>
+      </div>
+    ),
+  });
 export const WEndFooter = defineComponent({
   render() {
     return (
@@ -80,16 +96,3 @@ export const WEndFooter = defineComponent({
     );
   },
 });
-// const WTemplates = defineComponent({
-//   setup(_, { slots }) {
-//     return { slots: slots as unknown as WSlotType };
-//   },
-//   render() {
-//     return (
-//       <>
-//         {this.slots.icon()}
-//         {this.slots.texts()}
-//       </>
-//     );
-//   },
-// });

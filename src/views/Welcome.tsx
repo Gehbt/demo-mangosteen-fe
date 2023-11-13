@@ -1,25 +1,34 @@
-import {
-  Transition,
-  VNode,
-  VNodeRef,
-  defineComponent,
-  ref,
-  watchEffect,
-} from "vue";
-import { RouterView } from "vue-router";
+import { Transition, VNode, defineComponent, ref, watchEffect } from "vue";
+import { RouterView } from "vue-router/auto";
 import s from "./Welcome.module.scss";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 import svg from "@svg_map";
 import SvgIcon from "@components/SvgIcon";
-import { useSwiper } from "@/composables/swiper";
+import { Direction, useSwiper } from "@/composables/swiper";
+import { throttle } from "@/shared/throttle";
 
 export const Welcome = defineComponent({
   setup() {
-    const main: VNodeRef = ref<HTMLElement | null>(null);
-    const { direction } = useSwiper(main);
+    const main = ref<HTMLDivElement>();
+    const route = useRoute();
+    const router = useRouter();
+    const { isSwiping, direction } = useSwiper(main, {
+      beforeStart: (e) => e.preventDefault(),
+    });
+    // 还可以使用 对象(对象替代switch同样的思路)
+    const push = throttle(() => {
+      const index = parseInt(route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0");
+      if (index <= 3 && index >= 1) {
+        router.replace(`/welcome/${index + 1}`);
+      } else if (index === 4) {
+        router.replace("/start");
+      } else {
+        router.replace(`/welcome/${index + 1}`);
+      }
+    }, 500);
     watchEffect(() => {
-      if(direction.value){
-        console.log("direction :>> ", direction.value);
+      if (isSwiping.value && direction.value === Direction.l) {
+        push();
       }
     });
     return () => (
