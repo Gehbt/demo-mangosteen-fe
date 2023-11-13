@@ -1,23 +1,9 @@
-import { defineComponent, ref, watch, watchEffect } from "vue";
+import { defineComponent } from "vue";
 import s from "./index.module.scss";
 import svg from "@svg_map";
 import SvgIcon from "../SvgIcon";
 import { RouterLink } from "vue-router";
-import { Direction, useSwiper } from "@/composables/swiper";
-// proximal
-const useSwiperWrapper = (ith: number) => {
-  const div = ref<HTMLDivElement>();
-  const router = useRouter();
-  const { isSwiping, direction } = useSwiper(div, {
-    beforeStart: (e) => e.preventDefault(),
-  });
-  watchEffect(() => {
-    if (isSwiping.value && direction.value === Direction.l) {
-      router.push(`/welcome/${ith}`);
-    }
-  });
-  return { div };
-};
+
 export const W1 = defineComponent({
   setup: () => {
     return () => (

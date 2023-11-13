@@ -1,12 +1,16 @@
-export const throttle = (fn: (...args: unknown[]) => void, time: number) => {
-  let timer: number | undefined;
-  return (...args : unknown[]) => {
-    if (timer) {
-      return;
+export const throttle = <T extends (...args: unknown[]) => unknown>(
+  fn: T,
+  time: number
+) => {
+  let timeOutId: number | undefined;
+  let result: ReturnType<T>;
+  return (...args: Parameters<T>) => {
+    if (timeOutId) {
+      return result;
     } else {
-      fn(...args);
-      timer = setTimeout(() => {
-        timer = undefined;
+      result = fn(...args) as ReturnType<T>;
+      timeOutId = setTimeout(() => {
+        timeOutId = undefined;
       }, time);
     }
   };
