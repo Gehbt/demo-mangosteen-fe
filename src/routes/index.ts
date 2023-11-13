@@ -6,27 +6,31 @@ const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",
     path: "0",
-    components: { main: Dsetup, footer: WFooter(0) },
+    components: { main: Dsetup, footer: WEndFooter },
   },
   {
     name: "w1",
     path: "1",
     components: { main: W1, footer: WFooter(1) },
+    meta: { seq: true },
   },
   {
     name: "w2",
     path: "2",
     components: { main: W2, footer: WFooter(2) },
+    meta: { seq: true },
   },
   {
     name: "w3",
     path: "3",
     components: { main: W3, footer: WFooter(3) },
+    meta: { seq: true },
   },
   {
     name: "w4",
     path: "4",
     components: { main: W4, footer: WEndFooter },
+    meta: { seq: true },
   },
 ];
 export const routes: RouteRecordRaw[] = [

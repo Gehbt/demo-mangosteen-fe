@@ -52,12 +52,10 @@ $color: #000000;
 .slide_fade_leave_to {
   transform: translateX(-100vw);
 }
-// .slide_fade_enter_to {
-//   transform: translateX(50vw); // 右整个屏幕
-// }
-// .slide_fade_leave_from {
-//   transform: translateX(-50vw);
-// }
-// .keep-d{
-//     // color: adjust-color($color: #000000, $red: 1, $green: 2, $blue: 3, $hue: 0, $saturation: 0%, $lightness: 0%, $alpha: 1.0);
-// }
+
+.slide_fade_enter_from_rev {
+  transform: translateX(-100vw); 
+}
+.slide_fade_leave_to_rev {
+  transform: translateX(100vw);
+}

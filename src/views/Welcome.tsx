@@ -21,7 +21,8 @@ export const Welcome = defineComponent({
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
         );
-        if (index <= 3 && index >= 1) {
+        // [1,2,3,4]
+        if (index <= 3 && index >= 2) {
           router.replace(`/welcome/${index + dire_effect}`);
         } else if (index === 4) {
           router.replace("/start");
@@ -38,6 +39,7 @@ export const Welcome = defineComponent({
           replace(1);
         } else if (direction.value === Direction.r) {
           replace(-1);
+          route.meta.seq = false;
         }
       }
     });
@@ -51,20 +53,30 @@ export const Welcome = defineComponent({
           <RouterView name="main">
             {({
               Component: P,
-              route: _R,
+              route: R,
             }: {
               Component: VNode;
               route: RouteLocationNormalizedLoaded;
-            }) => (
-              <Transition
-                enterFromClass={s.slide_fade_enter_from}
-                enterActiveClass={s.slide_fade_enter_active}
-                leaveToClass={s.slide_fade_leave_to}
-                leaveActiveClass={s.slide_fade_leave_active}
-              >
-                {P}
-              </Transition>
-            )}
+            }) => {
+              const motion = {
+                from: s.slide_fade_enter_from,
+                to: s.slide_fade_leave_to,
+              };
+              if (!R.meta.seq) {
+                motion.from = s.slide_fade_enter_from_rev;
+                motion.to = s.slide_fade_leave_to_rev;
+              }
+              return (
+                <Transition
+                  enterFromClass={motion.from}
+                  leaveToClass={motion.to}
+                  enterActiveClass={s.slide_fade_enter_active}
+                  leaveActiveClass={s.slide_fade_leave_active}
+                >
+                  {P}
+                </Transition>
+              );
+            }}
           </RouterView>
         </main>
         <footer>
