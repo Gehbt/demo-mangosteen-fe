@@ -1,3 +1,4 @@
+import { Start } from "@/views/Start";
 import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
 import { Welcome } from "@views/Welcome";
@@ -48,4 +49,8 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   // { path: "/r", component: Ur , name:"useRender"},
+  {
+    path: "/start",
+    component: Start,
+  },
 ];
