@@ -1,4 +1,4 @@
-
+@use "sass:math";
 .btn {
   border: 1px solid var(--button-theme);
   padding: 8px 16px;
@@ -8,6 +8,23 @@
   border-radius: var(--button-radius);
   height: var(--button-h);// button 的字默认居中
   &:hover{
-    border-color: red;
+    border-color: gray;
+  }
+}
+.fbtn{
+  background: var(--float-button-theme);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%/* math.div(56px,2)*/;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  >.icon{
+    color: var(--float-button-text);
+    width: 24px;
+    height: 24px;
   }
 }

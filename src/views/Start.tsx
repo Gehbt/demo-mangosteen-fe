@@ -1,4 +1,4 @@
-import { Button } from "@/components/Button";
+import { Button, Floatbutton } from "@/components/Button";
 import { defineComponent } from "vue";
 import s from "./Start.module.scss";
 const onClick = () => {
@@ -13,6 +13,7 @@ export const Start = defineComponent({
             测试
           </Button>
         </div>
+        <Floatbutton></Floatbutton>
       </div>
     );
   },

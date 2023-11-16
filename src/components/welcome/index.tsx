@@ -22,7 +22,7 @@ export const W1 = defineComponent({
 export const W2 = defineComponent({
   render: () => (
     <div class={s.card}>
-      <SvgIcon src={svg.clock} w="112px" />
+      <SvgIcon src={svg.clock} w="108px" />
       <h2>
         每日提醒
         <br />
@@ -47,7 +47,7 @@ export const W4 = defineComponent({
   render: () => {
     return (
       <div class={s.card}>
-        <SvgIcon src={svg.cloud2} class={s.svg_contain} />
+        <SvgIcon src={svg.cloud2} w="128px" />
         <h2>
           云备份
           <br />

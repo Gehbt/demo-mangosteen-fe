@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# auto gen
+# auto gened
 auto-imports.d.ts
 typed-router.d.ts
+src/assets/jsons/svg_map.json

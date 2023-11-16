@@ -1,5 +1,5 @@
-import { defineComponent, computed } from "vue";
-
+import { defineComponent, computed, PropType } from "vue";
+// import svg from "@svg_map";
 export default defineComponent({
   name: "SvgIcon",
   props: {
@@ -12,7 +12,7 @@ export default defineComponent({
       default: "src-assets-icons",
     },
     name: {
-      type: String,
+      type: String as PropType<string>, //as PropType<keyof typeof svg>,
       required: false,
       default: "empty_img",
     },
@@ -29,8 +29,13 @@ export default defineComponent({
     w: {
       type: String,
       required: false,
+      default: "1.2em",
     },
     h: {
+      type: String,
+      required: false,
+    },
+    color: {
       type: String,
       required: false,
     },
@@ -43,7 +48,11 @@ export default defineComponent({
   },
   render() {
     return (
-      <svg aria-hidden="true" width={this.size.w} height={this.size.h}>
+      <svg
+        aria-hidden="true"
+        width={this.size.w}
+        height={this.size.h ?? this.size.w}
+      >
         <use xlinkHref={this.symbolId} />
       </svg>
     );
