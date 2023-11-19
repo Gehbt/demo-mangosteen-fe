@@ -1,6 +1,10 @@
 import { defineComponent } from "vue";
 import s from "./Navbar.module.scss";
-export const Navbar = defineComponent({
+interface NavbarProps {
+  onClick?: (e: MouseEvent | TouchEvent) => void;
+}
+export const Navbar = defineComponent<NavbarProps>({
+  name: "Navbar",
   setup(props, context) {
     const { slots } = context;
     return () => (

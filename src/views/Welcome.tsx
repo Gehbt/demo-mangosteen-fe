@@ -8,6 +8,7 @@ import { Direction, useSwiper } from "@/composables/swiper";
 import { throttle } from "lodash";
 
 export const Welcome = defineComponent({
+  name: "Welcome",
   setup() {
     const main = ref<HTMLDivElement>();
     const route = useRoute();

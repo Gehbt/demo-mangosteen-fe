@@ -3,7 +3,7 @@ import s from "./Button.module.scss";
 import SvgIcon from "./SvgIcon";
 import svg from "@svg_map";
 interface ButtonProps {
-  onClick: (e: MouseEvent) => void;
+  onClick?: (e: MouseEvent | TouchEvent) => void;
   class: string;
 }
 export const Button = defineComponent<ButtonProps>({
@@ -12,6 +12,7 @@ export const Button = defineComponent<ButtonProps>({
   //   "onClick",
   //   "class",
   // ],
+  name: "Button",
   setup(props, context) {
     return () => (
       <button class={[s.btn, props.class]} onClick={props.onClick}>
@@ -21,6 +22,7 @@ export const Button = defineComponent<ButtonProps>({
   },
 });
 export const Floatbutton = defineComponent({
+  name: "Floatbutton",
   props: {
     iconName: {
       type: String,

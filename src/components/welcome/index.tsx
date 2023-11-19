@@ -5,6 +5,7 @@ import SvgIcon from "../SvgIcon";
 import { RouterLink } from "vue-router";
 
 export const W1 = defineComponent({
+  name: "W1",
   setup: () => {
     return () => (
       <div class={s.card}>
@@ -20,6 +21,7 @@ export const W1 = defineComponent({
 });
 
 export const W2 = defineComponent({
+  name: "W2",
   render: () => (
     <div class={s.card}>
       <SvgIcon src={svg.clock} w="108px" />
@@ -32,6 +34,7 @@ export const W2 = defineComponent({
   ),
 });
 export const W3 = defineComponent({
+  name: "W3",
   render: () => (
     <div class={s.card}>
       <SvgIcon src={svg.charts2} w="112px" />
@@ -44,6 +47,7 @@ export const W3 = defineComponent({
   ),
 });
 export const W4 = defineComponent({
+  name: "W4",
   render: () => {
     return (
       <div class={s.card}>
@@ -59,6 +63,7 @@ export const W4 = defineComponent({
 });
 export const WFooter = (metadata_ith: number) =>
   defineComponent({
+    name: "WFooter",
     render: () => (
       <div class={s.actions}>
         <RouterLink class={s.fake} to={`/welcome/${metadata_ith - 1}`}>
@@ -70,6 +75,7 @@ export const WFooter = (metadata_ith: number) =>
     ),
   });
 export const WEndFooter = defineComponent({
+  name: "WEndFooter",
   render() {
     return (
       <div class={s.actions}>

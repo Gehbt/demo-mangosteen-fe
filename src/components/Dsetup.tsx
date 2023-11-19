@@ -1,6 +1,9 @@
 import { ref } from "vue";
 
 export const Dsetup: SetupFC = () => {
+  defineOptions({
+    name: "Dsetup",
+  });
   const count = ref(0);
   const props = withDefaults(
     defineProps<{

@@ -2,6 +2,7 @@ import { PropType, defineComponent } from "vue";
 import s from "./Center.module.scss";
 
 export const Center = defineComponent({
+  name: "Center",
   props: {
     direction: {
       type: String as PropType<"horizontal" | "vertical">,
