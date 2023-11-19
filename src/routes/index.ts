@@ -1,3 +1,5 @@
+import { ItemsCreate, ItemsList } from "@/components/ItemsList";
+import { Items } from "@/views/Items";
 import { Start } from "@/views/Start";
 import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
@@ -35,13 +37,14 @@ const WelcomeTable: RouteRecordRaw[] = [
   },
 ];
 export const routes: RouteRecordRaw[] = [
-  { path: "/", redirect: "/welcome" },
+  { path: "/", redirect: "/welcome", name: "home" },
   // { path: "/about", component: Bar },
   {
     path: "/welcome",
     component: Welcome,
     children: [
       {
+        name: "w",
         path: "",
         redirect: "/welcome/1",
       },
@@ -50,7 +53,25 @@ export const routes: RouteRecordRaw[] = [
   },
   // { path: "/r", component: Ur , name:"useRender"},
   {
+    name: "start",
     path: "/start",
     component: Start,
+  },
+  {
+    name: "items",
+    path: "/items",
+    component: Items,
+    children: [
+      {
+        name: "list",
+        path: "",
+        component: ItemsList,
+      },
+      {
+        name: "create",
+        path: "create",
+        component: ItemsCreate,
+      },
+    ],
   },
 ];

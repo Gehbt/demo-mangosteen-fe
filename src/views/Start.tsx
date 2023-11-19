@@ -6,6 +6,7 @@ import svg from "@svg_map";
 import SvgIcon from "@/components/SvgIcon";
 import { Navbar } from "@/components/Navbar";
 import { Overlay, OverlayMask } from "@/components/Overlay";
+import { RouterLink } from "vue-router/auto";
 
 export const Start = defineComponent({
   name: "Start",
@@ -35,9 +36,13 @@ export const Start = defineComponent({
           <SvgIcon name={svg.piggy2} class={s.svg} />
         </Center>
         <div class={s.btn_wrapper}>
-          <Button class={s.btn}>开始记账</Button>
+          <RouterLink to="/Items/create">
+            <Button class={s.btn}>开始记账</Button>
+          </RouterLink>
         </div>
-        <Floatbutton></Floatbutton>
+        <RouterLink to="/Items/create">
+          <Floatbutton />
+        </RouterLink>
         <div
           style={{ visibility: overlayVisibleRef.value ? "visible" : "hidden" }}
         >
