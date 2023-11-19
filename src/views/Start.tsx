@@ -21,13 +21,7 @@ export const Start = defineComponent({
       console.log("blurOverlay :>> ", overlayVisibleRef.value);
     };
     return () => (
-      <MainLayout
-        title="蓝莓记账"
-        icon={(className?: string) => (
-          <SvgIcon name={svg.menu} class={className}></SvgIcon>
-        )}
-        toggle={toggleOverlay}
-      >
+      <MainLayout title="蓝莓记账" icon={svg.menu} toggle={toggleOverlay}>
         {{
           default: () => (
             <>

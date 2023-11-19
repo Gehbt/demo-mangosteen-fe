@@ -1,5 +1,6 @@
 import { PropType, defineComponent } from "vue";
 import { Navbar } from "@/components/Navbar";
+import SvgIcon from "@/components/SvgIcon";
 export const MainLayout = defineComponent({
   name: "MainLayout",
   props: {
@@ -8,7 +9,7 @@ export const MainLayout = defineComponent({
       required: true,
     },
     icon: {
-      type: Function as PropType<(className?: string) => JSX.Element>,
+      type: String,
       required: true,
     },
     toggle: {
@@ -20,7 +21,20 @@ export const MainLayout = defineComponent({
     return () => (
       <div>
         <Navbar onToggle={props.toggle}>
-          {{ title: () => props.title, icon: props.icon }}
+          {{
+            title: () => props.title,
+            icon: () => (
+              <SvgIcon
+                name={props.icon}
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  position: "relative",
+                  top: "2px",
+                }}
+              ></SvgIcon>
+            ),
+          }}
         </Navbar>
         {context.slots.default?.()}
       </div>
