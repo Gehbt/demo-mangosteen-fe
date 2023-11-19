@@ -1,4 +1,10 @@
 :root {
+  --main-theme: linear-gradient(
+    to bottom,
+    #8751ce 0%,
+    #b942ff 60%,
+    var(--welcome-bg-end) 100%
+  );
   --welcome-card-bg-color: white;
   --welcome-text: white;
   --welcome-bg-start: #7556bd;
@@ -17,4 +23,10 @@
   --navbar-bg-start: var(--welcome-bg-start);
   --navbar-bg-end: var(--welcome-bg-end);
   --foreground-theme: white;
+  --z-index-overlay: 20;
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5);
+  --overlay-main-bg: white;
+  --top-safe-area-height: 24px;
+  --overlay-user-bg: var(--welcome-bg-start);
+  --overlay-user-text: white;
 }
