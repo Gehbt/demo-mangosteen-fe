@@ -23,5 +23,18 @@ export const Dsetup: SetupFC = () => {
     name: "/welcome/hidings",
     meta: {},
   });
-  defineRender(<div>hello marcos!{count.value}</div>);
+
+  const itemss = [{ text: 1 }, { text: 2 }];
+  // Vfor`(const { text } of itemss` {
+  //   console.log("text :>> ", text);
+  // }
+  const random = Math.random();
+  defineRender(
+    <div>
+      hello marcos!{count.value}
+      <div v-if={random > 0.5}>Now you see me {random}</div>
+      <div v-else>Now you don't</div>
+      {/* <div v-for={1}>{item.text}</div> */}
+    </div>
+  );
 };

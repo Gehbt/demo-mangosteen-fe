@@ -14,7 +14,7 @@ export const MainLayout = defineComponent({
     },
     toggle: {
       type: Function as PropType<() => void>,
-      required: true,
+      required: false,
     },
   },
   setup(props, context) {

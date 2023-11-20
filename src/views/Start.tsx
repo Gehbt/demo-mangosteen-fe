@@ -29,10 +29,10 @@ export const Start = defineComponent({
                 <SvgIcon name={svg.piggy2} class={s.svg} />
               </Center>
               <div class={s.btn_wrapper}>
-                <RouterLink to="/Items/create">
+                <RouterLink to="/items/create">
                   <Button class={s.btn}>开始记账</Button>
                 </RouterLink>
-                <RouterLink to="/Items/create">
+                <RouterLink to="/items/create">
                   <Floatbutton />
                 </RouterLink>
               </div>
