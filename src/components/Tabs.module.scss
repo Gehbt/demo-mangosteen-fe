@@ -1,0 +1,28 @@
+.tabs {
+  &_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: var(--button-font-theme);
+    > li {
+      padding: 8px 0;
+      flex-grow: 1;
+      flex-shrink: 0;
+      background: var(--tabs-theme);
+      &.selected {
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background-color: var(--tabs-indicator-bg);
+        }
+      }
+    }
+  }
+}

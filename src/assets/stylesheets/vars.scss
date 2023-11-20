@@ -1,4 +1,5 @@
 :root {
+  /* blow Status bar*/
   --main-theme: linear-gradient(
     to bottom,
     #8751ce 0%,
@@ -29,4 +30,10 @@
   --top-safe-area-height: 24px;
   --overlay-user-bg: var(--welcome-bg-start);
   --overlay-user-text: white;
+  --tabs-theme: linear-gradient(
+    to bottom,
+    #b842ff 0%,
+    var(--welcome-bg-end) 100%
+  );
+  --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
 }
