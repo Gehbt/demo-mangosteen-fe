@@ -11,6 +11,9 @@ import VueRouter from "unplugin-vue-router/vite";
 import vueMacros from "unplugin-vue-macros/vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
+import Components from "unplugin-vue-components/vite";
+import { VantResolver } from "@vant/auto-import-resolver";
+
 const pathResolve = (dir: string): string => {
   return resolve(__dirname, ".", dir);
 };
@@ -65,6 +68,7 @@ export default defineConfig({
         // },
       ],
     }),
+    Components({ resolvers: [VantResolver()] }),
   ],
   resolve: {
     alias,
