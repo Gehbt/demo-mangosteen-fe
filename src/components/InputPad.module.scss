@@ -1,0 +1,48 @@
+.inputPad {
+  content: "";
+}
+.dataAmount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-top: 1px solid var(--number-pad-border-color);
+  font-family: monospace;
+  > .date {
+    font-size: 16px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: var(--date-theme);
+    > .icon {
+      color: var(--amount-text-theme);
+      margin-right: 8px;
+    }
+  }
+  > .amount {
+    font-size: 24px;
+    font-family: monospace;
+    color: var(--amount-text-theme);
+  }
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--number-pad-border-color);
+  > button {
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid var(--number-pad-border-color);
+    border-bottom: 1px solid var(--number-pad-border-color);
+    width: 25%;
+    height: 64px;
+    &:nth-child(4n) {
+      border-right: none;
+    }
+    &:nth-last-child(-n + 4) {
+      /* `-n+x`表示最后x个元素 */
+      border-bottom: none;
+    }
+  }
+}

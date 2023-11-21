@@ -3,7 +3,8 @@ import { defineComponent, ref } from "vue";
 import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
-import { RouterLink } from "vue-router/auto";
+import { InputPad } from "./InputPad";
+import s from "./ItemsList.module.scss";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
@@ -34,10 +35,15 @@ export const ItemsCreate = defineComponent({
             //   selected={selectedTab.value}
             //   onUpdateSelected={updateSelected}
             // >
-            <Tabs v-model:selected={selectedTab.value}>
-              <Tab name="支出">111</Tab>
-              <Tab name="收入">222</Tab>
-            </Tabs>
+            <>
+              <Tabs v-model:selected={selectedTab.value}>
+                <Tab name="支出">111</Tab>
+                <Tab name="收入">222</Tab>
+              </Tabs>
+              <div class={s.inputPad_wrapper}>
+                <InputPad></InputPad>
+              </div>
+            </>
           ),
         }}
       </MainLayout>

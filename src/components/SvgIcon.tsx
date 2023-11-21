@@ -52,6 +52,7 @@ export default defineComponent({
         aria-hidden="true"
         width={this.size.w}
         height={this.size.h ?? this.size.w}
+        color={this.color}
       >
         <use xlinkHref={this.symbolId} />
       </svg>
