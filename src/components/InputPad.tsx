@@ -9,23 +9,119 @@ import { useSL } from "@/composables/save_load";
 export const InputPad = defineComponent({
   name: "InputPad",
   setup(props, context) {
+    const refAmount = ref("0");
+    const refDot = ref(false);
+    const dotNumber = ref(0);
+    const appendNumber = (n: number | "." = ".") => {
+      if (refAmount.value.length <= 16) {
+        // < 11位数
+        if (refAmount.value === "0" && n !== ".") {
+          refAmount.value = n.toString();
+        } else {
+          if (!refDot.value) {
+            // 无小数点
+            refAmount.value += n.toString();
+            return;
+          }
+          if (refDot.value && dotNumber.value < 3) {
+            // 有dot
+            dotNumber.value += 1;
+            refAmount.value += n.toString();
+            return;
+          }
+        }
+      }
+    };
     const numberPart = [
-      { text: 1, onclick: () => {} },
-      { text: 2, onclick: () => {} },
-      { text: 3, onclick: () => {} },
-      { text: "删除", onclick: () => {} },
-      { text: 4, onclick: () => {} },
-      { text: 5, onclick: () => {} },
-      { text: 6, onclick: () => {} },
-      { text: "+", onclick: () => {} },
-      { text: 7, onclick: () => {} },
-      { text: 8, onclick: () => {} },
-      { text: 9, onclick: () => {} },
-      { text: "-", onclick: () => {} },
-      { text: "清空", onclick: () => {} },
-      { text: 0, onclick: () => {} },
-      { text: ".", onclick: () => {} },
-      { text: "提交", onclick: () => {} },
+      {
+        text: "1",
+        onClick: () => {
+          appendNumber(1);
+        },
+      },
+      {
+        text: "2",
+        onClick: () => {
+          appendNumber(2);
+        },
+      },
+      {
+        text: "3",
+        onClick: () => {
+          appendNumber(3);
+        },
+      },
+      {
+        text: "4",
+        onClick: () => {
+          appendNumber(4);
+        },
+      },
+      {
+        text: "5",
+        onClick: () => {
+          appendNumber(5);
+        },
+      },
+      {
+        text: "6",
+        onClick: () => {
+          appendNumber(6);
+        },
+      },
+
+      {
+        text: "7",
+        onClick: () => {
+          appendNumber(7);
+        },
+      },
+      {
+        text: "8",
+        onClick: () => {
+          appendNumber(8);
+        },
+      },
+      {
+        text: "9",
+        onClick: () => {
+          appendNumber(9);
+        },
+      },
+      {
+        text: "0",
+        onClick: () => {
+          appendNumber(0);
+        },
+      },
+      {
+        text: ".",
+        onClick: () => {
+          if (!refDot.value) {
+            // 无 dot
+            appendNumber();
+            refDot.value = true;
+          }
+        },
+      },
+      {
+        text: "清空",
+        onClick: () => {
+          refAmount.value = "0";
+          refDot.value = false;
+          dotNumber.value = 0;
+        },
+      },
+      {
+        text: "记录",
+        onClick: () => {
+          //todo: record
+          console.log("amount :>> ", refAmount.value);
+          refAmount.value = "0";
+          refDot.value = false;
+          dotNumber.value = 0;
+        },
+      },
     ];
     const nowDate = time(new Date()).format();
     // console.log(nowDate.split("-"));
@@ -36,8 +132,8 @@ export const InputPad = defineComponent({
       return refDate.value.join("-");
     });
     let data_record = useSL(refDate.value);
-
     const showPicker = ref(false);
+
     return () => (
       <div class={s.inputPad}>
         <div class={s.dataAmount}>
@@ -60,6 +156,7 @@ export const InputPad = defineComponent({
                     // 防止跳动
                     refDate.value = data_record.load();
                   }, 100);
+                  showPicker.value = false;
                 }}
               >
                 <DatePicker
@@ -69,18 +166,24 @@ export const InputPad = defineComponent({
                     showPicker.value = false;
                   }}
                   onCancel={() => {
-                    refDate.value = data_record.load();
+                    setTimeout(() => {
+                      // 防止跳动
+                      refDate.value = data_record.load();
+                    }, 100);
                     showPicker.value = false;
                   }}
                 />
               </Popup>
             </span>
           </span>
-          <span class={s.amount}>12.34</span>
+          <span class={s.amount}>
+            <SvgIcon name={svg.yuan} class={s.yuan} />
+            {refAmount.value}
+          </span>
         </div>
         <div class={s.buttons}>
           {numberPart.map((item) => (
-            <button onClick={item.onclick}>{item.text}</button>
+            <button onClick={item.onClick}>{item.text}</button>
           ))}
         </div>
       </div>
