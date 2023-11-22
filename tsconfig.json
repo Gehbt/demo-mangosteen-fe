@@ -42,6 +42,6 @@
     "*.d.ts"
   ],
 
-  "exclude": ["dist", "**/*.js", "node_modules"],
+  "exclude": ["dist", "**/*.js", "node_modules","src/assets/jsons/emoji_list.json"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

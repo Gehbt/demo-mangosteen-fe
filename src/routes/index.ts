@@ -1,6 +1,8 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
+import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
 import { Items } from "@/views/Items";
 import { Start } from "@/views/Start";
+import { Tag } from "@/views/Tag";
 import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
 import { Welcome } from "@views/Welcome";
@@ -63,14 +65,31 @@ export const routes: RouteRecordRaw[] = [
     component: Items,
     children: [
       {
-        name: "list",
+        name: "itemsList",
         path: "",
         component: ItemsList,
       },
       {
-        name: "create",
+        name: "itemsCreate",
         path: "create",
         component: ItemsCreate,
+      },
+    ],
+  },
+  {
+    name: "tags",
+    path: "/tags",
+    component: Tag,
+    children: [
+      {
+        name: "tagsCreate",
+        path: "create",
+        component: TagsCreate,
+      },
+      {
+        name: "tagsId",
+        path: ":id",
+        component: TagsEdit,
       },
     ],
   },
