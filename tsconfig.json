@@ -5,7 +5,8 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@views/*": ["./src/views/*"],
-      "@svg_map": ["./src/assets/jsons/svg_map.json"]
+      "@svg_map": ["./src/assets/jsons/svg_map.json"],
+      "@emoji_list":["src/assets/jsons/emoji_list.ts"]
     },
     "types": [
       "vite/client",
@@ -25,6 +26,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "jsxImportSource":"vue",
 
     /* Linting */
     "strict": true,
@@ -39,9 +41,10 @@
     "src/*.tsx",
     "src/*.vue",
     "src/**/*.vue",
-    "*.d.ts"
+    "*.d.ts",
+    "*.js"
   ],
 
-  "exclude": ["dist", "**/*.js", "node_modules","src/assets/jsons/emoji_list.json"],
+  "exclude": ["dist", "node_modules","src/assets/jsons/emoji_list.json"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

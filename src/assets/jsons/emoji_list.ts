@@ -1,6 +1,7 @@
 // \\u\{1F441\}
 // \\u{$1}
-export default emojiList = [
+
+export const face: readonly [string, string[]][] = [
   [
     "face-smiling",
     [
@@ -17,8 +18,8 @@ export default emojiList = [
       "\u{1FAE0}",
       "\u{1F609}",
       "\u{1F60A}",
-      "\u{1F607}"
-    ]
+      "\u{1F607}",
+    ],
   ],
   [
     "face-affection",
@@ -31,8 +32,8 @@ export default emojiList = [
       "\u{263A}",
       "\u{1F61A}",
       "\u{1F619}",
-      "\u{1F972}"
-    ]
+      "\u{1F972}",
+    ],
   ],
   [
     "face-tongue",
@@ -42,8 +43,8 @@ export default emojiList = [
       "\u{1F61C}",
       "\u{1F92A}",
       "\u{1F61D}",
-      "\u{1F911}"
-    ]
+      "\u{1F911}",
+    ],
   ],
   [
     "face-hand",
@@ -54,8 +55,8 @@ export default emojiList = [
       "\u{1FAE3}",
       "\u{1F92B}",
       "\u{1F914}",
-      "\u{1FAE1}"
-    ]
+      "\u{1FAE1}",
+    ],
   ],
   [
     "face-neutral-skeptical",
@@ -66,27 +67,21 @@ export default emojiList = [
       "\u{1F611}",
       "\u{1F636}",
       "\u{1FAE5}",
-      "\u{1F636} \u{200D} \u{1F32B} \u{FE0F}",
+      "\u{1F636}\u{200D}\u{1F32B}\u{FE0F}",
       "\u{1F60F}",
       "\u{1F612}",
       "\u{1F644}",
       "\u{1F62C}",
-      "\u{1F62E} \u{200D} \u{1F4A8}",
+      "\u{1F62E}\u{200D}\u{1F4A8}",
       "\u{1F925}",
       "\u{1FAE8}",
-      "\u{1F642} \u{200D} \u{2194} \u{FE0F}",
-      "\u{1F642} \u{200D} \u{2195} \u{FE0F}"
-    ]
+      "\u{1F642}\u{200D}\u{2194}\u{FE0F}",
+      "\u{1F642}\u{200D}\u{2195}\u{FE0F}",
+    ],
   ],
   [
     "face-sleepy",
-    [
-      "\u{1F60C}",
-      "\u{1F614}",
-      "\u{1F62A}",
-      "\u{1F924}",
-      "\u{1F634}"
-    ]
+    ["\u{1F60C}", "\u{1F614}", "\u{1F62A}", "\u{1F924}", "\u{1F634}"],
   ],
   [
     "face-unwell",
@@ -101,26 +96,12 @@ export default emojiList = [
       "\u{1F976}",
       "\u{1F974}",
       "\u{1F635}",
-      "\u{1F635} \u{200D} \u{1F4AB}",
-      "\u{1F92F}"
-    ]
+      "\u{1F635}\u{200D}\u{1F4AB}",
+      "\u{1F92F}",
+    ],
   ],
-  [
-    "face-hat",
-    [
-      "\u{1F920}",
-      "\u{1F973}",
-      "\u{1F978}"
-    ]
-  ],
-  [
-    "face-glasses",
-    [
-      "\u{1F60E}",
-      "\u{1F913}",
-      "\u{1F9D0}"
-    ]
-  ],
+  ["face-hat", ["\u{1F920}", "\u{1F973}", "\u{1F978}"]],
+  ["face-glasses", ["\u{1F60E}", "\u{1F913}", "\u{1F9D0}"]],
   [
     "face-concerned",
     [
@@ -149,8 +130,8 @@ export default emojiList = [
       "\u{1F613}",
       "\u{1F629}",
       "\u{1F62B}",
-      "\u{1F971}"
-    ]
+      "\u{1F971}",
+    ],
   ],
   [
     "face-negative",
@@ -162,8 +143,8 @@ export default emojiList = [
       "\u{1F608}",
       "\u{1F47F}",
       "\u{1F480}",
-      "\u{2620}"
-    ]
+      "\u{2620}",
+    ],
   ],
   [
     "face-costume",
@@ -175,8 +156,8 @@ export default emojiList = [
       "\u{1F47B}",
       "\u{1F47D}",
       "\u{1F47E}",
-      "\u{1F916}"
-    ]
+      "\u{1F916}",
+    ],
   ],
   [
     "cat-face",
@@ -189,17 +170,10 @@ export default emojiList = [
       "\u{1F63D}",
       "\u{1F640}",
       "\u{1F63F}",
-      "\u{1F63E}"
-    ]
+      "\u{1F63E}",
+    ],
   ],
-  [
-    "monkey-face",
-    [
-      "\u{1F648}",
-      "\u{1F649}",
-      "\u{1F64A}"
-    ]
-  ],
+  ["monkey-face", ["\u{1F648}", "\u{1F649}", "\u{1F64A}"]],
   [
     "heart",
     [
@@ -214,8 +188,8 @@ export default emojiList = [
       "\u{1F49F}",
       "\u{2763}",
       "\u{1F494}",
-      "\u{2764} \u{FE0F} \u{200D} \u{1F525}",
-      "\u{2764} \u{FE0F} \u{200D} \u{1FA79}",
+      "\u{2764}\u{FE0F}\u{200D}\u{1F525}",
+      "\u{2764}\u{FE0F}\u{200D}\u{1FA79}",
       "\u{2764}",
       "\u{1FA77}",
       "\u{1F9E1}",
@@ -227,8 +201,8 @@ export default emojiList = [
       "\u{1F90E}",
       "\u{1F5A4}",
       "\u{1FA76}",
-      "\u{1F90D}"
-    ]
+      "\u{1F90D}",
+    ],
   ],
   [
     "emotion",
@@ -242,13 +216,16 @@ export default emojiList = [
       "\u{1F4A8}",
       "\u{1F573}",
       "\u{1F4AC}",
-      "\u{1F441} \u{FE0F} \u{200D} \u{1F5E8} \u{FE0F}",
+      "11",
+      "\u{1F441}\u{FE0F}\u{200D}\u{1F5E8}\u{FE0F}",
       "\u{1F5E8}",
       "\u{1F5EF}",
       "\u{1F4AD}",
-      "\u{1F4A4}"
-    ]
+      "\u{1F4A4}",
+    ],
   ],
+];
+export const hand: readonly [string, string[]][] = [
   [
     "hand-fingers-open",
     [
@@ -262,8 +239,8 @@ export default emojiList = [
       "\u{1FAF3}",
       "\u{1FAF4}",
       "\u{1FAF7}",
-      "\u{1FAF8}"
-    ]
+      "\u{1FAF8}",
+    ],
   ],
   [
     "hand-fingers-partial",
@@ -276,8 +253,8 @@ export default emojiList = [
       "\u{1FAF0}",
       "\u{1F91F}",
       "\u{1F918}",
-      "\u{1F919}"
-    ]
+      "\u{1F919}",
+    ],
   ],
   [
     "hand-single-finger",
@@ -288,8 +265,8 @@ export default emojiList = [
       "\u{1F595}",
       "\u{1F447}",
       "\u{261D}",
-      "\u{1FAF5}"
-    ]
+      "\u{1FAF5}",
+    ],
   ],
   [
     "hand-fingers-closed",
@@ -299,8 +276,8 @@ export default emojiList = [
       "\u{270A}",
       "\u{1F44A}",
       "\u{1F91B}",
-      "\u{1F91C}"
-    ]
+      "\u{1F91C}",
+    ],
   ],
   [
     "hands",
@@ -311,17 +288,10 @@ export default emojiList = [
       "\u{1F450}",
       "\u{1F932}",
       "\u{1F91D}",
-      "\u{1F64F}"
-    ]
+      "\u{1F64F}",
+    ],
   ],
-  [
-    "hand-prop",
-    [
-      "\u{270D}",
-      "\u{1F485}",
-      "\u{1F933}"
-    ]
-  ],
+  ["hand-prop", ["\u{270D}", "\u{1F485}", "\u{1F933}"]],
   [
     "body-parts",
     [
@@ -342,9 +312,11 @@ export default emojiList = [
       "\u{1F441}",
       "\u{1F445}",
       "\u{1F444}",
-      "\u{1FAE6}"
-    ]
+      "\u{1FAE6}",
+    ],
   ],
+];
+export const person: readonly [string, string[]][] = [
   [
     "person",
     [
@@ -356,149 +328,149 @@ export default emojiList = [
       "\u{1F471}",
       "\u{1F468}",
       "\u{1F9D4}",
-      "\u{1F9D4} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9D4} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{1F9B0}",
-      "\u{1F468} \u{200D} \u{1F9B1}",
-      "\u{1F468} \u{200D} \u{1F9B3}",
-      "\u{1F468} \u{200D} \u{1F9B2}",
+      "\u{1F9D4}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9D4}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{1F9B0}",
+      "\u{1F468}\u{200D}\u{1F9B1}",
+      "\u{1F468}\u{200D}\u{1F9B3}",
+      "\u{1F468}\u{200D}\u{1F9B2}",
       "\u{1F469}",
-      "\u{1F469} \u{200D} \u{1F9B0}",
-      "\u{1F9D1} \u{200D} \u{1F9B0}",
-      "\u{1F469} \u{200D} \u{1F9B1}",
-      "\u{1F9D1} \u{200D} \u{1F9B1}",
-      "\u{1F469} \u{200D} \u{1F9B3}",
-      "\u{1F9D1} \u{200D} \u{1F9B3}",
-      "\u{1F469} \u{200D} \u{1F9B2}",
-      "\u{1F9D1} \u{200D} \u{1F9B2}",
-      "\u{1F471} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F471} \u{200D} \u{2642} \u{FE0F}",
+      "\u{1F469}\u{200D}\u{1F9B0}",
+      "\u{1F9D1}\u{200D}\u{1F9B0}",
+      "\u{1F469}\u{200D}\u{1F9B1}",
+      "\u{1F9D1}\u{200D}\u{1F9B1}",
+      "\u{1F469}\u{200D}\u{1F9B3}",
+      "\u{1F9D1}\u{200D}\u{1F9B3}",
+      "\u{1F469}\u{200D}\u{1F9B2}",
+      "\u{1F9D1}\u{200D}\u{1F9B2}",
+      "\u{1F471}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F471}\u{200D}\u{2642}\u{FE0F}",
       "\u{1F9D3}",
       "\u{1F474}",
-      "\u{1F475}"
-    ]
+      "\u{1F475}",
+    ],
   ],
   [
     "person-gesture",
     [
       "\u{1F64D}",
-      "\u{1F64D} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F64D} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F64D}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F64D}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F64E}",
-      "\u{1F64E} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F64E} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F64E}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F64E}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F645}",
-      "\u{1F645} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F645} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F645}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F645}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F646}",
-      "\u{1F646} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F646} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F646}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F646}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F481}",
-      "\u{1F481} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F481} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F481}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F481}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F64B}",
-      "\u{1F64B} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F64B} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F64B}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F64B}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9CF}",
-      "\u{1F9CF} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9CF} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9CF}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9CF}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F647}",
-      "\u{1F647} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F647} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F647}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F647}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F926}",
-      "\u{1F926} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F926} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F926}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F926}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F937}",
-      "\u{1F937} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F937} \u{200D} \u{2640} \u{FE0F}"
-    ]
+      "\u{1F937}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F937}\u{200D}\u{2640}\u{FE0F}",
+    ],
   ],
   [
     "person-role",
     [
-      "\u{1F9D1} \u{200D} \u{2695} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{2695} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{2695} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F393}",
-      "\u{1F468} \u{200D} \u{1F393}",
-      "\u{1F469} \u{200D} \u{1F393}",
-      "\u{1F9D1} \u{200D} \u{1F3EB}",
-      "\u{1F468} \u{200D} \u{1F3EB}",
-      "\u{1F469} \u{200D} \u{1F3EB}",
-      "\u{1F9D1} \u{200D} \u{2696} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{2696} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{2696} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F33E}",
-      "\u{1F468} \u{200D} \u{1F33E}",
-      "\u{1F469} \u{200D} \u{1F33E}",
-      "\u{1F9D1} \u{200D} \u{1F373}",
-      "\u{1F468} \u{200D} \u{1F373}",
-      "\u{1F469} \u{200D} \u{1F373}",
-      "\u{1F9D1} \u{200D} \u{1F527}",
-      "\u{1F468} \u{200D} \u{1F527}",
-      "\u{1F469} \u{200D} \u{1F527}",
-      "\u{1F9D1} \u{200D} \u{1F3ED}",
-      "\u{1F468} \u{200D} \u{1F3ED}",
-      "\u{1F469} \u{200D} \u{1F3ED}",
-      "\u{1F9D1} \u{200D} \u{1F4BC}",
-      "\u{1F468} \u{200D} \u{1F4BC}",
-      "\u{1F469} \u{200D} \u{1F4BC}",
-      "\u{1F9D1} \u{200D} \u{1F52C}",
-      "\u{1F468} \u{200D} \u{1F52C}",
-      "\u{1F469} \u{200D} \u{1F52C}",
-      "\u{1F9D1} \u{200D} \u{1F4BB}",
-      "\u{1F468} \u{200D} \u{1F4BB}",
-      "\u{1F469} \u{200D} \u{1F4BB}",
-      "\u{1F9D1} \u{200D} \u{1F3A4}",
-      "\u{1F468} \u{200D} \u{1F3A4}",
-      "\u{1F469} \u{200D} \u{1F3A4}",
-      "\u{1F9D1} \u{200D} \u{1F3A8}",
-      "\u{1F468} \u{200D} \u{1F3A8}",
-      "\u{1F469} \u{200D} \u{1F3A8}",
-      "\u{1F9D1} \u{200D} \u{2708} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{2708} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{2708} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F680}",
-      "\u{1F468} \u{200D} \u{1F680}",
-      "\u{1F469} \u{200D} \u{1F680}",
-      "\u{1F9D1} \u{200D} \u{1F692}",
-      "\u{1F468} \u{200D} \u{1F692}",
-      "\u{1F469} \u{200D} \u{1F692}",
+      "\u{1F9D1}\u{200D}\u{2695}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{2695}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{2695}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F393}",
+      "\u{1F468}\u{200D}\u{1F393}",
+      "\u{1F469}\u{200D}\u{1F393}",
+      "\u{1F9D1}\u{200D}\u{1F3EB}",
+      "\u{1F468}\u{200D}\u{1F3EB}",
+      "\u{1F469}\u{200D}\u{1F3EB}",
+      "\u{1F9D1}\u{200D}\u{2696}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{2696}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{2696}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F33E}",
+      "\u{1F468}\u{200D}\u{1F33E}",
+      "\u{1F469}\u{200D}\u{1F33E}",
+      "\u{1F9D1}\u{200D}\u{1F373}",
+      "\u{1F468}\u{200D}\u{1F373}",
+      "\u{1F469}\u{200D}\u{1F373}",
+      "\u{1F9D1}\u{200D}\u{1F527}",
+      "\u{1F468}\u{200D}\u{1F527}",
+      "\u{1F469}\u{200D}\u{1F527}",
+      "\u{1F9D1}\u{200D}\u{1F3ED}",
+      "\u{1F468}\u{200D}\u{1F3ED}",
+      "\u{1F469}\u{200D}\u{1F3ED}",
+      "\u{1F9D1}\u{200D}\u{1F4BC}",
+      "\u{1F468}\u{200D}\u{1F4BC}",
+      "\u{1F469}\u{200D}\u{1F4BC}",
+      "\u{1F9D1}\u{200D}\u{1F52C}",
+      "\u{1F468}\u{200D}\u{1F52C}",
+      "\u{1F469}\u{200D}\u{1F52C}",
+      "\u{1F9D1}\u{200D}\u{1F4BB}",
+      "\u{1F468}\u{200D}\u{1F4BB}",
+      "\u{1F469}\u{200D}\u{1F4BB}",
+      "\u{1F9D1}\u{200D}\u{1F3A4}",
+      "\u{1F468}\u{200D}\u{1F3A4}",
+      "\u{1F469}\u{200D}\u{1F3A4}",
+      "\u{1F9D1}\u{200D}\u{1F3A8}",
+      "\u{1F468}\u{200D}\u{1F3A8}",
+      "\u{1F469}\u{200D}\u{1F3A8}",
+      "\u{1F9D1}\u{200D}\u{2708}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{2708}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{2708}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F680}",
+      "\u{1F468}\u{200D}\u{1F680}",
+      "\u{1F469}\u{200D}\u{1F680}",
+      "\u{1F9D1}\u{200D}\u{1F692}",
+      "\u{1F468}\u{200D}\u{1F692}",
+      "\u{1F469}\u{200D}\u{1F692}",
       "\u{1F46E}",
-      "\u{1F46E} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F46E} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F46E}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F46E}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F575}",
-      "\u{1F575} \u{FE0F} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F575} \u{FE0F} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F575}\u{FE0F}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F575}\u{FE0F}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F482}",
-      "\u{1F482} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F482} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F482}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F482}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F977}",
       "\u{1F477}",
-      "\u{1F477} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F477} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F477}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F477}\u{200D}\u{2640}\u{FE0F}",
       "\u{1FAC5}",
       "\u{1F934}",
       "\u{1F478}",
       "\u{1F473}",
-      "\u{1F473} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F473} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F473}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F473}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F472}",
       "\u{1F9D5}",
       "\u{1F935}",
-      "\u{1F935} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F935} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F935}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F935}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F470}",
-      "\u{1F470} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F470} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F470}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F470}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F930}",
       "\u{1FAC3}",
       "\u{1FAC4}",
       "\u{1F931}",
-      "\u{1F469} \u{200D} \u{1F37C}",
-      "\u{1F468} \u{200D} \u{1F37C}",
-      "\u{1F9D1} \u{200D} \u{1F37C}"
-    ]
+      "\u{1F469}\u{200D}\u{1F37C}",
+      "\u{1F468}\u{200D}\u{1F37C}",
+      "\u{1F9D1}\u{200D}\u{1F37C}",
+    ],
   ],
   [
     "person-fantasy",
@@ -506,98 +478,98 @@ export default emojiList = [
       "\u{1F47C}",
       "\u{1F385}",
       "\u{1F936}",
-      "\u{1F9D1} \u{200D} \u{1F384}",
+      "\u{1F9D1}\u{200D}\u{1F384}",
       "\u{1F9B8}",
-      "\u{1F9B8} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9B8} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9B8}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9B8}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9B9}",
-      "\u{1F9B9} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9B9} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9B9}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9B9}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9D9}",
-      "\u{1F9D9} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9D9} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9D9}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9D9}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DA}",
-      "\u{1F9DA} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DA} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9DA}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DA}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DB}",
-      "\u{1F9DB} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DB} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9DB}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DB}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DC}",
-      "\u{1F9DC} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DC} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9DC}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DC}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DD}",
-      "\u{1F9DD} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DD} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9DD}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DD}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DE}",
-      "\u{1F9DE} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DE} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9DE}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DE}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9DF}",
-      "\u{1F9DF} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9DF} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F9CC}"
-    ]
+      "\u{1F9DF}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9DF}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F9CC}",
+    ],
   ],
   [
     "person-activity",
     [
       "\u{1F486}",
-      "\u{1F486} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F486} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F486}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F486}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F487}",
-      "\u{1F487} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F487} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F487}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F487}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F6B6}",
-      "\u{1F6B6} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F6B6} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F6B6} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F6B6} \u{200D} \u{2640} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F6B6} \u{200D} \u{2642} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
+      "\u{1F6B6}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F6B6}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F6B6}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F6B6}\u{200D}\u{2640}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F6B6}\u{200D}\u{2642}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
       "\u{1F9CD}",
-      "\u{1F9CD} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9CD} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9CD}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9CD}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9CE}",
-      "\u{1F9CE} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9CE} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F9CE} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F9CE} \u{200D} \u{2640} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F9CE} \u{200D} \u{2642} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F9AF}",
-      "\u{1F9D1} \u{200D} \u{1F9AF} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{1F9AF}",
-      "\u{1F468} \u{200D} \u{1F9AF} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{1F9AF}",
-      "\u{1F469} \u{200D} \u{1F9AF} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F9BC}",
-      "\u{1F9D1} \u{200D} \u{1F9BC} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{1F9BC}",
-      "\u{1F468} \u{200D} \u{1F9BC} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{1F9BC}",
-      "\u{1F469} \u{200D} \u{1F9BC} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F9D1} \u{200D} \u{1F9BD}",
-      "\u{1F9D1} \u{200D} \u{1F9BD} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F468} \u{200D} \u{1F9BD}",
-      "\u{1F468} \u{200D} \u{1F9BD} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F469} \u{200D} \u{1F9BD}",
-      "\u{1F469} \u{200D} \u{1F9BD} \u{200D} \u{27A1} \u{FE0F}",
+      "\u{1F9CE}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9CE}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F9CE}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F9CE}\u{200D}\u{2640}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F9CE}\u{200D}\u{2642}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F9AF}",
+      "\u{1F9D1}\u{200D}\u{1F9AF}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{1F9AF}",
+      "\u{1F468}\u{200D}\u{1F9AF}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{1F9AF}",
+      "\u{1F469}\u{200D}\u{1F9AF}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F9BC}",
+      "\u{1F9D1}\u{200D}\u{1F9BC}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{1F9BC}",
+      "\u{1F468}\u{200D}\u{1F9BC}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{1F9BC}",
+      "\u{1F469}\u{200D}\u{1F9BC}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F9D1}\u{200D}\u{1F9BD}",
+      "\u{1F9D1}\u{200D}\u{1F9BD}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F468}\u{200D}\u{1F9BD}",
+      "\u{1F468}\u{200D}\u{1F9BD}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F469}\u{200D}\u{1F9BD}",
+      "\u{1F469}\u{200D}\u{1F9BD}\u{200D}\u{27A1}\u{FE0F}",
       "\u{1F3C3}",
-      "\u{1F3C3} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F3C3} \u{200D} \u{2640} \u{FE0F}",
-      "\u{1F3C3} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F3C3} \u{200D} \u{2640} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
-      "\u{1F3C3} \u{200D} \u{2642} \u{FE0F} \u{200D} \u{27A1} \u{FE0F}",
+      "\u{1F3C3}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F3C3}\u{200D}\u{2640}\u{FE0F}",
+      "\u{1F3C3}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F3C3}\u{200D}\u{2640}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
+      "\u{1F3C3}\u{200D}\u{2642}\u{FE0F}\u{200D}\u{27A1}\u{FE0F}",
       "\u{1F483}",
       "\u{1F57A}",
       "\u{1F574}",
       "\u{1F46F}",
-      "\u{1F46F} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F46F} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F46F}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F46F}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9D6}",
-      "\u{1F9D6} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9D6} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9D6}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9D6}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F9D7}",
-      "\u{1F9D7} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9D7} \u{200D} \u{2640} \u{FE0F}"
-    ]
+      "\u{1F9D7}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9D7}\u{200D}\u{2640}\u{FE0F}",
+    ],
   ],
   [
     "person-sport",
@@ -607,97 +579,97 @@ export default emojiList = [
       "\u{26F7}",
       "\u{1F3C2}",
       "\u{1F3CC}",
-      "\u{1F3CC} \u{FE0F} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F3CC} \u{FE0F} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F3CC}\u{FE0F}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F3CC}\u{FE0F}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F3C4}",
-      "\u{1F3C4} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F3C4} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F3C4}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F3C4}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F6A3}",
-      "\u{1F6A3} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F6A3} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F6A3}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F6A3}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F3CA}",
-      "\u{1F3CA} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F3CA} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F3CA}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F3CA}\u{200D}\u{2640}\u{FE0F}",
       "\u{26F9}",
-      "\u{26F9} \u{FE0F} \u{200D} \u{2642} \u{FE0F}",
-      "\u{26F9} \u{FE0F} \u{200D} \u{2640} \u{FE0F}",
+      "\u{26F9}\u{FE0F}\u{200D}\u{2642}\u{FE0F}",
+      "\u{26F9}\u{FE0F}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F3CB}",
-      "\u{1F3CB} \u{FE0F} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F3CB} \u{FE0F} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F3CB}\u{FE0F}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F3CB}\u{FE0F}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F6B4}",
-      "\u{1F6B4} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F6B4} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F6B4}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F6B4}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F6B5}",
-      "\u{1F6B5} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F6B5} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F6B5}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F6B5}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F938}",
-      "\u{1F938} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F938} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F938}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F938}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F93C}",
-      "\u{1F93C} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F93C} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F93C}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F93C}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F93D}",
-      "\u{1F93D} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F93D} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F93D}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F93D}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F93E}",
-      "\u{1F93E} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F93E} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F93E}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F93E}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F939}",
-      "\u{1F939} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F939} \u{200D} \u{2640} \u{FE0F}"
-    ]
+      "\u{1F939}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F939}\u{200D}\u{2640}\u{FE0F}",
+    ],
   ],
   [
     "person-resting",
     [
       "\u{1F9D8}",
-      "\u{1F9D8} \u{200D} \u{2642} \u{FE0F}",
-      "\u{1F9D8} \u{200D} \u{2640} \u{FE0F}",
+      "\u{1F9D8}\u{200D}\u{2642}\u{FE0F}",
+      "\u{1F9D8}\u{200D}\u{2640}\u{FE0F}",
       "\u{1F6C0}",
-      "\u{1F6CC}"
-    ]
+      "\u{1F6CC}",
+    ],
   ],
   [
     "family",
     [
-      "\u{1F9D1} \u{200D} \u{1F91D} \u{200D} \u{1F9D1}",
+      "\u{1F9D1}\u{200D}\u{1F91D}\u{200D}\u{1F9D1}",
       "\u{1F46D}",
       "\u{1F46B}",
       "\u{1F46C}",
       "\u{1F48F}",
-      "\u{1F469} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F48B} \u{200D} \u{1F468}",
-      "\u{1F468} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F48B} \u{200D} \u{1F468}",
-      "\u{1F469} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F48B} \u{200D} \u{1F469}",
+      "\u{1F469}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F48B}\u{200D}\u{1F468}",
+      "\u{1F468}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F48B}\u{200D}\u{1F468}",
+      "\u{1F469}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F48B}\u{200D}\u{1F469}",
       "\u{1F491}",
-      "\u{1F469} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F468}",
-      "\u{1F468} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F468}",
-      "\u{1F469} \u{200D} \u{2764} \u{FE0F} \u{200D} \u{1F469}",
-      "\u{1F468} \u{200D} \u{1F469} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F469} \u{200D} \u{1F467}",
-      "\u{1F468} \u{200D} \u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F469} \u{200D} \u{1F466} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F467}",
-      "\u{1F468} \u{200D} \u{1F468} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F468} \u{200D} \u{1F467}",
-      "\u{1F468} \u{200D} \u{1F468} \u{200D} \u{1F467} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F468} \u{200D} \u{1F466} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F468} \u{200D} \u{1F467} \u{200D} \u{1F467}",
-      "\u{1F469} \u{200D} \u{1F469} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F469} \u{200D} \u{1F467}",
-      "\u{1F469} \u{200D} \u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F469} \u{200D} \u{1F466} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F467}",
-      "\u{1F468} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F466} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F467}",
-      "\u{1F468} \u{200D} \u{1F467} \u{200D} \u{1F466}",
-      "\u{1F468} \u{200D} \u{1F467} \u{200D} \u{1F467}",
-      "\u{1F469} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F466} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F467}",
-      "\u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F466}",
-      "\u{1F469} \u{200D} \u{1F467} \u{200D} \u{1F467}"
-    ]
+      "\u{1F469}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F468}",
+      "\u{1F468}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F468}",
+      "\u{1F469}\u{200D}\u{2764}\u{FE0F}\u{200D}\u{1F469}",
+      "\u{1F468}\u{200D}\u{1F469}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F469}\u{200D}\u{1F467}",
+      "\u{1F468}\u{200D}\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F469}\u{200D}\u{1F466}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F467}",
+      "\u{1F468}\u{200D}\u{1F468}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F468}\u{200D}\u{1F467}",
+      "\u{1F468}\u{200D}\u{1F468}\u{200D}\u{1F467}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F468}\u{200D}\u{1F466}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F468}\u{200D}\u{1F467}\u{200D}\u{1F467}",
+      "\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F467}",
+      "\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F466}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F467}",
+      "\u{1F468}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F466}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F467}",
+      "\u{1F468}\u{200D}\u{1F467}\u{200D}\u{1F466}",
+      "\u{1F468}\u{200D}\u{1F467}\u{200D}\u{1F467}",
+      "\u{1F469}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F466}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F467}",
+      "\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F466}",
+      "\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F467}",
+    ],
   ],
   [
     "person-symbol",
@@ -707,22 +679,16 @@ export default emojiList = [
       "\u{1F465}",
       "\u{1FAC2}",
       "\u{1F46A}",
-      "\u{1F9D1} \u{200D} \u{1F9D1} \u{200D} \u{1F9D2}",
-      "\u{1F9D1} \u{200D} \u{1F9D1} \u{200D} \u{1F9D2} \u{200D} \u{1F9D2}",
-      "\u{1F9D1} \u{200D} \u{1F9D2}",
-      "\u{1F9D1} \u{200D} \u{1F9D2} \u{200D} \u{1F9D2}",
-      "\u{1F463}"
-    ]
+      "\u{1F9D1}\u{200D}\u{1F9D1}\u{200D}\u{1F9D2}",
+      "\u{1F9D1}\u{200D}\u{1F9D1}\u{200D}\u{1F9D2}\u{200D}\u{1F9D2}",
+      "\u{1F9D1}\u{200D}\u{1F9D2}",
+      "\u{1F9D1}\u{200D}\u{1F9D2}\u{200D}\u{1F9D2}",
+      "\u{1F463}",
+    ],
   ],
-  [
-    "hair-style",
-    [
-      "\u{1F9B0}",
-      "\u{1F9B1}",
-      "\u{1F9B3}",
-      "\u{1F9B2}"
-    ]
-  ],
+  ["hair-style", ["\u{1F9B0}", "\u{1F9B1}", "\u{1F9B3}", "\u{1F9B2}"]],
+];
+export const animal: readonly [string, string[]][] = [
   [
     "animal-mammal",
     [
@@ -733,14 +699,14 @@ export default emojiList = [
       "\u{1F436}",
       "\u{1F415}",
       "\u{1F9AE}",
-      "\u{1F415} \u{200D} \u{1F9BA}",
+      "\u{1F415}\u{200D}\u{1F9BA}",
       "\u{1F429}",
       "\u{1F43A}",
       "\u{1F98A}",
       "\u{1F99D}",
       "\u{1F431}",
       "\u{1F408}",
-      "\u{1F408} \u{200D} \u{2B1B}",
+      "\u{1F408}\u{200D}\u{2B1B}",
       "\u{1F981}",
       "\u{1F42F}",
       "\u{1F405}",
@@ -783,7 +749,7 @@ export default emojiList = [
       "\u{1F994}",
       "\u{1F987}",
       "\u{1F43B}",
-      "\u{1F43B} \u{200D} \u{2744} \u{FE0F}",
+      "\u{1F43B}\u{200D}\u{2744}\u{FE0F}",
       "\u{1F428}",
       "\u{1F43C}",
       "\u{1F9A5}",
@@ -791,8 +757,8 @@ export default emojiList = [
       "\u{1F9A8}",
       "\u{1F998}",
       "\u{1F9A1}",
-      "\u{1F43E}"
-    ]
+      "\u{1F43E}",
+    ],
   ],
   [
     "animal-bird",
@@ -816,17 +782,12 @@ export default emojiList = [
       "\u{1F99A}",
       "\u{1F99C}",
       "\u{1FABD}",
-      "\u{1F426} \u{200D} \u{2B1B}",
+      "\u{1F426}\u{200D}\u{2B1B}",
       "\u{1FABF}",
-      "\u{1F426} \u{200D} \u{1F525}"
-    ]
+      "\u{1F426}\u{200D}\u{1F525}",
+    ],
   ],
-  [
-    "animal-amphibian",
-    [
-      "\u{1F438}"
-    ]
-  ],
+  ["animal-amphibian", ["\u{1F438}"]],
   [
     "animal-reptile",
     [
@@ -837,8 +798,8 @@ export default emojiList = [
       "\u{1F432}",
       "\u{1F409}",
       "\u{1F995}",
-      "\u{1F996}"
-    ]
+      "\u{1F996}",
+    ],
   ],
   [
     "animal-marine",
@@ -854,8 +815,8 @@ export default emojiList = [
       "\u{1F419}",
       "\u{1F41A}",
       "\u{1FAB8}",
-      "\u{1FABC}"
-    ]
+      "\u{1FABC}",
+    ],
   ],
   [
     "animal-bug",
@@ -875,9 +836,11 @@ export default emojiList = [
       "\u{1F99F}",
       "\u{1FAB0}",
       "\u{1FAB1}",
-      "\u{1F9A0}"
-    ]
+      "\u{1F9A0}",
+    ],
   ],
+];
+export const plant: readonly [string, string[]][] = [
   [
     "plant-flower",
     [
@@ -892,8 +855,8 @@ export default emojiList = [
       "\u{1F33B}",
       "\u{1F33C}",
       "\u{1F337}",
-      "\u{1FABB}"
-    ]
+      "\u{1FABB}",
+    ],
   ],
   [
     "plant-other",
@@ -913,9 +876,11 @@ export default emojiList = [
       "\u{1F343}",
       "\u{1FAB9}",
       "\u{1FABA}",
-      "\u{1F344}"
-    ]
+      "\u{1F344}",
+    ],
   ],
+];
+export const food: readonly [string, string[]][] = [
   [
     "food-fruit",
     [
@@ -924,7 +889,7 @@ export default emojiList = [
       "\u{1F349}",
       "\u{1F34A}",
       "\u{1F34B}",
-      "\u{1F34B} \u{200D} \u{1F7E9}",
+      "\u{1F34B}\u{200D}\u{1F7E9}",
       "\u{1F34C}",
       "\u{1F34D}",
       "\u{1F96D}",
@@ -938,8 +903,8 @@ export default emojiList = [
       "\u{1F95D}",
       "\u{1F345}",
       "\u{1FAD2}",
-      "\u{1F965}"
-    ]
+      "\u{1F965}",
+    ],
   ],
   [
     "food-vegetable",
@@ -961,8 +926,8 @@ export default emojiList = [
       "\u{1F330}",
       "\u{1FADA}",
       "\u{1FADB}",
-      "\u{1F344} \u{200D} \u{1F7EB}"
-    ]
+      "\u{1F344}\u{200D}\u{1F7EB}",
+    ],
   ],
   [
     "food-prepared",
@@ -1000,8 +965,8 @@ export default emojiList = [
       "\u{1F37F}",
       "\u{1F9C8}",
       "\u{1F9C2}",
-      "\u{1F96B}"
-    ]
+      "\u{1F96B}",
+    ],
   ],
   [
     "food-asian",
@@ -1022,18 +987,12 @@ export default emojiList = [
       "\u{1F361}",
       "\u{1F95F}",
       "\u{1F960}",
-      "\u{1F961}"
-    ]
+      "\u{1F961}",
+    ],
   ],
   [
     "food-marine",
-    [
-      "\u{1F980}",
-      "\u{1F99E}",
-      "\u{1F990}",
-      "\u{1F991}",
-      "\u{1F9AA}"
-    ]
+    ["\u{1F980}", "\u{1F99E}", "\u{1F990}", "\u{1F991}", "\u{1F9AA}"],
   ],
   [
     "food-sweet",
@@ -1051,8 +1010,8 @@ export default emojiList = [
       "\u{1F36C}",
       "\u{1F36D}",
       "\u{1F36E}",
-      "\u{1F36F}"
-    ]
+      "\u{1F36F}",
+    ],
   ],
   [
     "drink",
@@ -1076,8 +1035,8 @@ export default emojiList = [
       "\u{1F9CB}",
       "\u{1F9C3}",
       "\u{1F9C9}",
-      "\u{1F9CA}"
-    ]
+      "\u{1F9CA}",
+    ],
   ],
   [
     "dishware",
@@ -1088,9 +1047,12 @@ export default emojiList = [
       "\u{1F944}",
       "\u{1F52A}",
       "\u{1FAD9}",
-      "\u{1F3FA}"
-    ]
+      "\u{1F3FA}",
+    ],
   ],
+];
+// 地理和建筑
+export const place: readonly [string, string[]][] = [
   [
     "place-map",
     [
@@ -1100,8 +1062,8 @@ export default emojiList = [
       "\u{1F310}",
       "\u{1F5FA}",
       "\u{1F5FE}",
-      "\u{1F9ED}"
-    ]
+      "\u{1F9ED}",
+    ],
   ],
   [
     "place-geographic",
@@ -1114,8 +1076,8 @@ export default emojiList = [
       "\u{1F3D6}",
       "\u{1F3DC}",
       "\u{1F3DD}",
-      "\u{1F3DE}"
-    ]
+      "\u{1F3DE}",
+    ],
   ],
   [
     "place-building",
@@ -1146,8 +1108,8 @@ export default emojiList = [
       "\u{1F3F0}",
       "\u{1F492}",
       "\u{1F5FC}",
-      "\u{1F5FD}"
-    ]
+      "\u{1F5FD}",
+    ],
   ],
   [
     "place-religious",
@@ -1157,8 +1119,8 @@ export default emojiList = [
       "\u{1F6D5}",
       "\u{1F54D}",
       "\u{26E9}",
-      "\u{1F54B}"
-    ]
+      "\u{1F54B}",
+    ],
   ],
   [
     "place-other",
@@ -1179,9 +1141,12 @@ export default emojiList = [
       "\u{1F3A1}",
       "\u{1F3A2}",
       "\u{1F488}",
-      "\u{1F3AA}"
-    ]
+      "\u{1F3AA}",
+    ],
   ],
+];
+// 交通工具
+export const transport: readonly [string, string[]][] = [
   [
     "transport-ground",
     [
@@ -1234,8 +1199,8 @@ export default emojiList = [
       "\u{1F6A5}",
       "\u{1F6A6}",
       "\u{1F6D1}",
-      "\u{1F6A7}"
-    ]
+      "\u{1F6A7}",
+    ],
   ],
   [
     "transport-water",
@@ -1248,8 +1213,8 @@ export default emojiList = [
       "\u{1F6F3}",
       "\u{26F4}",
       "\u{1F6E5}",
-      "\u{1F6A2}"
-    ]
+      "\u{1F6A2}",
+    ],
   ],
   [
     "transport-air",
@@ -1266,16 +1231,13 @@ export default emojiList = [
       "\u{1F6A1}",
       "\u{1F6F0}",
       "\u{1F680}",
-      "\u{1F6F8}"
-    ]
+      "\u{1F6F8}",
+    ],
   ],
-  [
-    "hotel",
-    [
-      "\u{1F6CE}",
-      "\u{1F9F3}"
-    ]
-  ],
+  ["hotel", ["\u{1F6CE}", "\u{1F9F3}"]],
+];
+// 时间和天气
+export const time: readonly [string, string[]][] = [
   [
     "time",
     [
@@ -1309,8 +1271,8 @@ export default emojiList = [
       "\u{1F559}",
       "\u{1F565}",
       "\u{1F55A}",
-      "\u{1F566}"
-    ]
+      "\u{1F566}",
+    ],
   ],
   [
     "sky & weather",
@@ -1361,9 +1323,12 @@ export default emojiList = [
       "\u{2604}",
       "\u{1F525}",
       "\u{1F4A7}",
-      "\u{1F30A}"
-    ]
+      "\u{1F30A}",
+    ],
   ],
+];
+// 事件
+export const event: readonly [string, string[]][] = [
   [
     "event",
     [
@@ -1387,9 +1352,12 @@ export default emojiList = [
       "\u{1F381}",
       "\u{1F397}",
       "\u{1F39F}",
-      "\u{1F3AB}"
-    ]
+      "\u{1F3AB}",
+    ],
   ],
+];
+// 运动
+export const sport: readonly [string, string[]][] = [
   [
     "award-medal",
     [
@@ -1398,8 +1366,8 @@ export default emojiList = [
       "\u{1F3C5}",
       "\u{1F947}",
       "\u{1F948}",
-      "\u{1F949}"
-    ]
+      "\u{1F949}",
+    ],
   ],
   [
     "sport",
@@ -1430,8 +1398,8 @@ export default emojiList = [
       "\u{1F3BD}",
       "\u{1F3BF}",
       "\u{1F6F7}",
-      "\u{1F94C}"
-    ]
+      "\u{1F94C}",
+    ],
   ],
   [
     "game",
@@ -1459,9 +1427,12 @@ export default emojiList = [
       "\u{265F}",
       "\u{1F0CF}",
       "\u{1F004}",
-      "\u{1F3B4}"
-    ]
+      "\u{1F3B4}",
+    ],
   ],
+];
+// 工艺品
+export const crafts: readonly [string, string[]][] = [
   [
     "arts & crafts",
     [
@@ -1471,9 +1442,12 @@ export default emojiList = [
       "\u{1F9F5}",
       "\u{1FAA1}",
       "\u{1F9F6}",
-      "\u{1FAA2}"
-    ]
+      "\u{1FAA2}",
+    ],
   ],
+];
+// 衣服
+export const clothing: readonly [string, string[]][] = [
   [
     "clothing",
     [
@@ -1523,9 +1497,12 @@ export default emojiList = [
       "\u{1F4FF}",
       "\u{1F484}",
       "\u{1F48D}",
-      "\u{1F48E}"
-    ]
+      "\u{1F48E}",
+    ],
   ],
+];
+// 声音&乐器
+export const sound: readonly [string, string[]][] = [
   [
     "sound",
     [
@@ -1537,8 +1514,8 @@ export default emojiList = [
       "\u{1F4E3}",
       "\u{1F4EF}",
       "\u{1F514}",
-      "\u{1F515}"
-    ]
+      "\u{1F515}",
+    ],
   ],
   [
     "music",
@@ -1551,8 +1528,8 @@ export default emojiList = [
       "\u{1F39B}",
       "\u{1F3A4}",
       "\u{1F3A7}",
-      "\u{1F4FB}"
-    ]
+      "\u{1F4FB}",
+    ],
   ],
   [
     "musical-instrument",
@@ -1567,9 +1544,12 @@ export default emojiList = [
       "\u{1F941}",
       "\u{1FA98}",
       "\u{1FA87}",
-      "\u{1FA88}"
-    ]
+      "\u{1FA88}",
+    ],
   ],
+];
+// 装备
+export const equipment: readonly [string, string[]][] = [
   [
     "phone",
     [
@@ -1578,8 +1558,8 @@ export default emojiList = [
       "\u{260E}",
       "\u{1F4DE}",
       "\u{1F4DF}",
-      "\u{1F4E0}"
-    ]
+      "\u{1F4E0}",
+    ],
   ],
   [
     "computer",
@@ -1597,8 +1577,8 @@ export default emojiList = [
       "\u{1F4BE}",
       "\u{1F4BF}",
       "\u{1F4C0}",
-      "\u{1F9EE}"
-    ]
+      "\u{1F9EE}",
+    ],
   ],
   [
     "light & video",
@@ -1618,9 +1598,10 @@ export default emojiList = [
       "\u{1F4A1}",
       "\u{1F526}",
       "\u{1F3EE}",
-      "\u{1FA94}"
-    ]
+      "\u{1FA94}",
+    ],
   ],
+
   [
     "book-paper",
     [
@@ -1640,9 +1621,12 @@ export default emojiList = [
       "\u{1F5DE}",
       "\u{1F4D1}",
       "\u{1F516}",
-      "\u{1F3F7}"
-    ]
+      "\u{1F3F7}",
+    ],
   ],
+];
+// 金钱
+export const misc2: readonly [string, string[]][] = [
   [
     "money",
     [
@@ -1655,9 +1639,12 @@ export default emojiList = [
       "\u{1F4B8}",
       "\u{1F4B3}",
       "\u{1F9FE}",
-      "\u{1F4B9}"
-    ]
+      "\u{1F4B9}",
+    ],
   ],
+];
+// 信息
+export const message: readonly [string, string[]][] = [
   [
     "mail",
     [
@@ -1673,8 +1660,8 @@ export default emojiList = [
       "\u{1F4EC}",
       "\u{1F4ED}",
       "\u{1F4EE}",
-      "\u{1F5F3}"
-    ]
+      "\u{1F5F3}",
+    ],
   ],
   [
     "writing",
@@ -1685,8 +1672,8 @@ export default emojiList = [
       "\u{1F58A}",
       "\u{1F58C}",
       "\u{1F58D}",
-      "\u{1F4DD}"
-    ]
+      "\u{1F4DD}",
+    ],
   ],
   [
     "office",
@@ -1713,8 +1700,8 @@ export default emojiList = [
       "\u{2702}",
       "\u{1F5C3}",
       "\u{1F5C4}",
-      "\u{1F5D1}"
-    ]
+      "\u{1F5D1}",
+    ],
   ],
   [
     "lock",
@@ -1724,9 +1711,12 @@ export default emojiList = [
       "\u{1F50F}",
       "\u{1F510}",
       "\u{1F511}",
-      "\u{1F5DD}"
-    ]
+      "\u{1F5DD}",
+    ],
   ],
+];
+// 工具
+export const tool: readonly [string, string[]][] = [
   [
     "tool",
     [
@@ -1750,13 +1740,13 @@ export default emojiList = [
       "\u{2696}",
       "\u{1F9AF}",
       "\u{1F517}",
-      "\u{26D3} \u{FE0F} \u{200D} \u{1F4A5}",
+      "\u{26D3}\u{FE0F}\u{200D}\u{1F4A5}",
       "\u{26D3}",
       "\u{1FA9D}",
       "\u{1F9F0}",
       "\u{1F9F2}",
-      "\u{1FA9C}"
-    ]
+      "\u{1FA9C}",
+    ],
   ],
   [
     "science",
@@ -1767,8 +1757,8 @@ export default emojiList = [
       "\u{1F9EC}",
       "\u{1F52C}",
       "\u{1F52D}",
-      "\u{1F4E1}"
-    ]
+      "\u{1F4E1}",
+    ],
   ],
   [
     "medical",
@@ -1779,8 +1769,8 @@ export default emojiList = [
       "\u{1FA79}",
       "\u{1FA7C}",
       "\u{1FA7A}",
-      "\u{1FA7B}"
-    ]
+      "\u{1FA7B}",
+    ],
   ],
   [
     "household",
@@ -1809,8 +1799,8 @@ export default emojiList = [
       "\u{1FAA5}",
       "\u{1F9FD}",
       "\u{1F9EF}",
-      "\u{1F6D2}"
-    ]
+      "\u{1F6D2}",
+    ],
   ],
   [
     "other-object",
@@ -1823,9 +1813,12 @@ export default emojiList = [
       "\u{1FAAC}",
       "\u{1F5FF}",
       "\u{1FAA7}",
-      "\u{1FAAA}"
-    ]
+      "\u{1FAAA}",
+    ],
   ],
+];
+// 标志
+export const mark: readonly [string, string[]][] = [
   [
     "transport-sign",
     [
@@ -1841,8 +1834,8 @@ export default emojiList = [
       "\u{1F6C2}",
       "\u{1F6C3}",
       "\u{1F6C4}",
-      "\u{1F6C5}"
-    ]
+      "\u{1F6C5}",
+    ],
   ],
   [
     "warning",
@@ -1859,8 +1852,8 @@ export default emojiList = [
       "\u{1F4F5}",
       "\u{1F51E}",
       "\u{2622}",
-      "\u{2623}"
-    ]
+      "\u{2623}",
+    ],
   ],
   [
     "arrow",
@@ -1885,8 +1878,8 @@ export default emojiList = [
       "\u{1F51A}",
       "\u{1F51B}",
       "\u{1F51C}",
-      "\u{1F51D}"
-    ]
+      "\u{1F51D}",
+    ],
   ],
   [
     "religion",
@@ -1903,8 +1896,8 @@ export default emojiList = [
       "\u{262E}",
       "\u{1F54E}",
       "\u{1F52F}",
-      "\u{1FAAF}"
-    ]
+      "\u{1FAAF}",
+    ],
   ],
   [
     "zodiac",
@@ -1921,8 +1914,8 @@ export default emojiList = [
       "\u{2651}",
       "\u{2652}",
       "\u{2653}",
-      "\u{26CE}"
-    ]
+      "\u{26CE}",
+    ],
   ],
   [
     "av-symbol",
@@ -1951,27 +1944,13 @@ export default emojiList = [
       "\u{1F4F6}",
       "\u{1F6DC}",
       "\u{1F4F3}",
-      "\u{1F4F4}"
-    ]
+      "\u{1F4F4}",
+    ],
   ],
-  [
-    "gender",
-    [
-      "\u{2640}",
-      "\u{2642}",
-      "\u{26A7}"
-    ]
-  ],
+  ["gender", ["\u{2640}", "\u{2642}", "\u{26A7}"]],
   [
     "math",
-    [
-      "\u{2716}",
-      "\u{2795}",
-      "\u{2796}",
-      "\u{2797}",
-      "\u{1F7F0}",
-      "\u{267E}"
-    ]
+    ["\u{2716}", "\u{2795}", "\u{2796}", "\u{2797}", "\u{1F7F0}", "\u{267E}"],
   ],
   [
     "punctuation",
@@ -1982,16 +1961,10 @@ export default emojiList = [
       "\u{2754}",
       "\u{2755}",
       "\u{2757}",
-      "\u{3030}"
-    ]
+      "\u{3030}",
+    ],
   ],
-  [
-    "currency",
-    [
-      "\u{1F4B1}",
-      "\u{1F4B2}"
-    ]
-  ],
+  ["currency", ["\u{1F4B1}", "\u{1F4B2}"]],
   [
     "other-symbol",
     [
@@ -2015,26 +1988,26 @@ export default emojiList = [
       "\u{2747}",
       "\u{00A9}",
       "\u{00AE}",
-      "\u{2122}"
-    ]
+      "\u{2122}",
+    ],
   ],
   [
     "keycap",
     [
-      "\u{0023} \u{FE0F} \u{20E3}",
-      "\u{002A} \u{FE0F} \u{20E3}",
-      "\u{0030} \u{FE0F} \u{20E3}",
-      "\u{0031} \u{FE0F} \u{20E3}",
-      "\u{0032} \u{FE0F} \u{20E3}",
-      "\u{0033} \u{FE0F} \u{20E3}",
-      "\u{0034} \u{FE0F} \u{20E3}",
-      "\u{0035} \u{FE0F} \u{20E3}",
-      "\u{0036} \u{FE0F} \u{20E3}",
-      "\u{0037} \u{FE0F} \u{20E3}",
-      "\u{0038} \u{FE0F} \u{20E3}",
-      "\u{0039} \u{FE0F} \u{20E3}",
-      "\u{1F51F}"
-    ]
+      "\u{0023}\u{FE0F}\u{20E3}",
+      "\u{002A}\u{FE0F}\u{20E3}",
+      "\u{0030}\u{FE0F}\u{20E3}",
+      "\u{0031}\u{FE0F}\u{20E3}",
+      "\u{0032}\u{FE0F}\u{20E3}",
+      "\u{0033}\u{FE0F}\u{20E3}",
+      "\u{0034}\u{FE0F}\u{20E3}",
+      "\u{0035}\u{FE0F}\u{20E3}",
+      "\u{0036}\u{FE0F}\u{20E3}",
+      "\u{0037}\u{FE0F}\u{20E3}",
+      "\u{0038}\u{FE0F}\u{20E3}",
+      "\u{0039}\u{FE0F}\u{20E3}",
+      "\u{1F51F}",
+    ],
   ],
   [
     "alphanum",
@@ -2077,8 +2050,8 @@ export default emojiList = [
       "\u{3297}",
       "\u{3299}",
       "\u{1F23A}",
-      "\u{1F235}"
-    ]
+      "\u{1F235}",
+    ],
   ],
   [
     "geometric",
@@ -2116,8 +2089,8 @@ export default emojiList = [
       "\u{1F4A0}",
       "\u{1F518}",
       "\u{1F533}",
-      "\u{1F532}"
-    ]
+      "\u{1F532}",
+    ],
   ],
   [
     "flag",
@@ -2127,280 +2100,299 @@ export default emojiList = [
       "\u{1F38C}",
       "\u{1F3F4}",
       "\u{1F3F3}",
-      "\u{1F3F3} \u{FE0F} \u{200D} \u{1F308}",
-      "\u{1F3F3} \u{FE0F} \u{200D} \u{26A7} \u{FE0F}",
-      "\u{1F3F4} \u{200D} \u{2620} \u{FE0F}"
-    ]
+      "\u{1F3F3}\u{FE0F}\u{200D}\u{1F308}",
+      "\u{1F3F3}\u{FE0F}\u{200D}\u{26A7}\u{FE0F}",
+      "\u{1F3F4}\u{200D}\u{2620}\u{FE0F}",
+    ],
   ],
-  [
-    "country-flag",
-    [
-      "\u{1F1E6} \u{1F1E8}",
-      "\u{1F1E6} \u{1F1E9}",
-      "\u{1F1E6} \u{1F1EA}",
-      "\u{1F1E6} \u{1F1EB}",
-      "\u{1F1E6} \u{1F1EC}",
-      "\u{1F1E6} \u{1F1EE}",
-      "\u{1F1E6} \u{1F1F1}",
-      "\u{1F1E6} \u{1F1F2}",
-      "\u{1F1E6} \u{1F1F4}",
-      "\u{1F1E6} \u{1F1F6}",
-      "\u{1F1E6} \u{1F1F7}",
-      "\u{1F1E6} \u{1F1F8}",
-      "\u{1F1E6} \u{1F1F9}",
-      "\u{1F1E6} \u{1F1FA}",
-      "\u{1F1E6} \u{1F1FC}",
-      "\u{1F1E6} \u{1F1FD}",
-      "\u{1F1E6} \u{1F1FF}",
-      "\u{1F1E7} \u{1F1E6}",
-      "\u{1F1E7} \u{1F1E7}",
-      "\u{1F1E7} \u{1F1E9}",
-      "\u{1F1E7} \u{1F1EA}",
-      "\u{1F1E7} \u{1F1EB}",
-      "\u{1F1E7} \u{1F1EC}",
-      "\u{1F1E7} \u{1F1ED}",
-      "\u{1F1E7} \u{1F1EE}",
-      "\u{1F1E7} \u{1F1EF}",
-      "\u{1F1E7} \u{1F1F1}",
-      "\u{1F1E7} \u{1F1F2}",
-      "\u{1F1E7} \u{1F1F3}",
-      "\u{1F1E7} \u{1F1F4}",
-      "\u{1F1E7} \u{1F1F6}",
-      "\u{1F1E7} \u{1F1F7}",
-      "\u{1F1E7} \u{1F1F8}",
-      "\u{1F1E7} \u{1F1F9}",
-      "\u{1F1E7} \u{1F1FB}",
-      "\u{1F1E7} \u{1F1FC}",
-      "\u{1F1E7} \u{1F1FE}",
-      "\u{1F1E7} \u{1F1FF}",
-      "\u{1F1E8} \u{1F1E6}",
-      "\u{1F1E8} \u{1F1E8}",
-      "\u{1F1E8} \u{1F1E9}",
-      "\u{1F1E8} \u{1F1EB}",
-      "\u{1F1E8} \u{1F1EC}",
-      "\u{1F1E8} \u{1F1ED}",
-      "\u{1F1E8} \u{1F1EE}",
-      "\u{1F1E8} \u{1F1F0}",
-      "\u{1F1E8} \u{1F1F1}",
-      "\u{1F1E8} \u{1F1F2}",
-      "\u{1F1E8} \u{1F1F3}",
-      "\u{1F1E8} \u{1F1F4}",
-      "\u{1F1E8} \u{1F1F5}",
-      "\u{1F1E8} \u{1F1F7}",
-      "\u{1F1E8} \u{1F1FA}",
-      "\u{1F1E8} \u{1F1FB}",
-      "\u{1F1E8} \u{1F1FC}",
-      "\u{1F1E8} \u{1F1FD}",
-      "\u{1F1E8} \u{1F1FE}",
-      "\u{1F1E8} \u{1F1FF}",
-      "\u{1F1E9} \u{1F1EA}",
-      "\u{1F1E9} \u{1F1EC}",
-      "\u{1F1E9} \u{1F1EF}",
-      "\u{1F1E9} \u{1F1F0}",
-      "\u{1F1E9} \u{1F1F2}",
-      "\u{1F1E9} \u{1F1F4}",
-      "\u{1F1E9} \u{1F1FF}",
-      "\u{1F1EA} \u{1F1E6}",
-      "\u{1F1EA} \u{1F1E8}",
-      "\u{1F1EA} \u{1F1EA}",
-      "\u{1F1EA} \u{1F1EC}",
-      "\u{1F1EA} \u{1F1ED}",
-      "\u{1F1EA} \u{1F1F7}",
-      "\u{1F1EA} \u{1F1F8}",
-      "\u{1F1EA} \u{1F1F9}",
-      "\u{1F1EA} \u{1F1FA}",
-      "\u{1F1EB} \u{1F1EE}",
-      "\u{1F1EB} \u{1F1EF}",
-      "\u{1F1EB} \u{1F1F0}",
-      "\u{1F1EB} \u{1F1F2}",
-      "\u{1F1EB} \u{1F1F4}",
-      "\u{1F1EB} \u{1F1F7}",
-      "\u{1F1EC} \u{1F1E6}",
-      "\u{1F1EC} \u{1F1E7}",
-      "\u{1F1EC} \u{1F1E9}",
-      "\u{1F1EC} \u{1F1EA}",
-      "\u{1F1EC} \u{1F1EB}",
-      "\u{1F1EC} \u{1F1EC}",
-      "\u{1F1EC} \u{1F1ED}",
-      "\u{1F1EC} \u{1F1EE}",
-      "\u{1F1EC} \u{1F1F1}",
-      "\u{1F1EC} \u{1F1F2}",
-      "\u{1F1EC} \u{1F1F3}",
-      "\u{1F1EC} \u{1F1F5}",
-      "\u{1F1EC} \u{1F1F6}",
-      "\u{1F1EC} \u{1F1F7}",
-      "\u{1F1EC} \u{1F1F8}",
-      "\u{1F1EC} \u{1F1F9}",
-      "\u{1F1EC} \u{1F1FA}",
-      "\u{1F1EC} \u{1F1FC}",
-      "\u{1F1EC} \u{1F1FE}",
-      "\u{1F1ED} \u{1F1F0}",
-      "\u{1F1ED} \u{1F1F2}",
-      "\u{1F1ED} \u{1F1F3}",
-      "\u{1F1ED} \u{1F1F7}",
-      "\u{1F1ED} \u{1F1F9}",
-      "\u{1F1ED} \u{1F1FA}",
-      "\u{1F1EE} \u{1F1E8}",
-      "\u{1F1EE} \u{1F1E9}",
-      "\u{1F1EE} \u{1F1EA}",
-      "\u{1F1EE} \u{1F1F1}",
-      "\u{1F1EE} \u{1F1F2}",
-      "\u{1F1EE} \u{1F1F3}",
-      "\u{1F1EE} \u{1F1F4}",
-      "\u{1F1EE} \u{1F1F6}",
-      "\u{1F1EE} \u{1F1F7}",
-      "\u{1F1EE} \u{1F1F8}",
-      "\u{1F1EE} \u{1F1F9}",
-      "\u{1F1EF} \u{1F1EA}",
-      "\u{1F1EF} \u{1F1F2}",
-      "\u{1F1EF} \u{1F1F4}",
-      "\u{1F1EF} \u{1F1F5}",
-      "\u{1F1F0} \u{1F1EA}",
-      "\u{1F1F0} \u{1F1EC}",
-      "\u{1F1F0} \u{1F1ED}",
-      "\u{1F1F0} \u{1F1EE}",
-      "\u{1F1F0} \u{1F1F2}",
-      "\u{1F1F0} \u{1F1F3}",
-      "\u{1F1F0} \u{1F1F5}",
-      "\u{1F1F0} \u{1F1F7}",
-      "\u{1F1F0} \u{1F1FC}",
-      "\u{1F1F0} \u{1F1FE}",
-      "\u{1F1F0} \u{1F1FF}",
-      "\u{1F1F1} \u{1F1E6}",
-      "\u{1F1F1} \u{1F1E7}",
-      "\u{1F1F1} \u{1F1E8}",
-      "\u{1F1F1} \u{1F1EE}",
-      "\u{1F1F1} \u{1F1F0}",
-      "\u{1F1F1} \u{1F1F7}",
-      "\u{1F1F1} \u{1F1F8}",
-      "\u{1F1F1} \u{1F1F9}",
-      "\u{1F1F1} \u{1F1FA}",
-      "\u{1F1F1} \u{1F1FB}",
-      "\u{1F1F1} \u{1F1FE}",
-      "\u{1F1F2} \u{1F1E6}",
-      "\u{1F1F2} \u{1F1E8}",
-      "\u{1F1F2} \u{1F1E9}",
-      "\u{1F1F2} \u{1F1EA}",
-      "\u{1F1F2} \u{1F1EB}",
-      "\u{1F1F2} \u{1F1EC}",
-      "\u{1F1F2} \u{1F1ED}",
-      "\u{1F1F2} \u{1F1F0}",
-      "{1F1F2} \u{1F1F1}",
-      "\u{1F1F2} \u{1F1F2}",
-      "\u{1F1F2} \u{1F1F3}",
-      "\u{1F1F2} \u{1F1F4}",
-      "\u{1F1F2} \u{1F1F5}",
-      "\u{1F1F2} \u{1F1F6}",
-      "\u{1F1F2} \u{1F1F7}",
-      "\u{1F1F2} \u{1F1F8}",
-      "\u{1F1F2} \u{1F1F9}",
-      "\u{1F1F2} \u{1F1FA}",
-      "\u{1F1F2} \u{1F1FB}",
-      "\u{1F1F2} \u{1F1FC}",
-      "\u{1F1F2} \u{1F1FD}",
-      "\u{1F1F2} \u{1F1FE}",
-      "\u{1F1F2} \u{1F1FF}",
-      "\u{1F1F3} \u{1F1E6}",
-      "\u{1F1F3} \u{1F1E8}",
-      "\u{1F1F3} \u{1F1EA}",
-      "\u{1F1F3} \u{1F1EB}",
-      "\u{1F1F3} \u{1F1EC}",
-      "\u{1F1F3} \u{1F1EE}",
-      "\u{1F1F3} \u{1F1F1}",
-      "\u{1F1F3} \u{1F1F4}",
-      "\u{1F1F3} \u{1F1F5}",
-      "\u{1F1F3} \u{1F1F7}",
-      "\u{1F1F3} \u{1F1FA}",
-      "\u{1F1F3} \u{1F1FF}",
-      "\u{1F1F4} \u{1F1F2}",
-      "\u{1F1F5} \u{1F1E6}",
-      "\u{1F1F5} \u{1F1EA}",
-      "\u{1F1F5} \u{1F1EB}",
-      "\u{1F1F5} \u{1F1EC}",
-      "\u{1F1F5} \u{1F1ED}",
-      "\u{1F1F5} \u{1F1F0}",
-      "\u{1F1F5} \u{1F1F1}",
-      "\u{1F1F5} \u{1F1F2}",
-      "\u{1F1F5} \u{1F1F3}",
-      "\u{1F1F5} \u{1F1F7}",
-      "\u{1F1F5} \u{1F1F8}",
-      "\u{1F1F5} \u{1F1F9}",
-      "\u{1F1F5} \u{1F1FC}",
-      "\u{1F1F5} \u{1F1FE}",
-      "\u{1F1F6} \u{1F1E6}",
-      "\u{1F1F7} \u{1F1EA}",
-      "\u{1F1F7} \u{1F1F4}",
-      "\u{1F1F7} \u{1F1F8}",
-      "\u{1F1F7} \u{1F1FA}",
-      "\u{1F1F7} \u{1F1FC}",
-      "\u{1F1F8} \u{1F1E6}",
-      "\u{1F1F8} \u{1F1E7}",
-      "\u{1F1F8} \u{1F1E8}",
-      "\u{1F1F8} \u{1F1E9}",
-      "\u{1F1F8} \u{1F1EA}",
-      "\u{1F1F8} \u{1F1EC}",
-      "\u{1F1F8} \u{1F1ED}",
-      "\u{1F1F8} \u{1F1EE}",
-      "\u{1F1F8} \u{1F1EF}",
-      "\u{1F1F8} \u{1F1F0}",
-      "\u{1F1F8} \u{1F1F1}",
-      "\u{1F1F8} \u{1F1F2}",
-      "\u{1F1F8} \u{1F1F3}",
-      "\u{1F1F8} \u{1F1F4}",
-      "\u{1F1F8} \u{1F1F7}",
-      "\u{1F1F8} \u{1F1F8}",
-      "\u{1F1F8} \u{1F1F9}",
-      "\u{1F1F8} \u{1F1FB}",
-      "\u{1F1F8} \u{1F1FD}",
-      "\u{1F1F8} \u{1F1FE}",
-      "\u{1F1F8} \u{1F1FF}",
-      "\u{1F1F9} \u{1F1E6}",
-      "\u{1F1F9} \u{1F1E8}",
-      "\u{1F1F9} \u{1F1E9}",
-      "\u{1F1F9} \u{1F1EB}",
-      "\u{1F1F9} \u{1F1EC}",
-      "\u{1F1F9} \u{1F1ED}",
-      "\u{1F1F9} \u{1F1EF}",
-      "\u{1F1F9} \u{1F1F0}",
-      "\u{1F1F9} \u{1F1F1}",
-      "\u{1F1F9} \u{1F1F2}",
-      "\u{1F1F9} \u{1F1F3}",
-      "\u{1F1F9} \u{1F1F4}",
-      "\u{1F1F9} \u{1F1F7}",
-      "\u{1F1F9} \u{1F1F9}",
-      "\u{1F1F9} \u{1F1FB}",
-      "\u{1F1F9} \u{1F1FC}",
-      "\u{1F1F9} \u{1F1FF}",
-      "\u{1F1FA} \u{1F1E6}",
-      "\u{1F1FA} \u{1F1EC}",
-      "\u{1F1FA} \u{1F1F2}",
-      "\u{1F1FA} \u{1F1F3}",
-      "\u{1F1FA} \u{1F1F8}",
-      "\u{1F1FA} \u{1F1FE}",
-      "\u{1F1FA} \u{1F1FF}",
-      "\u{1F1FB} \u{1F1E6}",
-      "\u{1F1FB} \u{1F1E8}",
-      "\u{1F1FB} \u{1F1EA}",
-      "\u{1F1FB} \u{1F1EC}",
-      "\u{1F1FB} \u{1F1EE}",
-      "\u{1F1FB} \u{1F1F3}",
-      "\u{1F1FB} \u{1F1FA}",
-      "\u{1F1FC} \u{1F1EB}",
-      "\u{1F1FC} \u{1F1F8}",
-      "\u{1F1FD} \u{1F1F0}",
-      "\u{1F1FE} \u{1F1EA}",
-      "\u{1F1FE} \u{1F1F9}",
-      "\u{1F1FF} \u{1F1E6}",
-      "\u{1F1FF} \u{1F1F2}",
-      "\u{1F1FF} \u{1F1FC}"
-    ]
-  ],
-  [
-    "subdivision-flag",
-    [
-      "\u{1F3F4} \u{E0067} \u{E0062} \u{E0065} \u{E006E} \u{E0067} \u{E007F}",
-      "\u{1F3F4} \u{E0067} \u{E0062} \u{E0073} \u{E0063} \u{E0074} \u{E007F}",
-      "\u{1F3F4} \u{E0067} \u{E0062} \u{E0077} \u{E006C} \u{E0073} \u{E007F}"
-    ]
-  ]
-]
+  // [
+  //   "country-flag",
+  //   [
+  //     "\u{1F1E6}\u{1F1E8}",
+  //     "\u{1F1E6}\u{1F1E9}",
+  //     "\u{1F1E6}\u{1F1EA}",
+  //     "\u{1F1E6}\u{1F1EB}",
+  //     "\u{1F1E6}\u{1F1EC}",
+  //     "\u{1F1E6}\u{1F1EE}",
+  //     "\u{1F1E6}\u{1F1F1}",
+  //     "\u{1F1E6}\u{1F1F2}",
+  //     "\u{1F1E6}\u{1F1F4}",
+  //     "\u{1F1E6}\u{1F1F6}",
+  //     "\u{1F1E6}\u{1F1F7}",
+  //     "\u{1F1E6}\u{1F1F8}",
+  //     "\u{1F1E6}\u{1F1F9}",
+  //     "\u{1F1E6}\u{1F1FA}",
+  //     "\u{1F1E6}\u{1F1FC}",
+  //     "\u{1F1E6}\u{1F1FD}",
+  //     "\u{1F1E6}\u{1F1FF}",
+  //     "\u{1F1E7}\u{1F1E6}",
+  //     "\u{1F1E7}\u{1F1E7}",
+  //     "\u{1F1E7}\u{1F1E9}",
+  //     "\u{1F1E7}\u{1F1EA}",
+  //     "\u{1F1E7}\u{1F1EB}",
+  //     "\u{1F1E7}\u{1F1EC}",
+  //     "\u{1F1E7}\u{1F1ED}",
+  //     "\u{1F1E7}\u{1F1EE}",
+  //     "\u{1F1E7}\u{1F1EF}",
+  //     "\u{1F1E7}\u{1F1F1}",
+  //     "\u{1F1E7}\u{1F1F2}",
+  //     "\u{1F1E7}\u{1F1F3}",
+  //     "\u{1F1E7}\u{1F1F4}",
+  //     "\u{1F1E7}\u{1F1F6}",
+  //     "\u{1F1E7}\u{1F1F7}",
+  //     "\u{1F1E7}\u{1F1F8}",
+  //     "\u{1F1E7}\u{1F1F9}",
+  //     "\u{1F1E7}\u{1F1FB}",
+  //     "\u{1F1E7}\u{1F1FC}",
+  //     "\u{1F1E7}\u{1F1FE}",
+  //     "\u{1F1E7}\u{1F1FF}",
+  //     "\u{1F1E8}\u{1F1E6}",
+  //     "\u{1F1E8}\u{1F1E8}",
+  //     "\u{1F1E8}\u{1F1E9}",
+  //     "\u{1F1E8}\u{1F1EB}",
+  //     "\u{1F1E8}\u{1F1EC}",
+  //     "\u{1F1E8}\u{1F1ED}",
+  //     "\u{1F1E8}\u{1F1EE}",
+  //     "\u{1F1E8}\u{1F1F0}",
+  //     "\u{1F1E8}\u{1F1F1}",
+  //     "\u{1F1E8}\u{1F1F2}",
+  //     "\u{1F1E8}\u{1F1F3}",
+  //     "\u{1F1E8}\u{1F1F4}",
+  //     "\u{1F1E8}\u{1F1F5}",
+  //     "\u{1F1E8}\u{1F1F7}",
+  //     "\u{1F1E8}\u{1F1FA}",
+  //     "\u{1F1E8}\u{1F1FB}",
+  //     "\u{1F1E8}\u{1F1FC}",
+  //     "\u{1F1E8}\u{1F1FD}",
+  //     "\u{1F1E8}\u{1F1FE}",
+  //     "\u{1F1E8}\u{1F1FF}",
+  //     "\u{1F1E9}\u{1F1EA}",
+  //     "\u{1F1E9}\u{1F1EC}",
+  //     "\u{1F1E9}\u{1F1EF}",
+  //     "\u{1F1E9}\u{1F1F0}",
+  //     "\u{1F1E9}\u{1F1F2}",
+  //     "\u{1F1E9}\u{1F1F4}",
+  //     "\u{1F1E9}\u{1F1FF}",
+  //     "\u{1F1EA}\u{1F1E6}",
+  //     "\u{1F1EA}\u{1F1E8}",
+  //     "\u{1F1EA}\u{1F1EA}",
+  //     "\u{1F1EA}\u{1F1EC}",
+  //     "\u{1F1EA}\u{1F1ED}",
+  //     "\u{1F1EA}\u{1F1F7}",
+  //     "\u{1F1EA}\u{1F1F8}",
+  //     "\u{1F1EA}\u{1F1F9}",
+  //     "\u{1F1EA}\u{1F1FA}",
+  //     "\u{1F1EB}\u{1F1EE}",
+  //     "\u{1F1EB}\u{1F1EF}",
+  //     "\u{1F1EB}\u{1F1F0}",
+  //     "\u{1F1EB}\u{1F1F2}",
+  //     "\u{1F1EB}\u{1F1F4}",
+  //     "\u{1F1EB}\u{1F1F7}",
+  //     "\u{1F1EC}\u{1F1E6}",
+  //     "\u{1F1EC}\u{1F1E7}",
+  //     "\u{1F1EC}\u{1F1E9}",
+  //     "\u{1F1EC}\u{1F1EA}",
+  //     "\u{1F1EC}\u{1F1EB}",
+  //     "\u{1F1EC}\u{1F1EC}",
+  //     "\u{1F1EC}\u{1F1ED}",
+  //     "\u{1F1EC}\u{1F1EE}",
+  //     "\u{1F1EC}\u{1F1F1}",
+  //     "\u{1F1EC}\u{1F1F2}",
+  //     "\u{1F1EC}\u{1F1F3}",
+  //     "\u{1F1EC}\u{1F1F5}",
+  //     "\u{1F1EC}\u{1F1F6}",
+  //     "\u{1F1EC}\u{1F1F7}",
+  //     "\u{1F1EC}\u{1F1F8}",
+  //     "\u{1F1EC}\u{1F1F9}",
+  //     "\u{1F1EC}\u{1F1FA}",
+  //     "\u{1F1EC}\u{1F1FC}",
+  //     "\u{1F1EC}\u{1F1FE}",
+  //     "\u{1F1ED}\u{1F1F0}",
+  //     "\u{1F1ED}\u{1F1F2}",
+  //     "\u{1F1ED}\u{1F1F3}",
+  //     "\u{1F1ED}\u{1F1F7}",
+  //     "\u{1F1ED}\u{1F1F9}",
+  //     "\u{1F1ED}\u{1F1FA}",
+  //     "\u{1F1EE}\u{1F1E8}",
+  //     "\u{1F1EE}\u{1F1E9}",
+  //     "\u{1F1EE}\u{1F1EA}",
+  //     "\u{1F1EE}\u{1F1F1}",
+  //     "\u{1F1EE}\u{1F1F2}",
+  //     "\u{1F1EE}\u{1F1F3}",
+  //     "\u{1F1EE}\u{1F1F4}",
+  //     "\u{1F1EE}\u{1F1F6}",
+  //     "\u{1F1EE}\u{1F1F7}",
+  //     "\u{1F1EE}\u{1F1F8}",
+  //     "\u{1F1EE}\u{1F1F9}",
+  //     "\u{1F1EF}\u{1F1EA}",
+  //     "\u{1F1EF}\u{1F1F2}",
+  //     "\u{1F1EF}\u{1F1F4}",
+  //     "\u{1F1EF}\u{1F1F5}",
+  //     "\u{1F1F0}\u{1F1EA}",
+  //     "\u{1F1F0}\u{1F1EC}",
+  //     "\u{1F1F0}\u{1F1ED}",
+  //     "\u{1F1F0}\u{1F1EE}",
+  //     "\u{1F1F0}\u{1F1F2}",
+  //     "\u{1F1F0}\u{1F1F3}",
+  //     "\u{1F1F0}\u{1F1F5}",
+  //     "\u{1F1F0}\u{1F1F7}",
+  //     "\u{1F1F0}\u{1F1FC}",
+  //     "\u{1F1F0}\u{1F1FE}",
+  //     "\u{1F1F0}\u{1F1FF}",
+  //     "\u{1F1F1}\u{1F1E6}",
+  //     "\u{1F1F1}\u{1F1E7}",
+  //     "\u{1F1F1}\u{1F1E8}",
+  //     "\u{1F1F1}\u{1F1EE}",
+  //     "\u{1F1F1}\u{1F1F0}",
+  //     "\u{1F1F1}\u{1F1F7}",
+  //     "\u{1F1F1}\u{1F1F8}",
+  //     "\u{1F1F1}\u{1F1F9}",
+  //     "\u{1F1F1}\u{1F1FA}",
+  //     "\u{1F1F1}\u{1F1FB}",
+  //     "\u{1F1F1}\u{1F1FE}",
+  //     "\u{1F1F2}\u{1F1E6}",
+  //     "\u{1F1F2}\u{1F1E8}",
+  //     "\u{1F1F2}\u{1F1E9}",
+  //     "\u{1F1F2}\u{1F1EA}",
+  //     "\u{1F1F2}\u{1F1EB}",
+  //     "\u{1F1F2}\u{1F1EC}",
+  //     "\u{1F1F2}\u{1F1ED}",
+  //     "\u{1F1F2}\u{1F1F0}",
+  //     "\u{1F1F2}\u{1F1F1}",
+  //     "\u{1F1F2}\u{1F1F2}",
+  //     "\u{1F1F2}\u{1F1F3}",
+  //     "\u{1F1F2}\u{1F1F4}",
+  //     "\u{1F1F2}\u{1F1F5}",
+  //     "\u{1F1F2}\u{1F1F6}",
+  //     "\u{1F1F2}\u{1F1F7}",
+  //     "\u{1F1F2}\u{1F1F8}",
+  //     "\u{1F1F2}\u{1F1F9}",
+  //     "\u{1F1F2}\u{1F1FA}",
+  //     "\u{1F1F2}\u{1F1FB}",
+  //     "\u{1F1F2}\u{1F1FC}",
+  //     "\u{1F1F2}\u{1F1FD}",
+  //     "\u{1F1F2}\u{1F1FE}",
+  //     "\u{1F1F2}\u{1F1FF}",
+  //     "\u{1F1F3}\u{1F1E6}",
+  //     "\u{1F1F3}\u{1F1E8}",
+  //     "\u{1F1F3}\u{1F1EA}",
+  //     "\u{1F1F3}\u{1F1EB}",
+  //     "\u{1F1F3}\u{1F1EC}",
+  //     "\u{1F1F3}\u{1F1EE}",
+  //     "\u{1F1F3}\u{1F1F1}",
+  //     "\u{1F1F3}\u{1F1F4}",
+  //     "\u{1F1F3}\u{1F1F5}",
+  //     "\u{1F1F3}\u{1F1F7}",
+  //     "\u{1F1F3}\u{1F1FA}",
+  //     "\u{1F1F3}\u{1F1FF}",
+  //     "\u{1F1F4}\u{1F1F2}",
+  //     "\u{1F1F5}\u{1F1E6}",
+  //     "\u{1F1F5}\u{1F1EA}",
+  //     "\u{1F1F5}\u{1F1EB}",
+  //     "\u{1F1F5}\u{1F1EC}",
+  //     "\u{1F1F5}\u{1F1ED}",
+  //     "\u{1F1F5}\u{1F1F0}",
+  //     "\u{1F1F5}\u{1F1F1}",
+  //     "\u{1F1F5}\u{1F1F2}",
+  //     "\u{1F1F5}\u{1F1F3}",
+  //     "\u{1F1F5}\u{1F1F7}",
+  //     "\u{1F1F5}\u{1F1F8}",
+  //     "\u{1F1F5}\u{1F1F9}",
+  //     "\u{1F1F5}\u{1F1FC}",
+  //     "\u{1F1F5}\u{1F1FE}",
+  //     "\u{1F1F6}\u{1F1E6}",
+  //     "\u{1F1F7}\u{1F1EA}",
+  //     "\u{1F1F7}\u{1F1F4}",
+  //     "\u{1F1F7}\u{1F1F8}",
+  //     "\u{1F1F7}\u{1F1FA}",
+  //     "\u{1F1F7}\u{1F1FC}",
+  //     "\u{1F1F8}\u{1F1E6}",
+  //     "\u{1F1F8}\u{1F1E7}",
+  //     "\u{1F1F8}\u{1F1E8}",
+  //     "\u{1F1F8}\u{1F1E9}",
+  //     "\u{1F1F8}\u{1F1EA}",
+  //     "\u{1F1F8}\u{1F1EC}",
+  //     "\u{1F1F8}\u{1F1ED}",
+  //     "\u{1F1F8}\u{1F1EE}",
+  //     "\u{1F1F8}\u{1F1EF}",
+  //     "\u{1F1F8}\u{1F1F0}",
+  //     "\u{1F1F8}\u{1F1F1}",
+  //     "\u{1F1F8}\u{1F1F2}",
+  //     "\u{1F1F8}\u{1F1F3}",
+  //     "\u{1F1F8}\u{1F1F4}",
+  //     "\u{1F1F8}\u{1F1F7}",
+  //     "\u{1F1F8}\u{1F1F8}",
+  //     "\u{1F1F8}\u{1F1F9}",
+  //     "\u{1F1F8}\u{1F1FB}",
+  //     "\u{1F1F8}\u{1F1FD}",
+  //     "\u{1F1F8}\u{1F1FE}",
+  //     "\u{1F1F8}\u{1F1FF}",
+  //     "\u{1F1F9}\u{1F1E6}",
+  //     "\u{1F1F9}\u{1F1E8}",
+  //     "\u{1F1F9}\u{1F1E9}",
+  //     "\u{1F1F9}\u{1F1EB}",
+  //     "\u{1F1F9}\u{1F1EC}",
+  //     "\u{1F1F9}\u{1F1ED}",
+  //     "\u{1F1F9}\u{1F1EF}",
+  //     "\u{1F1F9}\u{1F1F0}",
+  //     "\u{1F1F9}\u{1F1F1}",
+  //     "\u{1F1F9}\u{1F1F2}",
+  //     "\u{1F1F9}\u{1F1F3}",
+  //     "\u{1F1F9}\u{1F1F4}",
+  //     "\u{1F1F9}\u{1F1F7}",
+  //     "\u{1F1F9}\u{1F1F9}",
+  //     "\u{1F1F9}\u{1F1FB}",
+  //     "\u{1F1F9}\u{1F1FC}",
+  //     "\u{1F1F9}\u{1F1FF}",
+  //     "\u{1F1FA}\u{1F1E6}",
+  //     "\u{1F1FA}\u{1F1EC}",
+  //     "\u{1F1FA}\u{1F1F2}",
+  //     "\u{1F1FA}\u{1F1F3}",
+  //     "\u{1F1FA}\u{1F1F8}",
+  //     "\u{1F1FA}\u{1F1FE}",
+  //     "\u{1F1FA}\u{1F1FF}",
+  //     "\u{1F1FB}\u{1F1E6}",
+  //     "\u{1F1FB}\u{1F1E8}",
+  //     "\u{1F1FB}\u{1F1EA}",
+  //     "\u{1F1FB}\u{1F1EC}",
+  //     "\u{1F1FB}\u{1F1EE}",
+  //     "\u{1F1FB}\u{1F1F3}",
+  //     "\u{1F1FB}\u{1F1FA}",
+  //     "\u{1F1FC}\u{1F1EB}",
+  //     "\u{1F1FC}\u{1F1F8}",
+  //     "\u{1F1FD}\u{1F1F0}",
+  //     "\u{1F1FE}\u{1F1EA}",
+  //     "\u{1F1FE}\u{1F1F9}",
+  //     "\u{1F1FF}\u{1F1E6}",
+  //     "\u{1F1FF}\u{1F1F2}",
+  //     "\u{1F1FF}\u{1F1FC}"
+  //   ]
+  // ],
+  // [
+  //   "subdivision-flag",
+  //   [
+  //     "\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}",
+  //     "\u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}",
+  //     "\u{1F3F4}\u{E0067}\u{E0062}\u{E0077}\u{E006C}\u{E0073}\u{E007F}"
+  //   ]
+  // ]
+];
+// export const emojiList: readonly [string, string[]][] = face
+// .concat(hand)
+// .concat(person)
+// .concat(animal)
+// .concat(plant)
+// .concat(food)
+// .concat(place)
+// .concat(transport)
+// .concat(time)
+// .concat(event)
+// .concat(sport)
+// .concat(crafts)
+// .concat(clothing)
+// .concat(sound)
+// .concat(equipment)
+// .concat(misc2)
+// .concat(message)
+// .concat(tool)
+// .concat(mark)

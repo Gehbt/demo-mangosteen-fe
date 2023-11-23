@@ -22,6 +22,7 @@ const alias: Record<string, string> = {
   "@components": pathResolve("./src/components"),
   "@views": pathResolve("./src/views"),
   "@svg_map": pathResolve("./src/assets/jsons/svg_map.json"),
+  "@emoji_list": pathResolve("./src/assets/jsons/emoji_list.ts"),
 };
 
 // https://vitejs.dev/config/
