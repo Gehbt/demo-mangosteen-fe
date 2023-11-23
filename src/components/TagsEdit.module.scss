@@ -14,6 +14,9 @@
 .formItem {
   min-height: var(--input-min-height);
   max-width: 100%;
+  &.btn {
+    width: 100%;
+  }
   &.input {
     flex-grow: 1;
     border: 1px solid var(--input-border-color);
@@ -31,8 +34,7 @@
     flex-grow: 1;
     border: 1px solid var(--input-border-color);
     border-radius: var(--input-radius);
-    font-size: 18px;
-    font-size: 14px;
+    font-size: 1rem;
     &.error {
       border-color: var(--error-color);
     }
@@ -86,7 +88,4 @@
     color: var(--error-color);
     font-size: 12px;
   }
-}
-.btn {
-  width: 100%;
 }
