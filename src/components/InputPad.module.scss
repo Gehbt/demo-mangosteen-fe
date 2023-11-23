@@ -45,8 +45,7 @@
   height: 32vh; // important!
   > button {
     &:active {
-      animation: bounce 0.3s;
-      color: var(--button-font-theme);
+      animation: bounce 0.5s;
     }
     border-radius: 6px;
     background-color: var(--button-font-theme);
@@ -81,7 +80,7 @@
   }
   70% {
     background-color: rgba(245, 75, 231, 0.7);
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
   100% {
     transform: scale(1);

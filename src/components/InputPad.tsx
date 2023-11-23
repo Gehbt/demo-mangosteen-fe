@@ -13,22 +13,22 @@ export const InputPad = defineComponent({
     const refDot = ref(false);
     const dotNumber = ref(0);
     const appendNumber = (n: number | "." = ".") => {
-      if (refAmount.value.length <= 16) {
+      if (
         // < 11位数
+        (refDot.value && refAmount.value.length < /* 11+ "." +2 */ 14) ||
+        refAmount.value.length < 11
+      ) {
+        // 第一位数
         if (refAmount.value === "0" && n !== ".") {
           refAmount.value = n.toString();
         } else {
           if (!refDot.value) {
-            // 无小数点
-            refAmount.value += n.toString();
-            return;
-          }
-          if (refDot.value && dotNumber.value < 3) {
-            // 有dot
+            //无小数点
+          } else if (refDot.value && dotNumber.value < 3) {
+            // 有小数点
             dotNumber.value += 1;
-            refAmount.value += n.toString();
-            return;
           }
+          refAmount.value += n.toString();
         }
       }
     };
@@ -99,8 +99,9 @@ export const InputPad = defineComponent({
         onClick: () => {
           if (!refDot.value) {
             // 无 dot
-            appendNumber();
             refDot.value = true;
+            dotNumber.value = 1;
+            appendNumber();
           }
         },
       },
@@ -115,7 +116,7 @@ export const InputPad = defineComponent({
       {
         text: "记录",
         onClick: () => {
-          //todo: record
+          // todo: record
           console.log("amount :>> ", refAmount.value);
           refAmount.value = "0";
           refDot.value = false;
@@ -124,7 +125,6 @@ export const InputPad = defineComponent({
       },
     ];
     const nowDate = time(new Date()).format();
-    // console.log(nowDate.split("-"));
     const refDate = ref<[string, string, string]>(
       nowDate.split("-") as [string, string, string]
     );
