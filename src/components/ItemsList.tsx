@@ -5,6 +5,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";
 import s from "./ItemsList.module.scss";
+import SvgIcon from "./SvgIcon";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
@@ -37,7 +38,15 @@ export const ItemsCreate = defineComponent({
             // >
             <>
               <Tabs v-model:selected={selectedTab.value}>
-                <Tab name="支出">111</Tab>
+                <Tab name="支出">
+                  <button
+                    onClick={() => {
+                      router.replace("/tags/create");
+                    }}
+                  >
+                    <SvgIcon name={svg.round_add} />
+                  </button>
+                </Tab>
                 <Tab name="收入">222</Tab>
               </Tabs>
               <div class={s.inputPad_wrapper}>

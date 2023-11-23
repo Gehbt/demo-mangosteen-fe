@@ -4,7 +4,7 @@ import SvgIcon from "./SvgIcon";
 import svg from "@svg_map";
 interface ButtonProps {
   onClick?: (e: MouseEvent | TouchEvent) => void;
-  class: string;
+  class: string | string[];
 }
 export const Button = defineComponent<ButtonProps>({
   // inheritAttrs: false,

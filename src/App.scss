@@ -1,5 +1,5 @@
-@import "./assets/stylesheets/reset.scss";
-@import "./assets/stylesheets/vars.scss";
+@use "./assets/stylesheets/reset.scss";
+@use "./assets/stylesheets/vars.scss";
 body {
   font-size: 16px;
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica,
