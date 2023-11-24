@@ -28,27 +28,31 @@ export const TagsCreate = defineComponent({
     const submit = (e: Event) => {
       const rules: RulesType<typeof formData> = [
         {
-          key: "name",
-          msg: "name必填",
           clan: "required",
+          key: "name",
+          msg: "标签名必填",
           required: true,
         },
         {
+          clan: "required",
           key: "sign",
-          msg: "sign必填",
-          clan: "required",
+          msg: "标签必填",
           required: true,
         },
         {
-          key: "name",
           clan: "pattern",
+          key: "name",
+          msg: "标签名太长",
           pattern: /^.{20,100}$/,
-          msg: "name太多",
+        },
+        {
+          clan: "pattern",
+          key: "name",
+          msg: "标签名太短",
+          pattern: /^.{1,3}$/,
         },
       ];
-      console.log("formData :>> ", toRaw(formData));
       errData.value = validate(toRaw(formData), rules);
-      console.log("err :>> ", errData.value);
       e.preventDefault();
     };
     // console.log("object :>> ", toRaw(formData));
@@ -66,8 +70,12 @@ export const TagsCreate = defineComponent({
                   <span class={s.formItem_name}>标签名</span>
                   <div class={s.formItem_value}>
                     <input
-                      v-model={formData.name?.[0]}
-                      class={[s.formItem, s.input, s.error]}
+                      v-model={formData.name}
+                      class={[
+                        s.formItem,
+                        s.input,
+                        errData.value.name?.[0] ? s.error : "",
+                      ]}
                     ></input>
                   </div>
                   <div class={s.formItem_errorHint}>
@@ -78,12 +86,16 @@ export const TagsCreate = defineComponent({
               <div class={s.formRow}>
                 <label class={s.formLabel}>
                   <span class={s.formItem_name}>
-                    符号:
+                    标签符号:
                     <span>{formData.sign}</span>
                   </span>
                   <div class={s.formItem_value}>
                     <EmojiSelect
-                      class={[s.formItem, s.emojiList, s.error]}
+                      class={[
+                        s.formItem,
+                        s.emojiList,
+                        errData.value.sign?.[0] ? s.error : "",
+                      ]}
                       modelValue={formData.sign}
                       onUpdate:modelValue={(emoji: string) => {
                         formData.sign = emoji;
@@ -100,7 +112,9 @@ export const TagsCreate = defineComponent({
                 <div class={s.formItem_value}>
                   <Button
                     class={[s.formItem, s.btn]}
-                    onClick={() => console.log("form :>> ", formData)}
+                    onClick={() =>
+                      console.log("form post:>> ", toRaw(formData))
+                    }
                   >
                     确定
                   </Button>

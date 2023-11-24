@@ -94,7 +94,7 @@ export const EmojiSelect = defineComponent({
       context.emit("update:modelValue", emoji);
     };
     return () => (
-      <div class={props.class}>
+      <div class={[props.class, s["emoji-select"]]}>
         <nav>{emoji_title.value}</nav>
         <ol>{emoji.value}</ol>
       </div>

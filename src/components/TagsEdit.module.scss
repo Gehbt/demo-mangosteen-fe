@@ -78,8 +78,14 @@
     }
   }
   &_name {
+    display: flex;
+    flex-direction: row;
+    margin-left: 2px;
+    height: 40px;
+    align-items: center;
+    font-size: 1.25rem;
     span {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
   }
   &_value {
@@ -89,6 +95,7 @@
   &_errorHint {
     margin-top: 4px;
     color: var(--error-color);
-    font-size: 12px;
+    font-size: 16px;
+    height: 20px;
   }
 }

@@ -39,18 +39,15 @@ export function validate<T extends FormDataType>(
   rules.map((rule) => {
     const { key, msg, clan } = rule;
     const value = formData[key];
-    console.log("value :>>", value);
     switch (clan) {
       case "required":
         if (value === undefined || value === null || value.toString() === "") {
-          console.log("errof value req:>> ", value);
           errors[key] = errors[key] ?? [];
           errors[key]?.push(msg);
         }
         break;
       case "pattern":
         if (value && rule.pattern.test(value.toString())) {
-          console.log("errof value patt:>> ", value);
           errors[key] = errors[key] ?? [];
           errors[key]?.push(msg);
         }
@@ -59,6 +56,5 @@ export function validate<T extends FormDataType>(
         throw new Error("Invalid clan");
     }
   });
-  console.log("errors :>> ", errors);
   return errors;
 }
