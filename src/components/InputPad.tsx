@@ -22,13 +22,15 @@ export const InputPad = defineComponent({
         if (refAmount.value === "0" && n !== ".") {
           refAmount.value = n.toString();
         } else {
+          // console.log(". n:>> ", refDot.value, dotNumber.value);
           if (!refDot.value) {
             //无小数点
-          } else if (refDot.value && dotNumber.value < 3) {
+            refAmount.value += n.toString();
+          } else if (refDot.value && dotNumber.value < 4) {
             // 有小数点
             dotNumber.value += 1;
+            refAmount.value += n.toString();
           }
-          refAmount.value += n.toString();
         }
       }
     };
@@ -97,6 +99,7 @@ export const InputPad = defineComponent({
       {
         text: ".",
         onClick: () => {
+          // console.log("object :>> ", refDot.value);
           if (!refDot.value) {
             // 无 dot
             refDot.value = true;
