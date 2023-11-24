@@ -1,9 +1,14 @@
-import { defineComponent, reactive } from "vue";
+import { Ref, defineComponent, reactive, ref, toRaw } from "vue";
 import s from "./TagsEdit.module.scss";
 import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "./Button";
 import { EmojiSelect } from "./EmojiSelect";
+import {
+  type RulesType,
+  validate,
+  InvalidateError,
+} from "@/composables/validate";
 
 export const TagsEdit = defineComponent({
   name: "TagsEdit",
@@ -19,6 +24,34 @@ export const TagsCreate = defineComponent({
       name: "",
       sign: "",
     });
+    const errData: Ref<InvalidateError<typeof formData>> = ref({}); // : { name: string; msg: string }[];
+    const submit = (e: Event) => {
+      const rules: RulesType<typeof formData> = [
+        {
+          key: "name",
+          msg: "name必填",
+          clan: "required",
+          required: true,
+        },
+        {
+          key: "sign",
+          msg: "sign必填",
+          clan: "required",
+          required: true,
+        },
+        {
+          key: "name",
+          clan: "pattern",
+          pattern: /^.{20,100}$/,
+          msg: "name太多",
+        },
+      ];
+      console.log("formData :>> ", toRaw(formData));
+      errData.value = validate(toRaw(formData), rules);
+      console.log("err :>> ", errData.value);
+      e.preventDefault();
+    };
+    // console.log("object :>> ", toRaw(formData));
     return () => (
       <MainLayout
         title="新建标签"
@@ -27,18 +60,18 @@ export const TagsCreate = defineComponent({
       >
         {{
           default: () => (
-            <form class={s.form}>
+            <form class={s.form} onSubmit={submit}>
               <div class={s.formRow}>
                 <label class={s.formLabel}>
                   <span class={s.formItem_name}>标签名</span>
                   <div class={s.formItem_value}>
                     <input
-                      v-model={formData.name}
+                      v-model={formData.name?.[0]}
                       class={[s.formItem, s.input, s.error]}
                     ></input>
                   </div>
                   <div class={s.formItem_errorHint}>
-                    <span>必填</span>
+                    <span>{errData.value.name?.[0]}</span>
                   </div>
                 </label>
               </div>
@@ -58,7 +91,7 @@ export const TagsCreate = defineComponent({
                     />
                   </div>
                   <div class={s.formItem_errorHint}>
-                    <span>必填</span>
+                    <span>{errData.value.sign?.[0]}</span>
                   </div>
                 </label>
               </div>
