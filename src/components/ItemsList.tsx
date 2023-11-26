@@ -102,7 +102,7 @@ export const ItemsCreate = defineComponent({
             <div class={s.wrapper}>
               <Tabs v-model:selected={selectedTab.value} class={s.tabs}>
                 <Tab name="支出" class={s.tags_wrapper}>
-                  <div class={s.tag}>
+                  <div class={[s.tag, s.selected]}>
                     <button
                       onClick={() => {
                         router.replace("/tags/create");
@@ -121,7 +121,7 @@ export const ItemsCreate = defineComponent({
                   ))}
                 </Tab>
                 <Tab name="收入" class={s.tags_wrapper}>
-                  <div class={s.tag}>
+                  <div class={[s.tag, s.selected]}>
                     <button
                       onClick={() => {
                         router.replace("/tags/create");

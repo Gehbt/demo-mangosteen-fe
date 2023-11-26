@@ -88,7 +88,7 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         name: "tagsId",
-        path: ":id",
+        path: ":id/edit",
         component: TagsEdit,
       },
     ],
