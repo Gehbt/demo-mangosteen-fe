@@ -9,9 +9,57 @@ import SvgIcon from "./SvgIcon";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
-    return () => <div>ItemsList</div>;
+    const router = useRouter();
+    const refSelected = ref<"本月" | "上月" | "今年" | "自定义">("本月");
+    return () => (
+      <MainLayout
+        title="蓝莓记账"
+        icon={svg.back}
+        toggle={() => {
+          console.log("back :>> /start");
+          router.replace("/start");
+        }}
+        class={s.layout}
+      >
+        {{
+          default: () => (
+            <div class={s.itemsList}>
+              <div class={s.tabs}>
+                <Tabs
+                  v-model:selected={refSelected.value}
+                  class={s.tabs}
+                  classPrefix={"customTabStyle"}
+                >
+                  <Tab name="本月">
+                    <div class={s.tab}>
+                      <span>1</span>
+                    </div>
+                  </Tab>
+                  <Tab name="上月">
+                    <div class={s.tab}>
+                      <span>2</span>
+                    </div>
+                  </Tab>
+                  <Tab name="今年">
+                    <div class={s.tab}>
+                      <span>3</span>
+                    </div>
+                  </Tab>
+                  <Tab name="自定义">
+                    <div class={s.tab}>
+                      <span>4</span>
+                    </div>
+                  </Tab>
+                </Tabs>
+              </div>
+            </div>
+          ),
+        }}
+      </MainLayout>
+    );
   },
 });
+
 export type ItemsName = "支出" | "收入";
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",

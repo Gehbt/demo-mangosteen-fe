@@ -6,15 +6,15 @@
     align-items: center;
     text-align: center;
     color: var(--button-font-theme);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     position: sticky;
     z-index: 1;
     top: 0;
+    background: var(--tabs-theme);
     > li {
       padding: 8px 0;
       flex-grow: 1;
       flex-shrink: 0;
-      background: var(--tabs-theme);
       &.selected {
         position: relative;
         &::after {

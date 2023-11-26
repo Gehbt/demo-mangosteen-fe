@@ -4,6 +4,10 @@ import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
   props: {
+    classPrefix: {
+      type: String,
+      default: "",
+    },
     selected: {
       type: String as PropType<ItemsName>,
       default: "支出",
@@ -25,13 +29,16 @@ export const Tabs = defineComponent({
       //     throw new Error("<Tabs> only accepts Tab as children");
       //   }
       // });
-
+      const inject_style = props.classPrefix;
       return (
-        <div class={s.tabs}>
-          <ol class={s.tabs_nav}>
+        <div class={[s.tabs, inject_style + "_tabs"]}>
+          <ol class={[s.tabs_nav, inject_style + "_tabs_nav"]}>
             {tabs.map((item) => (
               <li
-                class={item.props?.name === props.selected ? s.selected : ""}
+                class={(item.props?.name === props.selected
+                  ? [s.selected, inject_style + "_selected"]
+                  : [""]
+                ).concat(inject_style + "_tabs_nav_item")}
                 onClick={() =>
                   context.emit("update:selected", item.props?.name)
                 }
@@ -52,7 +59,7 @@ export const Tab = defineComponent({
   name: "Tab",
   props: {
     name: {
-      type: String as PropType<ItemsName>,
+      type: String as PropType<ItemsName | string>,
     },
   },
   setup(props, context) {
