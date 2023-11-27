@@ -10,11 +10,21 @@ import { ItemSummary } from "./ItemSummary";
 import { Time } from "@/composables/date";
 import { Overlay } from "vant";
 import { Form, FormItem } from "./Form";
+import {
+  Overlay as MyOverlay,
+  OverlayMask as MyOverlayMask,
+} from "@/components/Overlay";
 export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
-    const router = useRouter();
+    const overlayVisibleRef = ref(false);
+    const toggleOverlay = () => {
+      overlayVisibleRef.value = true;
+    };
+    const blurOverlay = () => {
+      overlayVisibleRef.value = false;
+    };
     const refSelected = ref<ItemsListName>("本月");
     const time = new Time();
     const refCustomTime = ref({
@@ -44,11 +54,8 @@ export const ItemsList = defineComponent({
     return () => (
       <MainLayout
         title="蓝莓记账"
-        icon={svg.back}
-        toggle={() => {
-          console.log("back :>> /start");
-          router.replace("/start");
-        }}
+        icon={svg.menu}
+        toggle={toggleOverlay}
         class={s.layout}
       >
         {{
@@ -58,8 +65,10 @@ export const ItemsList = defineComponent({
                 v-model:selected={refSelected.value}
                 class={s.tabs}
                 classPrefix={"customTabStyle"}
-                onUpdate:selected={() => {
-                  refOverlayVisible.value = true;
+                onUpdate:selected={(value) => {
+                  if (value === "自定义") {
+                    refOverlayVisible.value = true;
+                  }
                 }}
               >
                 <Tab name="本月">
@@ -122,13 +131,26 @@ export const ItemsList = defineComponent({
                         }}
                       ></FormItem>
                       <div class={[s.actions, s.formRow]}>
-                        <button type="button">取消</button>
+                        <button
+                          type="button"
+                          onClick={() => (refOverlayVisible.value = false)}
+                        >
+                          取消
+                        </button>
                         <button type="submit">确认</button>
                       </div>
                     </Form>
                   </main>
                 </div>
               </Overlay>
+              <div
+                style={{
+                  visibility: overlayVisibleRef.value ? "visible" : "hidden",
+                }}
+              >
+                <MyOverlay />
+                <MyOverlayMask onBlurOverlay={blurOverlay} />
+              </div>
             </>
           ),
         }}

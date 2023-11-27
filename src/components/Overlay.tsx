@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import SvgIcon from "./SvgIcon";
 import s from "./Overlay.module.scss";
 import svg from "@svg_map";
@@ -59,6 +59,35 @@ export const OverlayMask = defineComponent({
           this.$emit("blurOverlay");
         }}
       ></div>
+    );
+  },
+});
+
+export const OverlayIcon = defineComponent({
+  name: "OverlayIcon",
+  setup(props, context) {
+    const overlayVisibleRef = ref(false);
+    const toggleOverlay = () => {
+      overlayVisibleRef.value = true;
+    };
+    const blurOverlay = () => {
+      overlayVisibleRef.value = false;
+      console.log("blurOverlay :>> ", overlayVisibleRef.value);
+    };
+    return () => (
+      <>
+        <div onClick={toggleOverlay}>
+          <SvgIcon name={svg.menu} />
+        </div>
+        <div
+          style={{
+            visibility: overlayVisibleRef.value ? "visible" : "hidden",
+          }}
+        >
+          <Overlay />
+          <OverlayMask onBlurOverlay={blurOverlay} />
+        </div>
+      </>
     );
   },
 });

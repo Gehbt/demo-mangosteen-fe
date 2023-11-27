@@ -14,11 +14,9 @@ export const Start = defineComponent({
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {
       overlayVisibleRef.value = true;
-      console.log("toggleOverlay :>> ", overlayVisibleRef.value);
     };
     const blurOverlay = () => {
       overlayVisibleRef.value = false;
-      console.log("blurOverlay :>> ", overlayVisibleRef.value);
     };
     return () => (
       <MainLayout title="蓝莓记账" icon={svg.menu} toggle={toggleOverlay}>

@@ -1,7 +1,7 @@
 {
   "name": "mangosteen-fe",
   "private": true,
-  "version": "0.18.0",
+  "version": "0.19.0",
   "main": "src/main.ts",
   "type": "module",
   "scripts": {
