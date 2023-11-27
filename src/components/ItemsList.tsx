@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, watchEffect } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 // import s from "./ItemsList.module.scss";
 import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
@@ -9,15 +9,15 @@ import SvgIcon from "./SvgIcon";
 import { ItemSummary } from "./ItemSummary";
 import { Time } from "@/composables/date";
 import { Overlay } from "vant";
+import { Form, FormItem } from "./Form";
 export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
     const router = useRouter();
     const refSelected = ref<ItemsListName>("本月");
-    const standardStartDate = "2023-01-01";
     const time = new Time();
-    const customTime = reactive({
+    const refCustomTime = ref({
       start: new Time(),
       end: new Time(),
     });
@@ -41,6 +41,11 @@ export const ItemsList = defineComponent({
         refOverlayVisible.value = true;
       }
     });
+    const refErrBox = ref("");
+    const onSubmitCustomDate = (e: Event) => {
+      e.preventDefault();
+      refOverlayVisible.value = false;
+    };
     return () => (
       <MainLayout
         title="蓝莓记账"
@@ -78,17 +83,51 @@ export const ItemsList = defineComponent({
                   />
                 </Tab>
                 <Tab name="自定义">
-                  <ItemSummary startDate={standardStartDate} endDate={"123"} />
+                  <ItemSummary
+                    startDate={refCustomTime.value.start.format()}
+                    endDate={refCustomTime.value.end.format()}
+                  />
                 </Tab>
               </Tabs>
-              <Overlay show={refOverlayVisible.value} class={s.overlay}>
+              <Overlay
+                show={refOverlayVisible.value}
+                class={s.overlay}
+                onClick={() => {
+                  refOverlayVisible.value = false;
+                  refSelected.value = "本月";
+                }}
+              >
                 <div class={s.overlay_inner}>
                   <header>请选择时间</header>
                   <main>
-                    <form>
-                      <div>开始时间</div>
-                      <div>结束时间</div>
-                    </form>
+                    <Form onSubmit={onSubmitCustomDate}>
+                      <FormItem
+                        label="开始时间"
+                        modelValue={refCustomTime.value.start.format()}
+                        err_data={refErrBox.value}
+                        clan="date"
+                        onUpdate:modelValue={(emitTime: string) => {
+                          refCustomTime.value.start = new Time(
+                            new Date(emitTime)
+                          );
+                        }}
+                      ></FormItem>
+                      <FormItem
+                        label="结束时间"
+                        modelValue={refCustomTime.value.end.format()}
+                        err_data={refErrBox.value}
+                        clan="date"
+                        onUpdate:modelValue={(emitTime: string) => {
+                          refCustomTime.value.end = new Time(
+                            new Date(emitTime)
+                          );
+                        }}
+                      ></FormItem>
+                      <div class={[s.actions, s.formRow]}>
+                        <button type="button">取消</button>
+                        <button type="submit">确认</button>
+                      </div>
+                    </Form>
                   </main>
                 </div>
               </Overlay>

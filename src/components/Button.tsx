@@ -19,6 +19,10 @@ export const Button = defineComponent({
       type: String as PropType<"primary" | "default" | "danger">,
       default: "default",
     },
+    clan: {
+      type: String as PropType<"button" | "submit" | "reset">,
+      default: "button",
+    },
   },
   name: "Button",
   setup(props, context) {
@@ -26,6 +30,7 @@ export const Button = defineComponent({
       <button
         class={[s.btn, props.class, s[props.level]]}
         onClick={props.onClick}
+        type={props.clan}
       >
         {context.slots.default?.()}
       </button>

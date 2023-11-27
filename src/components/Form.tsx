@@ -1,6 +1,8 @@
-import { PropType, computed, defineComponent } from "vue";
+import { PropType, computed, defineComponent, ref } from "vue";
 import s from "./Form.module.scss";
 import { EmojiSelect } from "./EmojiSelect";
+import { DatePicker, Popup } from "vant";
+import { Time } from "@/composables/date";
 export const Form = defineComponent({
   name: "Form",
   props: {
@@ -32,12 +34,13 @@ export const FormItem = defineComponent({
       required: false,
     },
     clan: {
-      type: String as PropType<"input" | "emoji" | "custom">,
+      type: String as PropType<"input" | "emoji" | "custom" | "date">,
       default: "input",
     },
   },
   emits: ["update:modelValue"],
   setup(props, context) {
+    const refDateVisible = ref(false);
     const content = computed(() => {
       switch (props.clan) {
         case "input":
@@ -48,6 +51,7 @@ export const FormItem = defineComponent({
                 s.input,
                 props.err_data !== "" ? s.error : "",
               ]}
+              value={props.modelValue}
               onChange={(e) => {
                 console.log(
                   "input value :>> ",
@@ -73,6 +77,40 @@ export const FormItem = defineComponent({
                 context.emit("update:modelValue", value)
               }
             />
+          );
+        case "date":
+          const computedPicker = computed(() => props.modelValue.split("-"));
+          return (
+            <>
+              <input
+                readonly={true}
+                value={props.modelValue}
+                onClick={() => {
+                  console.log("props.modelValue :>> ", props.modelValue);
+                  refDateVisible.value = true;
+                }}
+                class={[s.formItem, s.input]}
+              />
+              <Popup
+                position="bottom"
+                onClickOverlay={() => (refDateVisible.value = false)}
+                v-model:show={refDateVisible.value}
+              >
+                <DatePicker
+                  v-model={computedPicker.value}
+                  title="选择年月日"
+                  onConfirm={(date) => {
+                    const emitPicker = (date.selectedValues as string[]).join(
+                      "-"
+                    );
+                    console.log("date :>> ", emitPicker);
+                    context.emit("update:modelValue", emitPicker);
+                    refDateVisible.value = false;
+                  }}
+                  onCancel={() => (refDateVisible.value = false)}
+                />
+              </Popup>
+            </>
           );
         case "custom":
           return context.slots.default?.();
