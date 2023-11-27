@@ -13,11 +13,8 @@ export const Tabs = defineComponent({
       default: "支出",
       required: true,
     },
-    // onUpdateSelected: {
-    //   type: Function,
-    // },
   },
-  // emits: ["updateSelected"],
+  emits: ["update:selected"],
   setup(props, context) {
     return () => {
       if (!context.slots.default?.()) {

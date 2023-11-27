@@ -36,11 +36,6 @@ export const ItemsList = defineComponent({
       },
     ];
     const refOverlayVisible = ref(false);
-    watchEffect(() => {
-      if (refSelected.value === "自定义") {
-        refOverlayVisible.value = true;
-      }
-    });
     const refErrBox = ref("");
     const onSubmitCustomDate = (e: Event) => {
       e.preventDefault();
@@ -63,6 +58,9 @@ export const ItemsList = defineComponent({
                 v-model:selected={refSelected.value}
                 class={s.tabs}
                 classPrefix={"customTabStyle"}
+                onUpdate:selected={() => {
+                  refOverlayVisible.value = true;
+                }}
               >
                 <Tab name="本月">
                   <ItemSummary
@@ -94,7 +92,7 @@ export const ItemsList = defineComponent({
                 class={s.overlay}
                 onClick={() => {
                   refOverlayVisible.value = false;
-                  refSelected.value = "本月";
+                  // refSelected.value = "本月";
                 }}
               >
                 <div class={s.overlay_inner}>
@@ -210,6 +208,8 @@ export const ItemsCreate = defineComponent({
       },
     ]);
     const router = useRouter();
+    const updateSelected = (tabName: ItemsCreateName) =>
+      (selectedTab.value = tabName);
     return () => (
       <MainLayout
         title="记一笔"
@@ -224,7 +224,7 @@ export const ItemsCreate = defineComponent({
           default: () => (
             // <Tabs
             //   selected={selectedTab.value}
-            //   onUpdateSelected={updateSelected}
+            //  onUpdate:selected={updateSelected}
             // >
             <div class={s.wrapper}>
               <Tabs v-model:selected={selectedTab.value} class={s.tabs}>
