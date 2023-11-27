@@ -3,12 +3,12 @@ import s from "./TagsEdit.module.scss";
 import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "./Button";
-import { EmojiSelect } from "./EmojiSelect";
 import {
   type RulesType,
   validate,
   InvalidateError,
 } from "@/composables/validate";
+import { Form, FormItem } from "./Form";
 
 export const TagsEdit = defineComponent({
   name: "TagsEdit",
@@ -16,11 +16,15 @@ export const TagsEdit = defineComponent({
     const router = useRouter();
     return () => (
       <>
-        <MainLayout title="新建标签" icon={svg.back} toggle={() => {}}>
+        <MainLayout
+          title="新建标签"
+          icon={svg.back}
+          toggle={() => router.replace("/items/create")}
+        >
           <TagsForm>
             <Button
               class={[s.formItem, s.btn]}
-              onClick={() => console.log("TagsEdit :>> ")}
+              onClick={() => console.log("Form summit :>> ")}
             >
               保存
             </Button>
@@ -29,14 +33,14 @@ export const TagsEdit = defineComponent({
             <Button
               level="danger"
               class={[s.btn, s.removeTags]}
-              onClick={() => console.log("TagsEdit :>> ")}
+              onClick={() => console.log("todo :>> ")}
             >
               删除标签
             </Button>
             <Button
               level="danger"
               class={[s.btn, s.removeAll]}
-              onClick={() => console.log("TagsEdit :>> ")}
+              onClick={() => console.log("todo :>> ")}
             >
               删除标签和记账
             </Button>
@@ -59,7 +63,7 @@ export const TagsCreate = defineComponent({
         <TagsForm>
           <Button
             class={[s.formItem, s.btn]}
-            onClick={() => console.log("TagsCreate :>> ")}
+            onClick={() => console.log("Form summit :>> ")}
           >
             确定
           </Button>
@@ -69,13 +73,16 @@ export const TagsCreate = defineComponent({
   },
 });
 export const TagsForm = defineComponent({
-  name: "TagFormt",
+  name: "TagForm",
   setup(props, context) {
     const formData = reactive({
       name: "",
       sign: "",
     });
-    const errData: Ref<InvalidateError<typeof formData>> = ref({}); // : { name: string; msg: string }[];
+    const errData: Ref<InvalidateError<typeof formData>> = ref({
+      name: [],
+      sign: [],
+    }); // : { name: string; msg: string }[];
     const submit = (e: Event) => {
       const rules: RulesType<typeof formData> = [
         {
@@ -104,57 +111,36 @@ export const TagsForm = defineComponent({
         },
       ];
       errData.value = validate(toRaw(formData), rules);
+      console.log("formData :>> ", toRaw(formData));
       e.preventDefault();
     };
+    console.log("errData.value.name?.[0] :>> ", errData.value.name?.[0]);
     return () => (
-      <form class={s.form} onSubmit={submit}>
-        <div class={s.formRow}>
-          <label class={s.formLabel}>
-            <span class={s.formItem_name}>标签名</span>
-            <div class={s.formItem_value}>
-              <input
-                v-model={formData.name}
-                class={[
-                  s.formItem,
-                  s.input,
-                  errData.value.name?.[0] ? s.error : "",
-                ]}
-              ></input>
-            </div>
-            <div class={s.formItem_errorHint}>
-              <span>{errData.value.name?.[0]}</span>
-            </div>
-          </label>
-        </div>
-        <div class={s.formRow}>
-          <label class={s.formLabel}>
-            <span class={s.formItem_name}>
-              标签符号:
-              <span>{formData.sign}</span>
-            </span>
-            <div class={s.formItem_value}>
-              <EmojiSelect
-                class={[
-                  s.formItem,
-                  s.emojiList,
-                  errData.value.sign?.[0] ? s.error : "",
-                ]}
-                modelValue={formData.sign}
-                onUpdate:modelValue={(emoji: string) => {
-                  formData.sign = emoji;
-                }}
-              />
-            </div>
-            <div class={s.formItem_errorHint}>
-              <span>{errData.value.sign?.[0]}</span>
-            </div>
-          </label>
-        </div>
+      <Form class={s.form} onSubmit={submit}>
+        <FormItem
+          label="标签名"
+          modelValue={formData.name}
+          err_data={errData.value.name?.[0] ?? ""}
+          onUpdate:modelValue={(itemName: string) => {
+            formData.name = itemName;
+          }}
+          clan="input"
+        ></FormItem>
+        <FormItem
+          label="标签符号:"
+          clan="emoji"
+          modelValue={formData.sign}
+          err_data={errData.value.sign?.[0] ?? ""}
+          onUpdate:modelValue={(emoji: string) => {
+            console.log("emoji :>> ", emoji);
+            formData.sign = emoji;
+          }}
+        ></FormItem>
         <div>
           <p class={s.tips}>记账时长按标签即可进行编辑</p>
           <div class={s.formItem_value}>{context.slots.default?.()}</div>
         </div>
-      </form>
+      </Form>
     );
   },
 });

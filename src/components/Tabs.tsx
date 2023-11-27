@@ -1,5 +1,5 @@
 import { PropType, defineComponent } from "vue";
-import type { ItemsName } from "@/components/ItemsList";
+import type { ItemsCreateName, ItemsListName } from "@/components/ItemsList";
 import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
@@ -9,7 +9,7 @@ export const Tabs = defineComponent({
       default: "",
     },
     selected: {
-      type: String as PropType<ItemsName>,
+      type: String as PropType<ItemsCreateName | ItemsListName>,
       default: "支出",
       required: true,
     },
@@ -59,7 +59,7 @@ export const Tab = defineComponent({
   name: "Tab",
   props: {
     name: {
-      type: String as PropType<ItemsName | string>,
+      type: String as PropType<ItemsCreateName | ItemsListName>,
     },
   },
   setup(props, context) {
