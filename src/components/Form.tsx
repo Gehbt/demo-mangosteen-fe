@@ -3,6 +3,7 @@ import s from "./Form.module.scss";
 import { EmojiSelect } from "./EmojiSelect";
 import { DatePicker, Popup } from "vant";
 import { Time } from "@/composables/date";
+import { Button } from "./Button";
 export const Form = defineComponent({
   name: "Form",
   props: {
@@ -33,9 +34,16 @@ export const FormItem = defineComponent({
       type: String as PropType<string>,
       required: false,
     },
+    simple: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+    },
     clan: {
-      type: String as PropType<"input" | "emoji" | "custom" | "date">,
+      type: String as PropType<
+        "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+      >,
       default: "input",
+      required: true,
     },
   },
   emits: ["update:modelValue"],
@@ -44,6 +52,7 @@ export const FormItem = defineComponent({
     const content = computed(() => {
       switch (props.clan) {
         case "input":
+        case "email":
           return (
             <input
               class={[
@@ -51,6 +60,7 @@ export const FormItem = defineComponent({
                 s.input,
                 props.err_data !== "" ? s.error : "",
               ]}
+              type={props.clan}
               value={props.modelValue}
               onChange={(e) => {
                 console.log(
@@ -79,7 +89,7 @@ export const FormItem = defineComponent({
             />
           );
         case "date":
-          const computedPicker = computed(() => props.modelValue.split("-"));
+          const computedPicker = computed(() => props.modelValue?.split("-"));
           return (
             <>
               <input
@@ -89,7 +99,11 @@ export const FormItem = defineComponent({
                   console.log("props.modelValue :>> ", props.modelValue);
                   refDateVisible.value = true;
                 }}
-                class={[s.formItem, s.input]}
+                class={[
+                  s.formItem,
+                  s.input,
+                  props.err_data !== "" ? s.error : "",
+                ]}
               />
               <Popup
                 position="bottom"
@@ -112,6 +126,36 @@ export const FormItem = defineComponent({
               </Popup>
             </>
           );
+        case "smsCaptcha":
+          return (
+            <>
+              <input
+                class={[
+                  s.formItem,
+                  s.input,
+                  s.smsCaptcha,
+                  props.err_data !== "" ? s.error : "",
+                ]}
+                value={props.modelValue}
+                onChange={(e) => {
+                  console.log(
+                    "input value :>> ",
+                    (e.target as HTMLInputElement).value
+                  );
+                  context.emit(
+                    "update:modelValue",
+                    (e.target as HTMLInputElement).value
+                  );
+                }}
+              />
+              <Button
+                class={[s.btn, s.formItem, s.smsCaptcha_btn]}
+                clan="button"
+              >
+                提交
+              </Button>
+            </>
+          );
         case "custom":
           return context.slots.default?.();
         default:
@@ -121,14 +165,18 @@ export const FormItem = defineComponent({
     return () => (
       <div class={s.formRow}>
         <label class={s.formLabel}>
-          <span class={s.formItem_name}>
-            {props.label}
-            <span>{props.clan === "emoji" ? props.modelValue : ""}</span>
-          </span>
+          {!props.simple && (
+            <span class={s.formItem_name}>
+              {props.label}
+              <span>{props.clan === "emoji" ? props.modelValue : ""}</span>
+            </span>
+          )}
           <div class={s.formItem_value}>{content.value}</div>
-          <div class={s.formItem_errorHint}>
-            <span>{props.err_data}</span>
-          </div>
+          {!props.simple && (
+            <div class={s.formItem_errorHint}>
+              <span>{props.err_data}</span>
+            </div>
+          )}
         </label>
       </div>
     );

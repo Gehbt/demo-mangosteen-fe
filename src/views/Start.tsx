@@ -20,32 +20,26 @@ export const Start = defineComponent({
     };
     return () => (
       <MainLayout title="蓝莓记账" icon={svg.menu} toggle={toggleOverlay}>
-        {{
-          default: () => (
-            <>
-              <Center direction="vertical" class={s.svg_wrapper}>
-                <SvgIcon name={svg.piggy2} class={s.svg} />
-              </Center>
-              <div class={s.btn_wrapper}>
-                <RouterLink to="/items/create">
-                  <Button class={s.btn}>开始记账</Button>
-                </RouterLink>
-                <RouterLink to="/items/create">
-                  <Floatbutton />
-                </RouterLink>
-              </div>
+        <Center direction="vertical" class={s.svg_wrapper}>
+          <SvgIcon name={svg.piggy2} class={s.svg} />
+        </Center>
+        <div class={s.btn_wrapper}>
+          <RouterLink to="/items/create">
+            <Button class={s.btn}>开始记账</Button>
+          </RouterLink>
+          <RouterLink to="/items/create">
+            <Floatbutton />
+          </RouterLink>
+        </div>
 
-              <div
-                style={{
-                  visibility: overlayVisibleRef.value ? "visible" : "hidden",
-                }}
-              >
-                <Overlay />
-                <OverlayMask onBlurOverlay={blurOverlay} />
-              </div>
-            </>
-          ),
-        }}
+        <div
+          style={{
+            visibility: overlayVisibleRef.value ? "visible" : "hidden",
+          }}
+        >
+          <Overlay />
+          <OverlayMask onBlurOverlay={blurOverlay} />
+        </div>
       </MainLayout>
     );
   },

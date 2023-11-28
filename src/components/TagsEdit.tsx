@@ -79,10 +79,7 @@ export const TagsForm = defineComponent({
       name: "",
       sign: "",
     });
-    const errData: Ref<InvalidateError<typeof formData>> = ref({
-      name: [],
-      sign: [],
-    }); // : { name: string; msg: string }[];
+    const errData: Ref<InvalidateError<typeof formData>> = ref({}); // : { name: string; msg: string }[];
     const submit = (e: Event) => {
       const rules: RulesType<typeof formData> = [
         {

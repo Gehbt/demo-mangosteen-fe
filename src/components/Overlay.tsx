@@ -12,8 +12,10 @@ export const Overlay = defineComponent({
     },
   },
   setup(props, context) {
+    const router = useRouter();
     const onClickSignIn = () => {
       // TODO: SignIn
+      router.replace("/sign_in");
     };
     return () => (
       <div class={s.overlay}>

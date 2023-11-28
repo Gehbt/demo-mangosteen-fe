@@ -26,6 +26,14 @@
       border-color: var(--error-color);
     }
   }
+  &.smsCaptcha {
+    flex-grow: 0;
+    width: 8em;
+    &_btn {
+      flex-grow: 1;
+      margin-left: 16px;
+    }
+  }
   &.emojiList {
     flex-grow: 1;
     border: 1px solid var(--input-border-color);

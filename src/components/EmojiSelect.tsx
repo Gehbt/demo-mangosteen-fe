@@ -56,7 +56,7 @@ export const EmojiSelect = defineComponent({
     },
     modelValue: {
       type: String as PropType<string>,
-      required: true,
+      required: false,
     },
   },
   emits: ["update:modelValue"],

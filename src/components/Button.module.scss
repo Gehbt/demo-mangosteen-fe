@@ -11,8 +11,10 @@
     border-color: gray;
   }
   &.default {
+    // todo
   }
   &.primary {
+    width: 100%;
   }
   &.danger {
     border-color: var(--button-theme-danger);

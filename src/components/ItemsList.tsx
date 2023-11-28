@@ -58,102 +58,92 @@ export const ItemsList = defineComponent({
         toggle={toggleOverlay}
         class={s.layout}
       >
-        {{
-          default: () => (
-            <>
-              <Tabs
-                v-model:selected={refSelected.value}
-                class={s.tabs}
-                classPrefix={"customTabStyle"}
-                onUpdate:selected={(value) => {
-                  if (value === "自定义") {
-                    refOverlayVisible.value = true;
-                  }
-                }}
-              >
-                <Tab name="本月">
-                  <ItemSummary
-                    startDate={timeList[0].start.format()}
-                    endDate={timeList[0].end.format()}
-                  />
-                </Tab>
-                <Tab name="上月">
-                  <ItemSummary
-                    startDate={timeList[1].start.format()}
-                    endDate={timeList[1].end.format()}
-                  />
-                </Tab>
-                <Tab name="今年">
-                  <ItemSummary
-                    startDate={timeList[2].start.format()}
-                    endDate={timeList[2].end.format()}
-                  />
-                </Tab>
-                <Tab name="自定义">
-                  <ItemSummary
-                    startDate={refCustomTime.value.start.format()}
-                    endDate={refCustomTime.value.end.format()}
-                  />
-                </Tab>
-              </Tabs>
-              <Overlay
-                show={refOverlayVisible.value}
-                class={s.overlay}
-                onClick={() => {
-                  refOverlayVisible.value = false;
-                  // refSelected.value = "本月";
-                }}
-              >
-                <div class={s.overlay_inner}>
-                  <header>请选择时间</header>
-                  <main>
-                    <Form onSubmit={onSubmitCustomDate}>
-                      <FormItem
-                        label="开始时间"
-                        modelValue={refCustomTime.value.start.format()}
-                        err_data={refErrBox.value}
-                        clan="date"
-                        onUpdate:modelValue={(emitTime: string) => {
-                          refCustomTime.value.start = new Time(
-                            new Date(emitTime)
-                          );
-                        }}
-                      ></FormItem>
-                      <FormItem
-                        label="结束时间"
-                        modelValue={refCustomTime.value.end.format()}
-                        err_data={refErrBox.value}
-                        clan="date"
-                        onUpdate:modelValue={(emitTime: string) => {
-                          refCustomTime.value.end = new Time(
-                            new Date(emitTime)
-                          );
-                        }}
-                      ></FormItem>
-                      <div class={[s.actions, s.formRow]}>
-                        <button
-                          type="button"
-                          onClick={() => (refOverlayVisible.value = false)}
-                        >
-                          取消
-                        </button>
-                        <button type="submit">确认</button>
-                      </div>
-                    </Form>
-                  </main>
+        <Tabs
+          v-model:selected={refSelected.value}
+          class={s.tabs}
+          classPrefix={"customTabStyle"}
+          onUpdate:selected={(value) => {
+            if (value === "自定义") {
+              refOverlayVisible.value = true;
+            }
+          }}
+        >
+          <Tab name="本月">
+            <ItemSummary
+              startDate={timeList[0].start.format()}
+              endDate={timeList[0].end.format()}
+            />
+          </Tab>
+          <Tab name="上月">
+            <ItemSummary
+              startDate={timeList[1].start.format()}
+              endDate={timeList[1].end.format()}
+            />
+          </Tab>
+          <Tab name="今年">
+            <ItemSummary
+              startDate={timeList[2].start.format()}
+              endDate={timeList[2].end.format()}
+            />
+          </Tab>
+          <Tab name="自定义">
+            <ItemSummary
+              startDate={refCustomTime.value.start.format()}
+              endDate={refCustomTime.value.end.format()}
+            />
+          </Tab>
+        </Tabs>
+        <Overlay
+          show={refOverlayVisible.value}
+          class={s.overlay}
+          onClick={() => {
+            refOverlayVisible.value = false;
+            // refSelected.value = "本月";
+          }}
+        >
+          <div class={s.overlay_inner}>
+            <header>请选择时间</header>
+            <main>
+              <Form onSubmit={onSubmitCustomDate}>
+                <FormItem
+                  label="开始时间"
+                  modelValue={refCustomTime.value.start.format()}
+                  err_data={refErrBox.value}
+                  clan="date"
+                  onUpdate:modelValue={(emitTime: string) => {
+                    refCustomTime.value.start = new Time(new Date(emitTime));
+                  }}
+                ></FormItem>
+                <FormItem
+                  label="结束时间"
+                  modelValue={refCustomTime.value.end.format()}
+                  err_data={refErrBox.value}
+                  clan="date"
+                  onUpdate:modelValue={(emitTime: string) => {
+                    refCustomTime.value.end = new Time(new Date(emitTime));
+                  }}
+                ></FormItem>
+                <div class={[s.actions, s.formRow]}>
+                  <button
+                    type="button"
+                    onClick={() => (refOverlayVisible.value = false)}
+                  >
+                    取消
+                  </button>
+                  <button type="submit">确认</button>
                 </div>
-              </Overlay>
-              <div
-                style={{
-                  visibility: overlayVisibleRef.value ? "visible" : "hidden",
-                }}
-              >
-                <MyOverlay />
-                <MyOverlayMask onBlurOverlay={blurOverlay} />
-              </div>
-            </>
-          ),
-        }}
+              </Form>
+            </main>
+          </div>
+        </Overlay>
+        <div
+          style={{
+            visibility: overlayVisibleRef.value ? "visible" : "hidden",
+          }}
+        >
+          <MyOverlay />
+          <MyOverlayMask onBlurOverlay={blurOverlay} />
+        </div>
       </MainLayout>
     );
   },
@@ -242,59 +232,51 @@ export const ItemsCreate = defineComponent({
         }}
         class={s.layout} // todo: layout
       >
-        {{
-          default: () => (
-            // <Tabs
-            //   selected={selectedTab.value}
-            //  onUpdate:selected={updateSelected}
-            // >
-            <div class={s.wrapper}>
-              <Tabs v-model:selected={selectedTab.value} class={s.tabs}>
-                <Tab name="支出" class={s.tags_wrapper}>
-                  <div class={[s.tag, s.selected]}>
-                    <button
-                      onClick={() => {
-                        router.replace("/tags/create");
-                      }}
-                      class={s.sign}
-                    >
-                      <SvgIcon name={svg.round_add} class={s.createTag} />
-                    </button>
-                    <div class={s.name}>新增</div>
-                  </div>
-                  {refExpensesTags.value.map((tag) => (
-                    <div class={[s.tag, s.selected]}>
-                      <div class={s.sign}>{tag.sign}</div>
-                      <div class={s.name}>{tag.name}</div>
-                    </div>
-                  ))}
-                </Tab>
-                <Tab name="收入" class={s.tags_wrapper}>
-                  <div class={[s.tag, s.selected]}>
-                    <button
-                      onClick={() => {
-                        router.replace("/tags/create");
-                      }}
-                      class={s.sign}
-                    >
-                      <SvgIcon name={svg.round_add} class={s.createTag} />
-                    </button>
-                    <div class={s.name}>新增</div>
-                  </div>
-                  {refIncomeTags.value.map((tag) => (
-                    <div class={[s.tag, s.selected]}>
-                      <div class={s.sign}>{tag.sign}</div>
-                      <div class={s.name}>{tag.name}</div>
-                    </div>
-                  ))}
-                </Tab>
-              </Tabs>
-              <div class={s.inputPad_wrapper}>
-                <InputPad />
+        <div class={s.wrapper}>
+          <Tabs v-model:selected={selectedTab.value} class={s.tabs}>
+            <Tab name="支出" class={s.tags_wrapper}>
+              <div class={[s.tag, s.selected]}>
+                <button
+                  onClick={() => {
+                    router.replace("/tags/create");
+                  }}
+                  class={s.sign}
+                >
+                  <SvgIcon name={svg.round_add} class={s.createTag} />
+                </button>
+                <div class={s.name}>新增</div>
               </div>
-            </div>
-          ),
-        }}
+              {refExpensesTags.value.map((tag) => (
+                <div class={[s.tag, s.selected]}>
+                  <div class={s.sign}>{tag.sign}</div>
+                  <div class={s.name}>{tag.name}</div>
+                </div>
+              ))}
+            </Tab>
+            <Tab name="收入" class={s.tags_wrapper}>
+              <div class={[s.tag, s.selected]}>
+                <button
+                  onClick={() => {
+                    router.replace("/tags/create");
+                  }}
+                  class={s.sign}
+                >
+                  <SvgIcon name={svg.round_add} class={s.createTag} />
+                </button>
+                <div class={s.name}>新增</div>
+              </div>
+              {refIncomeTags.value.map((tag) => (
+                <div class={[s.tag, s.selected]}>
+                  <div class={s.sign}>{tag.sign}</div>
+                  <div class={s.name}>{tag.name}</div>
+                </div>
+              ))}
+            </Tab>
+          </Tabs>
+          <div class={s.inputPad_wrapper}>
+            <InputPad />
+          </div>
+        </div>
       </MainLayout>
     );
   },

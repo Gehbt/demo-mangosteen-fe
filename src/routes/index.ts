@@ -1,6 +1,8 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
 import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
+import { usedRender } from "@/components/usedRender";
 import { Items } from "@/views/Items";
+import { SignIn } from "@/views/SignIn";
 import { Start } from "@/views/Start";
 import { Tag } from "@/views/Tag";
 import { Dsetup } from "@components/Dsetup";
@@ -53,7 +55,7 @@ export const routes: RouteRecordRaw[] = [
       ...WelcomeTable,
     ],
   },
-  // { path: "/r", component: Ur , name:"useRender"},
+  { path: "/statistics", component: usedRender, name: "useRender" },
   {
     name: "start",
     path: "/start",
@@ -92,5 +94,10 @@ export const routes: RouteRecordRaw[] = [
         component: TagsEdit,
       },
     ],
+  },
+  {
+    name: "signIn",
+    path: "/sign_in",
+    component: SignIn,
   },
 ];
