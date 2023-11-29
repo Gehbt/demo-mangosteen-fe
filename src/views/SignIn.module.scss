@@ -1,2 +1,17 @@
 .wrapper {
+  .logo {
+    padding-top: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &_item {
+      width: 64px;
+    }
+    &_item_name {
+      color: var(--float-button-theme);
+      font-size: 32px;
+      font-weight: 500;
+    }
+  }
 }

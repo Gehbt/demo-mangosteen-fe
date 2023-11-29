@@ -5,6 +5,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate } from "@/composables/validate";
+import SvgIcon from "@/components/SvgIcon";
 export const SignIn = defineComponent({
   name: "SignIn",
   setup(props, context) {
@@ -35,15 +36,20 @@ export const SignIn = defineComponent({
       ]);
       e.preventDefault();
     };
+    const router = useRouter();
     return () => (
       <MainLayout
         title="登录页"
         icon={svg.back}
         toggle={() => {
-          console.log("todo :>> ");
+          router.replace("/start");
         }}
       >
         <div class={s.wrapper}>
+          <div class={s.logo}>
+            <SvgIcon class={s.logo_item} name={svg.blueberry2} w="64px" />
+            <h2 class={s.logo_item_name}>蓝莓记账</h2>
+          </div>
           <Form onSubmit={onSubmit}>
             <FormItem
               label="邮箱"
@@ -51,19 +57,19 @@ export const SignIn = defineComponent({
               err_data={refErr.value.email?.[0] ?? ""}
               clan="email"
               onUpdate:modelValue={(email: string) => {
-                console.log("email :>> ", email);
                 formData.email = email;
               }}
+              placeholder={"请输入邮箱,获取验证码"}
             ></FormItem>
             <FormItem
               label="验证码"
-              modelValue={formData.code}
               err_data={refErr.value.code?.[0] ?? ""}
               clan="smsCaptcha"
+              modelValue={formData.code}
               onUpdate:modelValue={(code: string) => {
-                console.log("code :>> ", code);
                 formData.code = code;
               }}
+              placeholder={"请输入六位数字"}
             ></FormItem>
             {/* <FormItem simple clan="custom"> */}
             <Button
@@ -72,7 +78,7 @@ export const SignIn = defineComponent({
               onClick={() => {
                 console.log("formData :>> ", toRaw(formData));
               }}
-              style={{ marginTop: "8px" }}
+              style={{ marginTop: "84px" }}
             >
               登录
             </Button>

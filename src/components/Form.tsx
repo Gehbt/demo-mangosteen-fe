@@ -2,7 +2,6 @@ import { PropType, computed, defineComponent, ref } from "vue";
 import s from "./Form.module.scss";
 import { EmojiSelect } from "./EmojiSelect";
 import { DatePicker, Popup } from "vant";
-import { Time } from "@/composables/date";
 import { Button } from "./Button";
 export const Form = defineComponent({
   name: "Form",
@@ -34,16 +33,15 @@ export const FormItem = defineComponent({
       type: String as PropType<string>,
       required: false,
     },
-    simple: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
     clan: {
       type: String as PropType<
         "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
       >,
       default: "input",
       required: true,
+    },
+    placeholder: {
+      type: String,
     },
   },
   emits: ["update:modelValue"],
@@ -60,6 +58,7 @@ export const FormItem = defineComponent({
                 s.input,
                 props.err_data !== "" ? s.error : "",
               ]}
+              placeholder={props.placeholder}
               type={props.clan}
               value={props.modelValue}
               onChange={(e) => {
@@ -96,7 +95,6 @@ export const FormItem = defineComponent({
                 readonly={true}
                 value={props.modelValue}
                 onClick={() => {
-                  console.log("props.modelValue :>> ", props.modelValue);
                   refDateVisible.value = true;
                 }}
                 class={[
@@ -104,6 +102,7 @@ export const FormItem = defineComponent({
                   s.input,
                   props.err_data !== "" ? s.error : "",
                 ]}
+                placeholder={props.placeholder}
               />
               <Popup
                 position="bottom"
@@ -147,12 +146,14 @@ export const FormItem = defineComponent({
                     (e.target as HTMLInputElement).value
                   );
                 }}
+                placeholder={props.placeholder}
               />
               <Button
                 class={[s.btn, s.formItem, s.smsCaptcha_btn]}
                 clan="button"
+                onClick={() => console.log("todo :>> ")}
               >
-                提交
+                发送
               </Button>
             </>
           );
@@ -165,18 +166,14 @@ export const FormItem = defineComponent({
     return () => (
       <div class={s.formRow}>
         <label class={s.formLabel}>
-          {!props.simple && (
-            <span class={s.formItem_name}>
-              {props.label}
-              <span>{props.clan === "emoji" ? props.modelValue : ""}</span>
-            </span>
-          )}
+          <span class={s.formItem_name}>
+            {props.label}
+            <span>{props.clan === "emoji" ? props.modelValue : ""}</span>
+          </span>
           <div class={s.formItem_value}>{content.value}</div>
-          {!props.simple && (
-            <div class={s.formItem_errorHint}>
-              <span>{props.err_data}</span>
-            </div>
-          )}
+          <div class={s.formItem_errorHint}>
+            <span>{props.err_data}</span>
+          </div>
         </label>
       </div>
     );
