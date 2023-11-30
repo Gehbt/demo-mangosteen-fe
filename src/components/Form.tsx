@@ -46,6 +46,7 @@ export const FormItem = defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, context) {
+    const toggle = ref(false);
     const refDateVisible = ref(false);
     const content = computed(() => {
       switch (props.clan) {
@@ -137,10 +138,6 @@ export const FormItem = defineComponent({
                 ]}
                 value={props.modelValue}
                 onChange={(e) => {
-                  console.log(
-                    "input value :>> ",
-                    (e.target as HTMLInputElement).value
-                  );
                   context.emit(
                     "update:modelValue",
                     (e.target as HTMLInputElement).value
@@ -149,9 +146,12 @@ export const FormItem = defineComponent({
                 placeholder={props.placeholder}
               />
               <Button
-                class={[s.btn, s.formItem, s.smsCaptcha_btn]}
+                class={[s.btn, s.formItem, s.smsCaptcha_btn, s.toggle]}
                 clan="button"
-                onClick={() => console.log("todo :>> ")}
+                onClick={() => {
+                  toggle.value = true;
+                  console.log("todo :>> ");
+                }}
               >
                 发送
               </Button>

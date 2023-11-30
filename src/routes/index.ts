@@ -4,6 +4,7 @@ import { usedRender } from "@/components/usedRender";
 import { Items } from "@/views/Items";
 import { SignIn } from "@/views/SignIn";
 import { Start } from "@/views/Start";
+import { Statistics } from "@/views/Statistics";
 import { Tag } from "@/views/Tag";
 import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
@@ -55,7 +56,7 @@ export const routes: RouteRecordRaw[] = [
       ...WelcomeTable,
     ],
   },
-  { path: "/statistics", component: usedRender, name: "useRender" },
+  { path: "/statistics", component: Statistics, name: "statistics" },
   {
     name: "start",
     path: "/start",
