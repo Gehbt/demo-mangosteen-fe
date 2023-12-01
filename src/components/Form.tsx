@@ -35,7 +35,13 @@ export const FormItem = defineComponent({
     },
     clan: {
       type: String as PropType<
-        "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+        | "input"
+        | "emoji"
+        | "custom"
+        | "date"
+        | "smsCaptcha"
+        | "email"
+        | "select"
       >,
       default: "input",
       required: true,
