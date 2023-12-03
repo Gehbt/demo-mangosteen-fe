@@ -1,6 +1,11 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 132px); // 90 + 42
 }
 .total {
+  top: 58px; // 纯测出来的
+  position: sticky;
   background: var(--total-bg);
   display: flex;
   justify-content: space-between;

@@ -28,24 +28,26 @@ export const Tabs = defineComponent({
       // });
       const inject_style = props.classPrefix;
       return (
-        <div class={[s.tabs, inject_style + "_tabs"]}>
-          <ol class={[s.tabs_nav, inject_style + "_tabs_nav"]}>
-            {tabs.map((item) => (
-              <li
-                class={(item.props?.name === props.selected
-                  ? [s.selected, inject_style + "_selected"]
-                  : [""]
-                ).concat(inject_style + "_tabs_nav_item")}
-                onClick={() =>
-                  context.emit("update:selected", item.props?.name)
-                }
-              >
-                {item.props?.name}
-              </li>
-            ))}
-          </ol>
-          <div>
-            {tabs.filter((item) => item.props?.name === props.selected)}
+        <div class={s.wrapper}>
+          <div class={[s.tabs, inject_style + "_tabs"]}>
+            <ol class={[s.tabs_nav, inject_style + "_tabs_nav"]}>
+              {tabs.map((item) => (
+                <li
+                  class={(item.props?.name === props.selected
+                    ? [s.selected, inject_style + "_selected"]
+                    : [""]
+                  ).concat(inject_style + "_tabs_nav_item")}
+                  onClick={() =>
+                    context.emit("update:selected", item.props?.name)
+                  }
+                >
+                  {item.props?.name}
+                </li>
+              ))}
+            </ol>
+            <div>
+              {tabs.filter((item) => item.props?.name === props.selected)}
+            </div>
           </div>
         </div>
       );
