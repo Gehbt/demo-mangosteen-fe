@@ -1,6 +1,5 @@
 import { defineComponent, PropType } from "vue";
 import s from "./ItemSummary.module.scss";
-import svg from "@svg_map";
 import { Floatbutton } from "./Button";
 export type ItemSummaryType = typeof ItemSummary;
 export const ItemSummary = defineComponent({
@@ -104,9 +103,69 @@ export const ItemSummary = defineComponent({
               <div class={s.time}>1999-12-13 12:39</div>
             </div>
           </li>
+          <li>
+            <div class={s.sign}>
+              <span>X</span>
+            </div>
+            <div class={s.text}>
+              <div class={s.tagAndAmount}>
+                <span class={s.tag}>旅行</span>
+                <span class={s.amount}>￥1234</span>
+              </div>
+              <div class={s.time}>1999-12-13 12:39</div>
+            </div>
+          </li>
+          <li>
+            <div class={s.sign}>
+              <span>X</span>
+            </div>
+            <div class={s.text}>
+              <div class={s.tagAndAmount}>
+                <span class={s.tag}>旅行</span>
+                <span class={s.amount}>￥1234</span>
+              </div>
+              <div class={s.time}>1999-12-13 12:39</div>
+            </div>
+          </li>
+          <li>
+            <div class={s.sign}>
+              <span>X</span>
+            </div>
+            <div class={s.text}>
+              <div class={s.tagAndAmount}>
+                <span class={s.tag}>旅行</span>
+                <span class={s.amount}>￥1234</span>
+              </div>
+              <div class={s.time}>1999-12-13 12:39</div>
+            </div>
+          </li>
+          <li>
+            <div class={s.sign}>
+              <span>X</span>
+            </div>
+            <div class={s.text}>
+              <div class={s.tagAndAmount}>
+                <span class={s.tag}>旅行</span>
+                <span class={s.amount}>￥1234</span>
+              </div>
+              <div class={s.time}>1999-12-13 12:39</div>
+            </div>
+          </li>
+          <li>
+            <div class={s.sign}>
+              <span>X</span>
+            </div>
+            <div class={s.text}>
+              <div class={s.tagAndAmount}>
+                <span class={s.tag}>旅行</span>
+                <span class={s.amount}>￥1234</span>
+              </div>
+              <div class={s.time}>1999-12-13 12:39</div>
+            </div>
+          </li>
         </ol>
         <div class={s.more}>向下滑动加载更多</div>
-        <Floatbutton iconName={svg.round_add} />
+        <Floatbutton iconName={svgs.round_add} />
       </div>
     );
   },

@@ -6,6 +6,7 @@
       "@components/*": ["./src/components/*"],
       "@views/*": ["./src/views/*"],
       "@svg_map": ["./src/assets/jsons/svg_map.json"],
+      "@type_svg_map": ["./src/assets/jsons/type_svg_map.ts"],
       "@emoji_list":["src/assets/jsons/emoji_list.ts"]
     },
     "types": [
@@ -27,7 +28,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "jsxImportSource":"vue",
-
+    "jsxFactory": "vue.h",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

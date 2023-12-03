@@ -1,6 +1,5 @@
 import { Ref, defineComponent, reactive, ref, toRaw } from "vue";
 import s from "./TagsEdit.module.scss";
-import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "./Button";
 import {
@@ -18,7 +17,7 @@ export const TagsEdit = defineComponent({
       <>
         <MainLayout
           title="新建标签"
-          icon={svg.back}
+          icon={svgs.back}
           toggle={() => router.replace("/items/create")}
         >
           <TagsForm>
@@ -57,7 +56,7 @@ export const TagsCreate = defineComponent({
     return () => (
       <MainLayout
         title="新建标签"
-        icon={svg.back}
+        icon={svgs.back}
         toggle={() => router.replace("/items/create")}
       >
         <TagsForm>

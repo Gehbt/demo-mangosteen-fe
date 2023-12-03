@@ -1,7 +1,5 @@
 import { defineComponent, ref } from "vue";
-import SvgIcon from "./SvgIcon";
 import s from "./Overlay.module.scss";
-import svg from "@svg_map";
 import { RouterLink } from "vue-router/auto";
 export const Overlay = defineComponent({
   name: "Overlay",
@@ -27,19 +25,19 @@ export const Overlay = defineComponent({
           <ul class={s.action_list}>
             <li>
               <RouterLink to="/statistics" class={s.action}>
-                <SvgIcon class={s.icon} name={svg.charts3}></SvgIcon>
+                <svg-icon class={s.icon} name={svgs.charts3}></svg-icon>
                 统计图表
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/notify" class={s.action}>
-                <SvgIcon class={s.icon} name={svg.bell}></SvgIcon>
+                <svg-icon class={s.icon} name={svgs.bell}></svg-icon>
                 记账提醒
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/export" class={s.action}>
-                <SvgIcon class={s.icon} name={svg.export}></SvgIcon>
+                <svg-icon class={s.icon} name={svgs.export}></svg-icon>
                 导出数据
               </RouterLink>
             </li>
@@ -79,7 +77,7 @@ export const OverlayIcon = defineComponent({
     return () => (
       <>
         <div onClick={toggleOverlay}>
-          <SvgIcon name={svg.menu} />
+          <svg-icon name={svgs.menu} />
         </div>
         <div
           style={{

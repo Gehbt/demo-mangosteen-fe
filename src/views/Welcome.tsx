@@ -2,11 +2,8 @@ import { Transition, VNode, defineComponent, ref, watchEffect } from "vue";
 import { RouterView } from "vue-router/auto";
 import s from "./Welcome.module.scss";
 import { RouteLocationNormalizedLoaded } from "vue-router";
-import svg from "@svg_map";
-import SvgIcon from "@components/SvgIcon";
 import { Direction, useSwiper } from "@/composables/swiper";
 import { throttle } from "lodash";
-
 export const Welcome = defineComponent({
   name: "Welcome",
   setup() {
@@ -44,10 +41,11 @@ export const Welcome = defineComponent({
         }
       }
     });
+
     return () => (
       <div class={s.wrapper}>
         <header>
-          <SvgIcon name={svg.blueberry2} class={s.main_svg_container} />
+          <svg-icon name={svgs.blueberry2} class={s.main_svg_container} />
           <h2>蓝莓记账</h2>
         </header>
         <main ref={main} class={s.main}>

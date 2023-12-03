@@ -1,5 +1,4 @@
 import { PropType, defineComponent, ref } from "vue";
-import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
 import { Time } from "@/composables/date";
@@ -62,7 +61,7 @@ export const TabsTime = defineComponent({
     return () => (
       <MainLayout
         title={props.title}
-        icon={svg.menu}
+        icon={svgs.menu}
         toggle={toggleOverlay}
         class={s.layout}
       >

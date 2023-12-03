@@ -54,7 +54,7 @@ export default defineComponent({
         height={this.size.h ?? this.size.w}
         color={this.color}
       >
-        <use xlinkHref={this.symbolId} />
+        <use href={this.symbolId} />
       </svg>
     );
   },

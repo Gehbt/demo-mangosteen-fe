@@ -1,11 +1,9 @@
 import { Ref, defineComponent, reactive, ref, toRaw } from "vue";
 import s from "./SignIn.module.scss";
-import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate } from "@/composables/validate";
-import SvgIcon from "@/components/SvgIcon";
 export const SignIn = defineComponent({
   name: "SignIn",
   setup(props, context) {
@@ -40,14 +38,14 @@ export const SignIn = defineComponent({
     return () => (
       <MainLayout
         title="登录页"
-        icon={svg.back}
+        icon={svgs.back}
         toggle={() => {
           router.replace("/start");
         }}
       >
         <div class={s.wrapper}>
           <div class={s.logo}>
-            <SvgIcon class={s.logo_item} name={svg.blueberry2} w="64px" />
+            <svg-icon class={s.logo_item} name={svgs.blueberry2} w="64px" />
             <h2 class={s.logo_item_name}>蓝莓记账</h2>
           </div>
           <Form onSubmit={onSubmit}>

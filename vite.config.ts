@@ -22,6 +22,7 @@ const alias: Record<string, string> = {
   "@components": pathResolve("./src/components"),
   "@views": pathResolve("./src/views"),
   "@svg_map": pathResolve("./src/assets/jsons/svg_map.json"),
+  "@type_svg_map": pathResolve("./src/assets/jsons/type_svg_map.ts"),
   "@emoji_list": pathResolve("./src/assets/jsons/emoji_list.ts"),
 };
 
@@ -48,6 +49,7 @@ export default defineConfig({
         }), // if needed
       },
     }),
+    // vue()
     // vueJsx({
     //   transformOn: true,
     //   mergeProps: true,
@@ -57,19 +59,30 @@ export default defineConfig({
     // svg({
     // })
     AutoImport({
+      vueTemplate: true,
       dts: true,
       imports: [
         VueRouterAutoImports,
+        "vue",
+        "pinia",
+        "@vueuse/core",
+        {
+          from: "@type_svg_map",
+          imports: ["svgs"],
+        },
+        {
+          from: "@components/SvgIcon.vue",
+          imports: [["default", "SvgIcon"]],
+        },
         // {
-        //   from: "src/assets/icons",
-        //   imports: readdirSync("./src/assets/icons").map((p) =>
-        //     basename(p, ".svg")
-        //   ),
-        //   type: false,
+        //   from: "@components/SvgIcon.tsx",
+        //   imports: [["SvgIcons", "SvgIconTsx"]],
         // },
       ],
     }),
-    Components({ resolvers: [VantResolver()] }),
+    Components({
+      resolvers: [VantResolver()],
+    }),
   ],
   resolve: {
     alias,

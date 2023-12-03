@@ -2,8 +2,6 @@ import { Button, Floatbutton } from "@/components/Button";
 import { defineComponent, ref } from "vue";
 import s from "./Start.module.scss";
 import { Center } from "@/components/Center";
-import svg from "@svg_map";
-import SvgIcon from "@/components/SvgIcon";
 import { Overlay, OverlayMask } from "@/components/Overlay";
 import { RouterLink } from "vue-router/auto";
 import { MainLayout } from "@/layouts/MainLayout";
@@ -19,9 +17,9 @@ export const Start = defineComponent({
       overlayVisibleRef.value = false;
     };
     return () => (
-      <MainLayout title="蓝莓记账" icon={svg.menu} toggle={toggleOverlay}>
+      <MainLayout title="蓝莓记账" icon={svgs.menu} toggle={toggleOverlay}>
         <Center direction="vertical" class={s.svg_wrapper}>
-          <SvgIcon name={svg.piggy2} class={s.svg} />
+          <svg-icon name={svgs.piggy2} class={s.svg} />
         </Center>
         <div class={s.btn_wrapper}>
           <RouterLink to="/items/create">

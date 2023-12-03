@@ -11,5 +11,9 @@ JSON.stringify(svg_map);
 
 writeFile("src/assets/jsons/svg_map.json", JSON.stringify(svg_map), (err) => {
   if (err) throw err;
-  console.log("The svg map generated!");
+  console.log(
+    `# ---------------------------------------------------------------------------- #
+#                            The svg map generated!                            #
+# ---------------------------------------------------------------------------- #`
+  );
 });

@@ -1,7 +1,5 @@
 import { computed, defineComponent, ref } from "vue";
 import s from "./InputPad.module.scss";
-import svg from "@svg_map";
-import SvgIcon from "./SvgIcon";
 import { DatePicker, Popup } from "vant";
 import { time } from "@/composables/date";
 import { useSL } from "@/composables/save_load";
@@ -141,7 +139,7 @@ export const InputPad = defineComponent({
       <div class={s.inputPad}>
         <div class={s.dataAmount}>
           <span class={s.date}>
-            <SvgIcon src={svg.datetime} w="24px" class={s.icon} />
+            <svg-icon src={svgs.datetime} w="24px" class={s.icon} />
             <span>
               <span
                 onClick={() => {
@@ -180,7 +178,7 @@ export const InputPad = defineComponent({
             </span>
           </span>
           <span class={s.amount}>
-            <SvgIcon name={svg.yuan} class={s.yuan} />
+            <svg-icon name={svgs.yuan} class={s.yuan} />
             {refAmount.value}
           </span>
         </div>

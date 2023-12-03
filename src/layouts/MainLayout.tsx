@@ -1,6 +1,5 @@
 import { PropType, defineComponent } from "vue";
 import { Navbar } from "@/components/Navbar";
-import SvgIcon from "@/components/SvgIcon";
 import s from "./MainLayout.module.scss";
 export const MainLayout = defineComponent({
   name: "MainLayout",
@@ -25,7 +24,7 @@ export const MainLayout = defineComponent({
           {{
             title: () => props.title,
             icon: () => (
-              <SvgIcon
+              <svg-icon
                 name={props.icon}
                 style={{
                   width: "30px",
@@ -33,7 +32,7 @@ export const MainLayout = defineComponent({
                   position: "relative",
                   top: "2px",
                 }}
-              ></SvgIcon>
+              ></svg-icon>
             ),
           }}
         </Navbar>

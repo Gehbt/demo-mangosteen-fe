@@ -1,11 +1,8 @@
 import { defineComponent, ref } from "vue";
-// import s from "./ItemsList.module.scss";
-import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";
 import s from "./ItemsList.module.scss";
-import SvgIcon from "./SvgIcon";
 import { ItemSummary } from "./ItemSummary";
 import { TabsTime } from "@/layouts/TabsTimeLayout";
 export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
@@ -33,6 +30,102 @@ export const ItemsCreate = defineComponent({
         name: "打车",
         sign: "🚕",
         kind: "交通",
+      },
+      {
+        id: "3",
+        name: "吃饭",
+        sign: "🍕",
+        kind: "食品",
+      },
+      {
+        id: "4",
+        name: "购物",
+        sign: "🧦",
+        kind: "商品",
+      },
+      {
+        id: "5",
+        name: "打车",
+        sign: "🚕",
+        kind: "交通",
+      },
+      {
+        id: "6",
+        name: "买肉",
+        sign: "🦆",
+        kind: "食品",
+      },
+      {
+        id: "3",
+        name: "吃饭",
+        sign: "🍕",
+        kind: "食品",
+      },
+      {
+        id: "4",
+        name: "购物",
+        sign: "🧦",
+        kind: "商品",
+      },
+      {
+        id: "5",
+        name: "打车",
+        sign: "🚕",
+        kind: "交通",
+      },
+      {
+        id: "6",
+        name: "买肉",
+        sign: "🦆",
+        kind: "食品",
+      },
+      {
+        id: "3",
+        name: "吃饭",
+        sign: "🍕",
+        kind: "食品",
+      },
+      {
+        id: "4",
+        name: "购物",
+        sign: "🧦",
+        kind: "商品",
+      },
+      {
+        id: "5",
+        name: "打车",
+        sign: "🚕",
+        kind: "交通",
+      },
+      {
+        id: "6",
+        name: "买肉",
+        sign: "🦆",
+        kind: "食品",
+      },
+      {
+        id: "3",
+        name: "吃饭",
+        sign: "🍕",
+        kind: "食品",
+      },
+      {
+        id: "4",
+        name: "购物",
+        sign: "🧦",
+        kind: "商品",
+      },
+      {
+        id: "5",
+        name: "打车",
+        sign: "🚕",
+        kind: "交通",
+      },
+      {
+        id: "6",
+        name: "买肉",
+        sign: "🦆",
+        kind: "食品",
       },
       {
         id: "3",
@@ -92,7 +185,7 @@ export const ItemsCreate = defineComponent({
     return () => (
       <MainLayout
         title="记一笔"
-        icon={svg.back}
+        icon={svgs.back}
         toggle={() => {
           console.log("back :>> /start");
           router.replace("/start");
@@ -109,7 +202,7 @@ export const ItemsCreate = defineComponent({
                   }}
                   class={s.sign}
                 >
-                  <SvgIcon name={svg.round_add} class={s.createTag} />
+                  <svg-icon name={svgs.round_add} class={s.createTag} />
                 </button>
                 <div class={s.name}>新增</div>
               </div>
@@ -128,7 +221,7 @@ export const ItemsCreate = defineComponent({
                   }}
                   class={s.sign}
                 >
-                  <SvgIcon name={svg.round_add} class={s.createTag} />
+                  <svg-icon name={svgs.round_add} class={s.createTag} />
                 </button>
                 <div class={s.name}>新增</div>
               </div>

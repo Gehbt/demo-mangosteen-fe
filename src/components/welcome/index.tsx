@@ -1,7 +1,5 @@
 import { defineComponent } from "vue";
 import s from "./index.module.scss";
-import svg from "@svg_map";
-import SvgIcon from "../SvgIcon";
 import { RouterLink } from "vue-router";
 
 export const W1 = defineComponent({
@@ -9,7 +7,7 @@ export const W1 = defineComponent({
   setup: () => {
     return () => (
       <div class={s.card}>
-        <SvgIcon src={svg.piggy2} w="134px" />
+        <svg-icon src={svgs.piggy2} w="134px" />
         <h2>
           会赚钱
           <br />
@@ -24,7 +22,7 @@ export const W2 = defineComponent({
   name: "W2",
   render: () => (
     <div class={s.card}>
-      <SvgIcon src={svg.clock} w="108px" />
+      <svg-icon src={svgs.clock} w="108px" />
       <h2>
         每日提醒
         <br />
@@ -37,7 +35,7 @@ export const W3 = defineComponent({
   name: "W3",
   render: () => (
     <div class={s.card}>
-      <SvgIcon src={svg.charts2} w="112px" />
+      <svg-icon src={svgs.charts2} w="112px" />
       <h2>
         数据可视化
         <br />
@@ -51,7 +49,7 @@ export const W4 = defineComponent({
   render: () => {
     return (
       <div class={s.card}>
-        <SvgIcon src={svg.cloud2} w="128px" />
+        <svg-icon src={svgs.cloud2} w="128px" />
         <h2>
           云备份
           <br />
