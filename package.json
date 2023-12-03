@@ -15,6 +15,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@vueuse/core": "^10.6.0",
     "dayjs": "^1.11.10",
+    "echarts": "^5.4.3",
     "jsdoc": "^4.0.2",
     "lodash": "^4.17.21",
     "sass": "^1.69.0",

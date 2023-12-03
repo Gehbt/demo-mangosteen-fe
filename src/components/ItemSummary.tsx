@@ -2,6 +2,7 @@ import { defineComponent, PropType } from "vue";
 import s from "./ItemSummary.module.scss";
 import svg from "@svg_map";
 import { Floatbutton } from "./Button";
+export type ItemSummaryType = typeof ItemSummary;
 export const ItemSummary = defineComponent({
   props: {
     startDate: {

@@ -12,7 +12,7 @@ export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
-    return () => <TabsTime comp={ItemSummary as any} title="蓝莓记账" />;
+    return () => <TabsTime comp={ItemSummary} title="蓝莓记账" />;
   },
 });
 

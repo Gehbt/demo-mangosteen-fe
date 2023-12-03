@@ -1,4 +1,4 @@
-import { DefineComponent, PropType, defineComponent, ref } from "vue";
+import { PropType, defineComponent, ref } from "vue";
 import svg from "@svg_map";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
@@ -10,16 +10,14 @@ import {
 } from "@/components/Overlay";
 import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
+import type { ChartsType } from "@/components/statistics/Charts";
+import type { ItemSummaryType } from "@/components/ItemSummary";
 export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
-type CompType = {
-  startDate: string;
-  endDate: string;
-};
 export const TabsTime = defineComponent({
   name: "TabsTimeLayout",
   props: {
     comp: {
-      type: Object as PropType<DefineComponent<CompType>>,
+      type: Object as PropType<ChartsType | ItemSummaryType>, //实际上它们的 类型一样
       required: true,
     },
     title: {
