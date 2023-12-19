@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
+    "prepare": "pnpm gen-svg-map",
     "gen-svg-map": "tsx src/batch/gen-svg-map.ts"
   },
   "dependencies": {
