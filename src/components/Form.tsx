@@ -58,6 +58,18 @@ export const FormItem = defineComponent({
     const timer = ref<number>();
     const count = ref<number>(props.countFrom);
     const isCounting = computed(() => !!timer.value);
+    const useCountDown = () => {
+      timer.value = setInterval(() => {
+        count.value -= 1;
+        if (count.value === 0) {
+          clearInterval(timer.value);
+          // re init
+          timer.value = undefined;
+          count.value = props.countFrom;
+        }
+      }, 1000);
+    };
+    context.expose({ useCountDown });
     const content = computed(() => {
       switch (props.clan) {
         case "input":
@@ -165,22 +177,9 @@ export const FormItem = defineComponent({
                 disableByCtx={isCounting.value}
                 clan="button"
                 onClick={() => {
-                  props
-                    .onToggle?.()
-                    .then(() => {
-                      timer.value = setInterval(() => {
-                        count.value -= 1;
-                        if (count.value === 0) {
-                          clearInterval(timer.value);
-                          // re init
-                          timer.value = undefined;
-                          count.value = props.countFrom;
-                        }
-                      }, 1000);
-                    })
-                    .catch(() => {
-                      return;
-                    });
+                  props.onToggle?.().catch((err: Array<any>) => {
+                    console.log(...err);
+                  });
                 }}
               >
                 {isCounting.value
@@ -211,4 +210,3 @@ export const FormItem = defineComponent({
     );
   },
 });
-function useCountDown() {}

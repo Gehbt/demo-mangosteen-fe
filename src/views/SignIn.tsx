@@ -27,7 +27,8 @@ export const SignIn = defineComponent({
       e.preventDefault();
     };
     const router = useRouter();
-    const clickSendCode = async (e?: Event) => {
+    const refSmsCodeComponent = ref(); // reference FormItem-smscode
+    const clickSendCode = (e?: Event) => {
       formData.email = formData.email.trim();
       const email = computed(() => formData.email);
       refErr.value = validate(
@@ -50,33 +51,29 @@ export const SignIn = defineComponent({
         true
       );
       e?.preventDefault();
-      console.log("err :>> ", refErr.value.email);
-      console.log(`email :>> '${email.value}'`);
       try {
         if (refErr.value.email) {
-          return await Promise.reject(refErr.value.email);
+          return Promise.reject(refErr.value.email);
+        } else {
+          refSmsCodeComponent.value.useCountDown();
+          // await axios.post(
+          //   "/api/v1/sendmail",
+          //   {
+          //     body: {
+          //       email: email.value,
+          //     },
+          //   },
+          //   {
+          //     headers: {
+          //       "Content-Type": "application/json; charset=utf-8",
+          //     },
+          //   }
+          // );
+          return Promise.resolve();
         }
-        Promise.resolve();
-        return await Promise.resolve();
       } catch (e: unknown) {
-        console.log("error :>> Response");
-        throw new Error(e as string);
+        return Promise.resolve();
       }
-
-      // await axios.post(
-      //   "/api/v1/sendmail",
-      //   {
-      //     body: {
-      //       email: email.value,
-      //     },
-      //   },
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json; charset=utf-8",
-      //     },
-      //   }
-      // );
-      // console.log("response :>> ", response);
     };
     const hasCode6 = computed(() =>
       formData.code.length === 6 ? true : false
@@ -107,6 +104,7 @@ export const SignIn = defineComponent({
             ></FormItem>
             <FormItem
               label="验证码"
+              ref={refSmsCodeComponent}
               err_data={refErr.value.code?.[0] ?? ""}
               clan="smsCaptcha"
               modelValue={formData.code}
