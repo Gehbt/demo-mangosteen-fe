@@ -43,11 +43,21 @@ export const FormItem = defineComponent({
     placeholder: {
       type: String,
     },
+    onToggle: {
+      type: Function as PropType<(e?: Event) => Promise<void>>,
+    },
+    countFrom: {
+      type: Number,
+      default: 60,
+      required: false,
+    },
   },
   emits: ["update:modelValue"],
   setup(props, context) {
-    const toggle = ref(false);
     const refDateVisible = ref(false);
+    const timer = ref<number>();
+    const count = ref<number>(props.countFrom);
+    const isCounting = computed(() => !!timer.value);
     const content = computed(() => {
       switch (props.clan) {
         case "input":
@@ -146,14 +156,36 @@ export const FormItem = defineComponent({
                 placeholder={props.placeholder}
               />
               <Button
-                class={[s.btn, s.formItem, s.smsCaptcha_btn, s.toggle]}
+                class={[
+                  s.btn,
+                  s.formItem,
+                  s.smsCaptcha_btn,
+                  isCounting.value ? s.toggled : "",
+                ]}
+                disableByCtx={isCounting.value}
                 clan="button"
                 onClick={() => {
-                  toggle.value = true;
-                  console.log("todo :>> ");
+                  props
+                    .onToggle?.()
+                    .then(() => {
+                      timer.value = setInterval(() => {
+                        count.value -= 1;
+                        if (count.value === 0) {
+                          clearInterval(timer.value);
+                          // re init
+                          timer.value = undefined;
+                          count.value = props.countFrom;
+                        }
+                      }, 1000);
+                    })
+                    .catch(() => {
+                      return;
+                    });
                 }}
               >
-                发送
+                {isCounting.value
+                  ? count.value.toString() + "秒后再发送"
+                  : "发送"}
               </Button>
             </>
           );
@@ -179,3 +211,4 @@ export const FormItem = defineComponent({
     );
   },
 });
+function useCountDown() {}

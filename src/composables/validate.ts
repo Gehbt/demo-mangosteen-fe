@@ -11,18 +11,15 @@ interface RuleOptionType {
   pattern: RegExp;
 }
 type RuleOptions = keyof RuleOptionType;
-type RuleTypeWrapper<
+type RuleType<
   K extends Record<string, unknown>,
-  T extends RuleOptions
+  T extends RuleOptions = RuleOptions
 > = T extends RuleOptions
   ? Omit<RuleTypeBase<K>, "clan"> & { clan: T } & {
-      [k in T]: RuleOptionType[T];
-    }
+    [k in T]: RuleOptionType[T];
+  }
   : never;
-export type RuleType<K extends Record<string, unknown>> = RuleTypeWrapper<
-  K,
-  RuleOptions
->;
+
 // 多个rule
 export type RulesType<K extends Record<string, unknown>> = RuleType<K>[];
 // 好难
@@ -33,7 +30,8 @@ export type InvalidateError<T> = {
 
 export function validate<T extends FormDataType>(
   formData: T,
-  rules: RulesType<T>
+  rules: RulesType<T>,
+  reversePattern: boolean = false
 ): InvalidateError<T> {
   const errors: InvalidateError<T> = {};
   rules.map((rule) => {
@@ -47,7 +45,7 @@ export function validate<T extends FormDataType>(
         }
         break;
       case "pattern":
-        if (value && rule.pattern.test(value.toString())) {
+        if ((value && rule.pattern.test(value.toString())) !== reversePattern) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(msg);
         }

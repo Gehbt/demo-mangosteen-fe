@@ -80,7 +80,7 @@ export const WEndFooter = defineComponent({
         <RouterLink class={s.fake} to={"/welcome"}>
           上页
         </RouterLink>
-        <RouterLink to={"/welcome"}>完成</RouterLink>
+        <RouterLink to={"/start"}>完成</RouterLink>
         <RouterLink class={s.fake} to={"/welcome"}>
           占位
         </RouterLink>

@@ -32,6 +32,11 @@
     &_btn {
       flex-grow: 1;
       margin-left: 16px;
+      &.toggled {
+        background-color: var(--emoji-nav-text);
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
     }
   }
   // &.smsCaptcha:not(toggle) {

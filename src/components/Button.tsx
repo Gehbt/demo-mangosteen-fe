@@ -21,12 +21,16 @@ export const Button = defineComponent({
       type: String as PropType<"button" | "submit" | "reset">,
       default: "button",
     },
+    disableByCtx: {
+      type: Boolean as PropType<boolean>,
+    },
   },
   name: "Button",
   setup(props, context) {
     return () => (
       <button
         class={[s.btn, props.class, s[props.level]]}
+        disabled={props.disableByCtx}
         onClick={props.onClick}
         type={props.clan}
       >
@@ -43,12 +47,16 @@ export const Floatbutton = defineComponent({
       default: svgs.round_add,
       required: false,
     },
+    onClick: {
+      type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
+      required: false,
+    },
   },
   setup(props) {
     return () => (
-      <div class={s.fbtn}>
+      <button class={s.fbtn} onClick={props.onClick}>
         <svg-icon class={s.icon} name={props.iconName}></svg-icon>
-      </div>
+      </button>
     );
   },
 });
