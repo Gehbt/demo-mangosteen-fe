@@ -5,6 +5,7 @@ import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate } from "@/composables/validate";
 import axios from "axios";
+import { httpClient } from "@/shared/http";
 interface EmailSchema {
   body: { email: string };
 }
@@ -56,20 +57,18 @@ export const SignIn = defineComponent({
           return Promise.reject(refErr.value.email);
         } else {
           refSmsCodeComponent.value.useCountDown();
-          // await axios.post(
-          //   "/api/v1/sendmail",
-          //   {
-          //     body: {
-          //       email: email.value,
-          //     },
-          //   },
-          //   {
-          //     headers: {
-          //       "Content-Type": "application/json; charset=utf-8",
-          //     },
-          //   }
-          // );
-          return Promise.resolve();
+          const respone = httpClient.post(
+            "/api/v1/sendmail",
+            {
+              email: email.value,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+              },
+            }
+          );
+          return respone; // Promise.resolve();
         }
       } catch (e: unknown) {
         return Promise.resolve();

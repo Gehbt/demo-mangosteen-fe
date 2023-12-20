@@ -44,7 +44,7 @@ export const FormItem = defineComponent({
       type: String,
     },
     onToggle: {
-      type: Function as PropType<(e?: Event) => Promise<void>>,
+      type: Function as PropType<(e?: Event) => Promise<any>>,
     },
     countFrom: {
       type: Number,
