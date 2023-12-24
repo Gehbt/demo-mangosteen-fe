@@ -58,7 +58,7 @@ export const SignIn = defineComponent({
         } else {
           refSmsCodeComponent.value.useCountDown();
           const respone = httpClient.post(
-            "/api/v1/sendmail",
+            "/sendmail",
             {
               email: email.value,
             },
@@ -70,8 +70,13 @@ export const SignIn = defineComponent({
           );
           return respone; // Promise.resolve();
         }
-      } catch (e: unknown) {
-        return Promise.resolve();
+      } catch (e: any) {
+        if (e.response?.status === 422) {
+          // 绕过前端从接口发送才可能发生
+          Object.assign(refErr.value, e.respone.data.errors);
+          alert("Email格式错误!"); // TODO: dialog
+        }
+        throw e;
       }
     };
     const hasCode6 = computed(() =>

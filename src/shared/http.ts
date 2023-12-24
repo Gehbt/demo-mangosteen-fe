@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
 export class Http {
   instance: AxiosInstance
@@ -39,4 +39,15 @@ export class Http {
 
 export const httpClient = new Http('/api/v1');
 // http.instance.interceptors.request.use(config => { }, () => { })
-// http.instance.interceptors.response.use(config => { }, () => { })
+httpClient.instance.interceptors.response.use(response => {
+  return response
+}, (error) => {
+  if (error.response) {
+    const err = error as AxiosError
+    // shared err
+    if (err.response?.status === 429) {
+      alert("请求频繁!") // TODO: dialog
+    }
+  }
+  throw error;
+})

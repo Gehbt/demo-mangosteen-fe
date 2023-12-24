@@ -28,3 +28,5 @@ components.d.ts
 auto-imports.d.ts
 typed-router.d.ts
 src/assets/jsons/svg_map.json
+
+SPEC.md
