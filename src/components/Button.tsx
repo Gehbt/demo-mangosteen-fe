@@ -9,6 +9,7 @@ export const Button = defineComponent({
   props: {
     onClick: {
       type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
+      required: true,
     },
     class: {
       type: String as PropType<string | string[]>,
@@ -23,15 +24,41 @@ export const Button = defineComponent({
     },
     disableByCtx: {
       type: Boolean as PropType<boolean>,
+      default: false,
+    },
+    selfDisciplineMode: {
+      type: Boolean as PropType<boolean>,
+      default: false,
+      required: false,
     },
   },
   name: "Button",
   setup(props, context) {
+    const self_disable = ref(false);
+    const wrapper_onclick = (e: MouseEvent | TouchEvent) => {
+      props.onClick?.(e);
+      self_disable.value = true;
+      setTimeout(() => {
+        self_disable.value = false;
+      }, 1000);
+    };
+    const _disable = computed(() => {
+      if (!props.selfDisciplineMode) {
+        return props.disableByCtx;
+      } else {
+        // settinged selfDisciplineMode
+        if (self_disable.value && !props.disableByCtx) {
+          return true;
+        } else {
+          return props.disableByCtx;
+        }
+      }
+    });
     return () => (
       <button
         class={[s.btn, props.class, s[props.level]]}
-        disabled={props.disableByCtx}
-        onClick={props.onClick}
+        disabled={_disable.value}
+        onClick={wrapper_onclick}
         type={props.clan}
       >
         {context.slots.default?.()}
