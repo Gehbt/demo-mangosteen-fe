@@ -5,7 +5,16 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
   },
-  "include": ["vite.config.ts","src/batch/*.ts"]
+  "include": [
+    "vite.config.ts",
+    "src/batch/*.ts",
+    "./env.d.ts",
+    "./src/batch",
+    "./src/scripts",
+    "src/scripts/gen-export-index.ts" // "./src/assets"
+  ]
 }

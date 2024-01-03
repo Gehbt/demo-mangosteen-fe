@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { resolve } from "path";
@@ -25,7 +25,7 @@ const alias: Record<string, string> = {
   "@type_svg_map": pathResolve("./src/assets/jsons/type_svg_map.ts"),
   "@emoji_list": pathResolve("./src/assets/jsons/emoji_list.ts"),
 };
-
+const env = loadEnv("dev", process.cwd(), "LOCAL_");
 // https://vitejs.dev/config/
 export default defineConfig({
   // base:"/mangosteen-fe/dist/", // build path in github
@@ -61,6 +61,7 @@ export default defineConfig({
     AutoImport({
       vueTemplate: true,
       dts: true,
+      resolvers: [VantResolver()],
       imports: [
         VueRouterAutoImports,
         "vue",

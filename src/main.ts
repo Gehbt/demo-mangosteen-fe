@@ -3,7 +3,7 @@ import { App } from "./App";
 import "./App.scss";
 import { createRouter } from "vue-router";
 import { routes } from "@/routes";
-import { history } from "@/shared/history";
+import { history } from "@/routes/history";
 import "vant/lib/index.css";
 import "virtual:svg-icons-register";
 // const history = createWebHashHistory();

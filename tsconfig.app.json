@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@views/*": [
+        "./src/views/*"
+      ],
+      "@svg_map": [
+        "./src/assets/jsons/svg_map.json"
+      ],
+      "@type_svg_map": [
+        "./src/assets/jsons/type_svg_map.ts"
+      ],
+      "@emoji_list": [
+        "src/assets/jsons/emoji_list.ts"
+      ]
+    },
+    "types": [
+      "vite/client",
+      "unplugin-vue-macros/macros-global"
+    ],
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "jsxFactory": "vue.h",
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/App.tsx",
+    "src/*.vue",
+    "src/**/*.vue",
+    "env.client.d.ts",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "src/assets/jsons/emoji_list.json",
+    "src/batch",
+    "src/scripts",
+    "src/assets"
+  ],
+}

@@ -27,3 +27,7 @@ Form
 Input
 Emoji
 Button
+
+file_path:
+src/scripts   更新文件目录
+src/batch     更新资源目录
