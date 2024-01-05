@@ -1,5 +1,5 @@
 import { Ref, computed, onMounted, onUnmounted, ref } from "vue";
-import { throttle } from "lodash";
+import { throttle } from "lodash-es";
 type Point = { x: number; y: number };
 export enum Direction {
   o = "0",

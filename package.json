@@ -9,7 +9,9 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "prepare": "pnpm gen-svg-map",
-    "gen-svg-map": "tsx src/batch/gen-svg-map.ts"
+    "gen-svg-map": "tsx src/batch/gen-svg-map.ts",
+    "svgo": "svgo -f ./src/assets/icons -o ./src/assets/icons/filter --config=./svgo.config.cjs",
+    "svgo-color": "svgo -f ./src/assets/icons -o ./src/assets/icons/filter"
   },
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^3.0.2",
@@ -29,7 +31,8 @@
     "vite-plugin-inspect": "^0.7.40",
     "vite-plugin-svgo": "^1.3.0",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-types": "^5.1.1"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",

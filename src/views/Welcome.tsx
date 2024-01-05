@@ -3,7 +3,7 @@ import { RouterView } from "vue-router/auto";
 import s from "./Welcome.module.scss";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 import { Direction, useSwiper } from "@/composables/swiper";
-import { throttle } from "lodash";
+import { throttle } from "lodash-es";
 export const Welcome = defineComponent({
   name: "Welcome",
   setup() {

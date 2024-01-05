@@ -6,7 +6,7 @@ import Inspect from "vite-plugin-inspect";
 import VueDevTools from "vite-plugin-vue-devtools";
 import AutoImport from "unplugin-auto-import/vite";
 import { VueRouterAutoImports } from "unplugin-vue-router"; // can`t use in nod 18.17.x-
-// import svg from 'vite-plugin-svgo'
+// import svg from "vite-plugin-svgo";
 import VueRouter from "unplugin-vue-router/vite";
 import vueMacros from "unplugin-vue-macros/vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
@@ -31,7 +31,7 @@ export default defineConfig({
   // base:"/mangosteen-fe/dist/", // build path in github
   plugins: [
     createSvgIconsPlugin({
-      iconDirs: [resolve(process.cwd()), "src/assets/icons"],
+      iconDirs: [resolve(process.cwd()), "src/assets/icons/filter"],
       symbolId: "icon-[dir]-[name]",
     }),
     VueRouter({
@@ -74,6 +74,27 @@ export default defineConfig({
         {
           from: "@components/SvgIcon.vue",
           imports: [["default", "SvgIcon"]],
+        },
+        {
+          axios: [
+            // default imports
+            ["default", "axios"], // import { default as axios } from 'axios',
+          ],
+        },
+        {
+          from: "vue-types",
+          imports: [
+            "any",
+            "func",
+            "bool",
+            "string",
+            "number",
+            "array",
+            "integer",
+            "symbol",
+            "object",
+            "nullable",
+          ],
         },
         // {
         //   from: "@components/SvgIcon.tsx",
