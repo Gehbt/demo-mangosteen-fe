@@ -4,14 +4,16 @@ import { Floatbutton } from "./Button";
 export type ItemSummaryType = typeof ItemSummary;
 export const ItemSummary = defineComponent({
   props: {
-    startDate: {
-      type: String as PropType<string>,
-      required: true,
-    },
-    endDate: {
-      type: String as PropType<string>,
-      required: true,
-    },
+    startDate: string().isRequired,
+    // {
+    //   type: String as PropType<string>,
+    //   required: true,
+    // },
+    endDate: string().isRequired,
+    // {
+    //   type: String as PropType<string>,
+    //   required: true,
+    // },
   },
   setup: (props, context) => {
     return () => (

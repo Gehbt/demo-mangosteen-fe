@@ -11,14 +11,16 @@ import * as echarts from "echarts";
 export const Charts = defineComponent({
   name: "Charts",
   props: {
-    startDate: {
-      type: String as PropType<string>,
-      required: true,
-    },
-    endDate: {
-      type: String as PropType<string>,
-      required: true,
-    },
+    startDate: string().isRequired,
+    // {
+    //   type: String as PropType<string>,
+    //   required: true,
+    // },
+    endDate: string().isRequired,
+    // {
+    //   type: String as PropType<string>,
+    //   required: true,
+    // },
   },
   setup(props, context) {
     const refCategory = ref<ItemsCreateName>("支出");
@@ -162,7 +164,7 @@ export const Bars = defineComponent({
                 </div>
                 <div
                   class={s.bar}
-                  // style={{ height: `calc($percent * 42px )` }}
+                // style={{ height: `calc($percent * 42px )` }}
                 >
                   <div class={s.bar_inner}></div>
                 </div>

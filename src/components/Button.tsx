@@ -1,4 +1,4 @@
-import { PropType, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import s from "./Button.module.scss";
 // interface ButtonProps {
 //   onClick?: (e: MouseEvent | TouchEvent) => void;
@@ -7,33 +7,16 @@ import s from "./Button.module.scss";
 export const Button = defineComponent({
   // inheritAttrs: false,
   props: {
-    onClick: {
-      type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
-      required: true,
-    },
-    class: {
-      type: String as PropType<string | string[]>,
-    },
-    level: {
-      type: String as PropType<"primary" | "default" | "danger">,
-      default: "default",
-    },
-    clan: {
-      type: String as PropType<"button" | "submit" | "reset">,
-      default: "button",
-    },
-    disableByCtx: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },
-    selfDisciplineMode: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-      required: false,
-    },
+    onClick: func<(e: MouseEvent | TouchEvent) => void>(),
+    class: any<string | string[]>(),
+    level: string<"primary" | "default" | "danger">().def("default"),
+    clan: string<"button" | "submit" | "reset">().def("button"),
+    disableByCtx: bool().def(false),
+    selfDisciplineMode: bool().def(false),
   },
   name: "Button",
   setup(props, context) {
+    // 点击控制关闭
     const self_disable = ref(false);
     const wrapper_onclick = (e: MouseEvent | TouchEvent) => {
       props.onClick?.(e);
@@ -43,20 +26,20 @@ export const Button = defineComponent({
       }, 1000);
     };
     const _disable = computed(() => {
-      if (!props.selfDisciplineMode) {
-        return props.disableByCtx;
+      if (props.disableByCtx) {
+        return true;
       } else {
-        // settinged selfDisciplineMode
-        if (self_disable.value && !props.disableByCtx) {
+        // 仅当开启自肃mode时 关闭控制
+        if (props.selfDisciplineMode && self_disable.value) {
           return true;
         } else {
-          return props.disableByCtx;
+          return self_disable.value;
         }
       }
     });
     return () => (
       <button
-        class={[s.btn, props.class, s[props.level]]}
+        class={[s.btn, props.class, s[props.level], _disable.value ? s.toggled : '']}
         disabled={_disable.value}
         onClick={wrapper_onclick}
         type={props.clan}
@@ -69,15 +52,12 @@ export const Button = defineComponent({
 export const Floatbutton = defineComponent({
   name: "Floatbutton",
   props: {
-    iconName: {
-      type: String,
-      default: svgs.round_add,
-      required: false,
-    },
-    onClick: {
-      type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
-      required: false,
-    },
+    iconName: string().def(svgs.round_add),
+    onClick: func<(e: MouseEvent | TouchEvent) => void>(),
+    // {
+    //   type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
+    //   required: false,
+    // },
   },
   setup(props) {
     return () => (

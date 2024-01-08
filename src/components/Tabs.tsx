@@ -4,15 +4,17 @@ import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
   props: {
-    classPrefix: {
-      type: String,
-      default: "",
-    },
-    selected: {
-      type: String as PropType<ItemsCreateName | ItemsListName>,
-      default: "支出",
-      required: true,
-    },
+    classPrefix: string().def(''),
+    // {
+    //   type: String,
+    //   default: "",
+    // },
+    selected: string<ItemsCreateName | ItemsListName>().def("支出"),
+    // {
+    //   type: String as PropType<ItemsCreateName | ItemsListName>,
+    //   default: "支出",
+    //   required: true,
+    // },
   },
   emits: ["update:selected"],
   setup(props, context) {
@@ -57,9 +59,10 @@ export const Tabs = defineComponent({
 export const Tab = defineComponent({
   name: "Tab",
   props: {
-    name: {
-      type: String as PropType<ItemsCreateName | ItemsListName>,
-    },
+    name: string<ItemsCreateName | ItemsListName>(),
+    // {
+    //   type: String as PropType<ItemsCreateName | ItemsListName>,
+    // },
   },
   setup(props, context) {
     return () => <div>{context.slots.default?.()}</div>;

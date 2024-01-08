@@ -50,14 +50,16 @@ const emoji_lists: Array<[string, Readonly<Array<[string, string[]]>>]> = [
 export const EmojiSelect = defineComponent({
   name: "EmojiSelect",
   props: {
-    class: {
-      type: String as PropType<string | string[]>,
-      required: false,
-    },
-    modelValue: {
-      type: String as PropType<string>,
-      required: false,
-    },
+    class: any<string | string[]>().def(''),
+    // {
+    //   type: String as PropType<string | string[]>,
+    //   required: false,
+    // },
+    modelValue: string(),
+    // {
+    //   type: String as PropType<string>,
+    //   required: false,
+    // },
   },
   emits: ["update:modelValue"],
   setup(props, context) {

@@ -4,10 +4,11 @@ import { RouterLink } from "vue-router/auto";
 export const Overlay = defineComponent({
   name: "Overlay",
   props: {
-    status: {
-      type: Boolean,
-      required: false,
-    },
+    status: bool(),
+    //  {
+    //   type: Boolean,
+    //   required: false,
+    // },
   },
   setup(props, context) {
     const router = useRouter();

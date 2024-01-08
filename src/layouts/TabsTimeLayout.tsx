@@ -15,14 +15,16 @@ export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
 export const TabsTime = defineComponent({
   name: "TabsTimeLayout",
   props: {
-    comp: {
+    comp:
+    {
       type: Object as PropType<ChartsType | ItemSummaryType>, //实际上它们的 类型一样
       required: true,
     },
-    title: {
-      type: String,
-      required: true,
-    },
+    title: string().isRequired,
+    // {
+    //   type: String,
+    //   required: true,
+    // },
   },
   setup(props, context) {
     const overlayVisibleRef = ref(false);

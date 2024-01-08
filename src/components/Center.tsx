@@ -4,11 +4,12 @@ import s from "./Center.module.scss";
 export const Center = defineComponent({
   name: "Center",
   props: {
-    direction: {
-      type: String as PropType<"horizontal" | "vertical">,
-      required: false,
-      default: "horizontal",
-    },
+    direction: string<"horizontal" | "vertical">().def("horizontal")
+    // {
+    //   type: String as PropType<"horizontal" | "vertical">,
+    //   required: false,
+    //   default: "horizontal",
+    // },
   },
   setup(props, context) {
     const direction =

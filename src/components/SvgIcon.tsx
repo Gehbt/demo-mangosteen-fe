@@ -1,3 +1,4 @@
+/** @deprecated: use .vue version */
 import { defineComponent, computed, PropType } from "vue";
 // import svg from "@svg_map";
 export default defineComponent({

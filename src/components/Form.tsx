@@ -6,9 +6,10 @@ import { Button } from "./Button";
 export const Form = defineComponent({
   name: "Form",
   props: {
-    onSubmit: {
-      type: Function as PropType<(e: Event) => void>,
-    },
+    onSubmit: func<(e: Event) => void>(),
+    // {
+    //   type: Function as PropType<(e: Event) => void>,
+    // },
   },
   setup(props, context) {
     return () => (
@@ -21,36 +22,42 @@ export const Form = defineComponent({
 export const FormItem = defineComponent({
   name: "FormItem",
   props: {
-    modelValue: {
-      type: String as PropType<string>,
-      required: true,
-    },
+    modelValue: string(),
+    // {
+    //   type: String as PropType<string>,
+    //   required: true,
+    // },
     err_data: {
       type: String as PropType<string | undefined>,
       required: true,
     },
-    label: {
-      type: String as PropType<string>,
-      required: false,
-    },
-    clan: {
-      type: String as PropType<
-        "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
-      >,
-      default: "input",
-      required: true,
-    },
-    placeholder: {
-      type: String,
-    },
-    onToggle: {
-      type: Function as PropType<(e?: Event) => Promise<any>>,
-    },
-    countFrom: {
-      type: Number,
-      default: 60,
-      required: false,
-    },
+    label: string(),
+    // {
+    //   type: String as PropType<string>,
+    //   required: false,
+    // },
+    clan: string<"input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email">().def("input"),
+    // {
+    //   type: String as PropType<
+    //     "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+    //   >,
+    //   default: "input",
+    //   required: true,
+    // },
+    placeholder: string(),
+    // {
+    //   type: String,
+    // },
+    onToggle: func<(e?: Event) => Promise<any>>(),
+    // {
+    //   type: Function as PropType<(e?: Event) => Promise<any>>,
+    // },
+    countFrom: number().def(60)
+    // {
+    //   type: Number,
+    //   default: 60,
+    //   required: false,
+    // },
   },
   emits: ["update:modelValue"],
   setup(props, context) {
@@ -177,8 +184,8 @@ export const FormItem = defineComponent({
                 disableByCtx={isCounting.value}
                 clan="button"
                 onClick={() => {
-                  props.onToggle?.().catch((err: Array<any>) => {
-                    console.log(...err);
+                  props.onToggle?.().catch((err: any) => {
+                    console.log(err);
                   });
                 }}
               >

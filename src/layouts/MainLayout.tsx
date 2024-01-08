@@ -4,18 +4,21 @@ import s from "./MainLayout.module.scss";
 export const MainLayout = defineComponent({
   name: "MainLayout",
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: true,
-    },
-    toggle: {
-      type: Function as PropType<() => void>,
-      required: false,
-    },
+    title: string().isRequired,
+    // {
+    //   type: String,
+    //   required: true,
+    // },
+    icon: string().isRequired,
+    // {
+    //   type: String,
+    //   required: true,
+    // },
+    toggle: func<() => void>()
+    // {
+    //   type: Function as PropType<() => void>,
+    //   required: false,
+    // },
   },
   setup(props, context) {
     return () => (
