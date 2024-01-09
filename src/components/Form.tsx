@@ -36,7 +36,9 @@ export const FormItem = defineComponent({
     //   type: String as PropType<string>,
     //   required: false,
     // },
-    clan: string<"input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email">().def("input"),
+    clan: string<
+      "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+    >().def("input"),
     // {
     //   type: String as PropType<
     //     "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
@@ -52,7 +54,7 @@ export const FormItem = defineComponent({
     // {
     //   type: Function as PropType<(e?: Event) => Promise<any>>,
     // },
-    countFrom: number().def(60)
+    countFrom: number().def(60),
     // {
     //   type: Number,
     //   default: 60,
@@ -166,7 +168,7 @@ export const FormItem = defineComponent({
                   props.err_data !== "" ? s.error : "",
                 ]}
                 value={props.modelValue}
-                onChange={(e) => {
+                onInput={(e) => {
                   context.emit(
                     "update:modelValue",
                     (e.target as HTMLInputElement).value

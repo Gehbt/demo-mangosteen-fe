@@ -64,6 +64,6 @@
     "src/assets/jsons/emoji_list.json",
     "src/batch",
     "src/scripts",
-    "src/assets"
+    "src/assets",
   ],
 }

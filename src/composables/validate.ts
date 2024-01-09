@@ -56,3 +56,11 @@ export function validate<T extends FormDataType>(
   });
   return errors;
 }
+export function errorFree(errors: Record<string, string[]>) {
+  for (let key in errors) {
+    if (errors[key].length > 0) {
+      return false;
+    }
+  }
+  return true;
+}
