@@ -16,8 +16,8 @@ type RuleType<
   T extends RuleOptions = RuleOptions
 > = T extends RuleOptions
   ? Omit<RuleTypeBase<K>, "clan"> & { clan: T } & {
-    [k in T]: RuleOptionType[T];
-  }
+      [k in T]: RuleOptionType[T];
+    }
   : never;
 
 // 多个rule
@@ -57,10 +57,8 @@ export function validate<T extends FormDataType>(
   return errors;
 }
 export function errorFree(errors: Record<string, string[]>) {
-  for (let key in errors) {
-    if (errors[key].length > 0) {
-      return false;
-    }
-  }
-  return true;
+  return (
+    // 一旦errArr存在则返回false
+    !Object.values(errors).some((errArr) => errArr.length > 0)
+  );
 }

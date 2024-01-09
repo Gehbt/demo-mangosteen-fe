@@ -5,8 +5,8 @@
 // }
 type GetterExtend<out T> = () => T;
 type SetterSuper<in T> = (value: T) => void;
-export const useSL = <T>(value: T) => {
-  let store_value = value;
+export const useSL = <T>(defaultValue: T) => {
+  let store_value = defaultValue;
   const save: SetterSuper<T> = (newValue: T) => {
     store_value = newValue;
   };

@@ -1,6 +1,6 @@
 import { readdirSync, writeFile } from "fs";
 import { basename } from "path";
-let svg_list = readdirSync("./src/assets/icons")
+const svg_list = readdirSync("./src/assets/icons")
   .filter((p) => p.endsWith(".svg"))
   .map((p) => basename(p, ".svg"));
 const svg_map: object = {};

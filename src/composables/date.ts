@@ -56,7 +56,7 @@ export class Time {
       | "millisecond"
   ) {
     // return new Time but not change this.date
-    let date = new Date(this.date.getTime());
+    const date = new Date(this.date.getTime());
     switch (unit) {
       case "year":
         const currentDate = date.getDate();

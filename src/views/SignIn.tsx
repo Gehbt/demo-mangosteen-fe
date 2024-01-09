@@ -5,7 +5,7 @@ import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate, errorFree } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
-
+import { history } from "@/routes/history";
 export const SignIn = defineComponent({
   name: "SignIn",
   setup(props, context) {
@@ -43,10 +43,10 @@ export const SignIn = defineComponent({
         const whenEmailResponseError = (e: any) => {
           if (e.response?.status === 422) {
             // 绕过前端从接口发送才可能发生
-            refErr.value.email = e.respone.data.errors;
+            refErr.value.email = e.response.data.errors;
             alert("Email格式错误!"); // TODO: dialog
           } else {
-            console.error("Error: " + e.respone.data.errors);
+            console.error("Error: " + e.response.data.errors);
           }
         };
         refIsSend.value = true;
@@ -100,12 +100,23 @@ export const SignIn = defineComponent({
       if (!errorFree(refErr.value)) {
         return Promise.reject(refErr.value.code);
       } else {
+        const whenCodeResponseError = (e: any) => {
+          if (e.response?.status === 422) {
+            // 绕过前端从接口发送才可能发生
+            refErr.value.email = e.response.data.errors;
+            alert("Email格式错误!"); // TODO: dialog
+          } else {
+            console.error("Error: " + e.response.data.errors);
+          }
+        };
         refIsSend.value = true;
         const response = httpClient
-          .post("/session", toRaw(formData))
-          .catch((err) => {
-            throw err;
+          .post<{ jwt: string }>("/session", toRaw(formData))
+          .then((response) => {
+            localStorage.setItem("jwt", response.data.jwt);
+            history.push("/");
           })
+          .catch(whenCodeResponseError)
           .finally(() => {
             refIsSend.value = false;
           });

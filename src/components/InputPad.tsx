@@ -132,7 +132,7 @@ export const InputPad = defineComponent({
     const date_format = computed(() => {
       return refDate.value.join("-");
     });
-    let data_record = useSL(refDate.value);
+    const data_record = useSL(refDate.value);
     const showPicker = ref(false);
 
     return () => (
