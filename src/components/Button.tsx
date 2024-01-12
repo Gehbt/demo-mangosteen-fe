@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { PropType, defineComponent } from "vue";
 import s from "./Button.module.scss";
 // interface ButtonProps {
 //   onClick?: (e: MouseEvent | TouchEvent) => void;
@@ -7,8 +7,8 @@ import s from "./Button.module.scss";
 export const Button = defineComponent({
   // inheritAttrs: false,
   props: {
-    onClick: func<(e: MouseEvent | TouchEvent) => void>(),
-    class: any<string | string[]>(),
+    onClick: Function as PropType<JSX.IntrinsicElements["button"]["onClick"]>,
+    class: [String, Array] as PropType<string | string[]>,
     level: string<"primary" | "default" | "danger">().def("default"),
     clan: string<"button" | "submit" | "reset">().def("button"),
     disableByCtx: bool().def(false),
@@ -18,7 +18,7 @@ export const Button = defineComponent({
   setup(props, context) {
     // 点击控制关闭
     const self_disable = ref(false);
-    const wrapper_onclick = (e: MouseEvent | TouchEvent) => {
+    const wrapper_onclick = (e: MouseEvent) => {
       props.onClick?.(e);
       self_disable.value = true;
       setTimeout(() => {
@@ -39,7 +39,12 @@ export const Button = defineComponent({
     });
     return () => (
       <button
-        class={[s.btn, props.class, s[props.level], _disable.value ? s.toggled : '']}
+        class={[
+          s.btn,
+          props.class,
+          s[props.level],
+          _disable.value ? s.toggled : "",
+        ]}
         disabled={_disable.value}
         onClick={wrapper_onclick}
         type={props.clan}

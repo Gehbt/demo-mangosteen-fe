@@ -5,7 +5,7 @@ import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate, errorFree } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
-import { history } from "@/routes/history";
+
 export const SignIn = defineComponent({
   name: "SignIn",
   setup(props, context) {
@@ -109,12 +109,18 @@ export const SignIn = defineComponent({
             console.error("Error: " + e.response.data.errors);
           }
         };
+
         refIsSend.value = true;
         const response = httpClient
           .post<{ jwt: string }>("/session", toRaw(formData))
           .then((response) => {
             localStorage.setItem("jwt", response.data.jwt);
-            history.push("/");
+            //{ router.push(
+            //   "/sign_in?return_to=" + encodeURIComponent(useRoute().fullPath)
+            // );
+            // const returnTo = useRoute().query.returnTo?.toString()}
+            const returnTo = sessionStorage.getItem("returnTo");
+            router.push(returnTo ?? "/");
           })
           .catch(whenCodeResponseError)
           .finally(() => {

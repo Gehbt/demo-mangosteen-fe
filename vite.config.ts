@@ -110,9 +110,16 @@ export default defineConfig({
     alias,
   },
   server: {
+    cors: {},
     proxy: {
       "/api/v1": {
         target: "http://localhost:3000",
+      },
+      "/api/tph": {
+        changeOrigin: true,
+        target: "https://jsonplaceholder.typicode.com/",
+        // http://localhost:5173/api/tph -> http://jsonplaceholder.typicode.com/
+        // rewrite: (path) => path.replace(/^\/api/tph, ""),
       },
     },
   },

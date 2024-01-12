@@ -59,18 +59,25 @@ export const W4 = defineComponent({
     );
   },
 });
+const skipWelcome = () => {
+  localStorage.setItem("skipWelcome", "yes");
+};
 export const WFooter = (metadata_ith: number) =>
   defineComponent({
     name: "WFooter",
-    render: () => (
-      <div class={s.actions}>
-        <RouterLink class={s.fake} to={`/welcome/${metadata_ith - 1}`}>
-          上页
-        </RouterLink>
-        <RouterLink to={`/welcome/${metadata_ith + 1}`}>下一页</RouterLink>
-        <RouterLink to="/start">跳过</RouterLink>
-      </div>
-    ),
+    render() {
+      return (
+        <div class={s.actions}>
+          <RouterLink class={s.fake} to={`/welcome/${metadata_ith - 1}`}>
+            上页
+          </RouterLink>
+          <RouterLink to={`/welcome/${metadata_ith + 1}`}>下一页</RouterLink>
+          <span onClick={skipWelcome}>
+            <RouterLink to="/start">跳过</RouterLink>
+          </span>
+        </div>
+      );
+    },
   });
 export const WEndFooter = defineComponent({
   name: "WEndFooter",
@@ -80,7 +87,9 @@ export const WEndFooter = defineComponent({
         <RouterLink class={s.fake} to={"/welcome"}>
           上页
         </RouterLink>
-        <RouterLink to={"/start"}>完成</RouterLink>
+        <span onClick={skipWelcome}>
+          <RouterLink to={"/start"}>完成</RouterLink>
+        </span>
         <RouterLink class={s.fake} to={"/welcome"}>
           占位
         </RouterLink>
