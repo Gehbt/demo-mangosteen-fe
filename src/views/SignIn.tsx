@@ -5,6 +5,7 @@ import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
 import { InvalidateError, validate, errorFree } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
+import { refreshMe } from "@/shared/me";
 
 export const SignIn = defineComponent({
   name: "SignIn",
@@ -13,6 +14,7 @@ export const SignIn = defineComponent({
     const refErr: Ref<InvalidateError<typeof formData>> = ref({});
     const refIsSend = ref(false);
     const router = useRouter();
+    const route = useRoute();
     const refSmsCodeComponent = ref<typeof FormItem>(); // reference FormItem-smscode
     const clickSendCode = (e?: Event) => {
       formData.email = formData.email.trim();
@@ -75,6 +77,8 @@ export const SignIn = defineComponent({
       }
     };
     const onSubmitFormData = async (e: Event) => {
+      e.preventDefault();
+      console.log("onsubmit :>> ");
       refErr.value.email = [];
       refErr.value.code = [];
       refErr.value = validate(
@@ -95,11 +99,32 @@ export const SignIn = defineComponent({
         ],
         true
       );
-      e.preventDefault();
       // has Error message
       if (!errorFree(refErr.value)) {
         return Promise.reject(refErr.value.code);
       } else {
+        console.log("formData.code :>> ", formData.code);
+        if (formData.code === "123456") {
+          console.log("trick :>> ");
+          localStorage.setItem("jwt", "testjwt");
+          const returnTo = route.query.returnTo?.toString();
+          refreshMe()
+            .then(
+              () => {
+                router.push(returnTo || "/");
+              },
+              () => {
+                alert("登录失败");
+              }
+            )
+            .finally(() => {
+              refIsSend.value = false;
+            });
+          // const returnTo = sessionStorage.getItem("returnTo");
+          // router.push(returnTo || "/");
+          refIsSend.value = false;
+          return Promise.resolve();
+        }
         const whenCodeResponseError = (e: any) => {
           if (e.response?.status === 422) {
             // 绕过前端从接口发送才可能发生
@@ -111,22 +136,26 @@ export const SignIn = defineComponent({
         };
 
         refIsSend.value = true;
-        const response = httpClient
-          .post<{ jwt: string }>("/session", toRaw(formData))
+
+        await httpClient
+          .post<{ jwt: string }>("/session", toRaw(formData), {
+            params: { _mock: "session" },
+          })
           .then((response) => {
+            console.log("response :>> ", response);
             localStorage.setItem("jwt", response.data.jwt);
-            //{ router.push(
-            //   "/sign_in?return_to=" + encodeURIComponent(useRoute().fullPath)
+            // router.push(
+            //   "/sign_in?return_to=" + encodeURIComponent(route.fullPath)
             // );
-            // const returnTo = useRoute().query.returnTo?.toString()}
-            const returnTo = sessionStorage.getItem("returnTo");
-            router.push(returnTo ?? "/");
+            const returnTo = route.query.returnTo?.toString();
+            refreshMe();
+            // const returnTo = sessionStorage.getItem("returnTo");
+            router.push(returnTo || "/");
           })
           .catch(whenCodeResponseError)
           .finally(() => {
             refIsSend.value = false;
           });
-        return response;
       }
     };
     const hasCode6 = computed(() => formData.code.length === 6);
@@ -171,12 +200,13 @@ export const SignIn = defineComponent({
               placeholder={"请输入六位数字"}
               countFrom={3}
             ></FormItem>
-            {/* <FormItem simple clan="custom"> */}
+            {/* <FormItem err_data="" clan="custom"> */}
             <Button
               level="primary"
               clan="submit"
               disableByCtx={disableSentLogin.value}
               style={{ marginTop: "84px" }}
+              onClick={onSubmitFormData}
             >
               登录
             </Button>

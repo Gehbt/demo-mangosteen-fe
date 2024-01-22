@@ -110,10 +110,12 @@ export default defineConfig({
     alias,
   },
   server: {
-    cors: {},
+    cors: true,
     proxy: {
       "/api/v1": {
-        target: "http://localhost:3000",
+        changeOrigin: true,
+        target: "http://192.168.0.247:3001",
+        rewrite: (path) => path.replace(/^\/api\/v1/, ""),
       },
       "/api/tph": {
         changeOrigin: true,

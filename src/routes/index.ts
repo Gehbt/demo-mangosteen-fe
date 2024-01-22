@@ -1,6 +1,5 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
 import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
-import { usedRender } from "@/components/usedRender";
 import { Items } from "@/views/Items";
 import { SignIn } from "@/views/SignIn";
 import { Start } from "@/views/Start";
@@ -47,10 +46,6 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/welcome",
     component: Welcome,
-    beforeEnter: (to, from, next) => {
-      //  or auth
-      next(localStorage.getItem("skipWelcome") === "yes" ? "/start" : "");
-    },
     children: [
       {
         name: "w",

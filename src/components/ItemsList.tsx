@@ -5,180 +5,48 @@ import { InputPad } from "./InputPad";
 import s from "./ItemsList.module.scss";
 import { ItemSummary } from "./ItemSummary";
 import { TabsTime } from "@/layouts/TabsTimeLayout";
+import { httpClient } from "@/shared";
 export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
+
+export type TagType<T extends "expenses" | "income" | string> = {
+  id: string;
+  name: string;
+  sign: string;
+  kind: T;
+  deleted_at?: Date | null;
+  created_at?: Date | null;
+  updated_at?: Date | null;
+};
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
     return () => <TabsTime comp={ItemSummary} title="蓝莓记账" />;
   },
 });
-
+const date = new Date();
 export type ItemsCreateName = "支出" | "收入";
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
   setup(props, context) {
     const selectedTab = ref<"支出" | "收入">("支出");
-    const refExpensesTags = ref([
-      {
-        id: "1",
-        name: "蛋糕",
-        sign: "🍰",
-        kind: "食品",
-      },
-      {
-        id: "2",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "3",
-        name: "吃饭",
-        sign: "🍕",
-        kind: "食品",
-      },
-      {
-        id: "4",
-        name: "购物",
-        sign: "🧦",
-        kind: "商品",
-      },
-      {
-        id: "5",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "6",
-        name: "买肉",
-        sign: "🦆",
-        kind: "食品",
-      },
-      {
-        id: "3",
-        name: "吃饭",
-        sign: "🍕",
-        kind: "食品",
-      },
-      {
-        id: "4",
-        name: "购物",
-        sign: "🧦",
-        kind: "商品",
-      },
-      {
-        id: "5",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "6",
-        name: "买肉",
-        sign: "🦆",
-        kind: "食品",
-      },
-      {
-        id: "3",
-        name: "吃饭",
-        sign: "🍕",
-        kind: "食品",
-      },
-      {
-        id: "4",
-        name: "购物",
-        sign: "🧦",
-        kind: "商品",
-      },
-      {
-        id: "5",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "6",
-        name: "买肉",
-        sign: "🦆",
-        kind: "食品",
-      },
-      {
-        id: "3",
-        name: "吃饭",
-        sign: "🍕",
-        kind: "食品",
-      },
-      {
-        id: "4",
-        name: "购物",
-        sign: "🧦",
-        kind: "商品",
-      },
-      {
-        id: "5",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "6",
-        name: "买肉",
-        sign: "🦆",
-        kind: "食品",
-      },
-      {
-        id: "3",
-        name: "吃饭",
-        sign: "🍕",
-        kind: "食品",
-      },
-      {
-        id: "4",
-        name: "购物",
-        sign: "🧦",
-        kind: "商品",
-      },
-      {
-        id: "5",
-        name: "打车",
-        sign: "🚕",
-        kind: "交通",
-      },
-      {
-        id: "6",
-        name: "买肉",
-        sign: "🦆",
-        kind: "食品",
-      },
-    ]);
-    const refIncomeTags = ref([
-      {
-        id: "100",
-        name: "利息",
-        sign: "💴",
-      },
-      {
-        id: "101",
-        name: "工资",
-        sign: "💸",
-      },
-      {
-        id: "102",
-        name: "奖金",
-        sign: "💰",
-      },
-      {
-        id: "103",
-        name: "年终奖",
-        sign: "💹",
-      },
-      {
-        id: "104",
-        name: "出售",
-        sign: "🪙",
-      },
-    ]);
+    onMounted(async () => {
+      const response_expenses = await httpClient.get("/tags", {
+        kind: "expenses",
+        _mock: "tagIndex",
+      });
+      console.log("response_exp :>> ", response_expenses);
+      refExpensesTags.value = response_expenses.data as TagType<"expenses">[];
+
+      const response_income = await httpClient.get("/tags", {
+        kind: "expenses",
+        _mock: "tagIndex",
+      });
+      console.log("response_inc :>> ", response_income);
+      refIncomeTags.value = response_income.data as TagType<"income">[];
+    });
+    const refExpensesTags = ref<TagType<"expenses">[]>([]);
+
+    const refIncomeTags = ref<TagType<"income">[]>([]);
     const router = useRouter();
     const updateSelected = (tabName: ItemsCreateName) =>
       (selectedTab.value = tabName);
@@ -193,7 +61,11 @@ export const ItemsCreate = defineComponent({
         class={s.layout} // todo: layout
       >
         <div class={s.wrapper}>
-          <Tabs v-model:selected={selectedTab.value} class={s.tabs}>
+          <Tabs
+            v-model:selected={selectedTab.value}
+            onUpdate:selected={updateSelected}
+            class={s.tabs}
+          >
             <Tab name="支出" class={s.tags_wrapper}>
               <div class={[s.tag, s.selected]}>
                 <button
