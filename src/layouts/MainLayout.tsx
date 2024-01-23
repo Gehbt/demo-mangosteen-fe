@@ -14,7 +14,7 @@ export const MainLayout = defineComponent({
     //   type: String,
     //   required: true,
     // },
-    toggle: func<() => void>()
+    toggle: func<() => void>(),
     // {
     //   type: Function as PropType<() => void>,
     //   required: false,

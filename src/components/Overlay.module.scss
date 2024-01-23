@@ -19,11 +19,15 @@
   border-top: 1px solid #a57ddb;
 }
 .currentUser {
+  height: 110px;
   padding: 32px 16px;
   padding-bottom: 16px;
   margin-top: 0;
   background: var(--main-theme);
   color: var(--overlay-user-text);
+  > h1 {
+    padding-bottom: 2px;
+  }
 }
 .action {
   display: flex;

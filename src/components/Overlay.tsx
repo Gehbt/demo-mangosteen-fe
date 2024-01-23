@@ -14,13 +14,16 @@ export const Overlay = defineComponent({
     const router = useRouter();
     const onClickSignIn = () => {
       // TODO: SignIn
-      router.replace("/sign_in");
+      router.push("/sign_in");
     };
     return () => (
       <div class={s.overlay}>
         <section class={s.currentUser} onClick={onClickSignIn}>
+          {/* TODO: 登录 */}
           <h1>未登录用户</h1>
           <p>点击这里登录</p>
+          {/* h1 {用户名} */}
+          {/* 您好 */}
         </section>
         <nav>
           <ul class={s.action_list}>

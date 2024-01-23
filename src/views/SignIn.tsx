@@ -147,7 +147,8 @@ export const SignIn = defineComponent({
             // router.push(
             //   "/sign_in?return_to=" + encodeURIComponent(route.fullPath)
             // );
-            const returnTo = route.query.returnTo?.toString();
+            const returnTo = route.query["return_to"]?.toString();
+            console.log("returnTo :>> ", returnTo);
             refreshMe();
             // const returnTo = sessionStorage.getItem("returnTo");
             router.push(returnTo || "/");

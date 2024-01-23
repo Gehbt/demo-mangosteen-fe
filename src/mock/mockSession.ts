@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 
 export const mockSession: Mock<{ jwt: string }> = (config) => {
   return {
-    jwt: faker.string.uuid(),
+    data: { jwt: faker.string.uuid() },
     status: 200,
   } as unknown as AxiosResponse<{ jwt: string }>;
 };

@@ -1,4 +1,5 @@
 .wrapper {
+  position: fixed;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 90px);
@@ -64,6 +65,7 @@
       color: var(--button-font-theme);
     }
     > main {
+      content: "";
     }
   }
 }
@@ -76,5 +78,15 @@
     & + & {
       margin-left: 16px;
     }
+  }
+}
+.load {
+  // padding: 16px;
+  text-align: center;
+  > .loadMore {
+    color: cornflowerblue;
+  }
+  > .noMore {
+    color: gray;
   }
 }

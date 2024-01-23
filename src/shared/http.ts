@@ -99,6 +99,7 @@ const mock: (
     case "tagCreate":
       return mockTagCreate(config);
     case "session":
+      console.log("session :>> ", config);
       const mock_session = mockSession(config);
       return mock_session;
   }

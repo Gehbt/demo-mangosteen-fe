@@ -1,15 +1,15 @@
 import { PropType, defineComponent } from "vue";
-import type { ItemsCreateName, ItemsListName } from "@/components/ItemsList";
+import { i18nT } from "@/shared/i18n-simple";
 import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
   props: {
-    classPrefix: string().def(''),
+    classPrefix: string().def(""),
     // {
     //   type: String,
     //   default: "",
     // },
-    selected: string<ItemsCreateName | ItemsListName>().def("支出"),
+    selected: string<TagKindType | DateScope>(),
     // {
     //   type: String as PropType<ItemsCreateName | ItemsListName>,
     //   default: "支出",
@@ -43,7 +43,7 @@ export const Tabs = defineComponent({
                     context.emit("update:selected", item.props?.name)
                   }
                 >
-                  {item.props?.name}
+                  {i18nT[item.props?.name as DateScope]}
                 </li>
               ))}
             </ol>
@@ -59,7 +59,7 @@ export const Tabs = defineComponent({
 export const Tab = defineComponent({
   name: "Tab",
   props: {
-    name: string<ItemsCreateName | ItemsListName>(),
+    name: string<TagKindType | DateScope>(),
     // {
     //   type: String as PropType<ItemsCreateName | ItemsListName>,
     // },

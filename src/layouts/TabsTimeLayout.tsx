@@ -15,8 +15,7 @@ export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
 export const TabsTime = defineComponent({
   name: "TabsTimeLayout",
   props: {
-    comp:
-    {
+    comp: {
       type: Object as PropType<ChartsType | ItemSummaryType>, //实际上它们的 类型一样
       required: true,
     },
@@ -34,7 +33,7 @@ export const TabsTime = defineComponent({
     const blurOverlay = () => {
       overlayVisibleRef.value = false;
     };
-    const refSelected = ref<ItemsListName>("本月");
+    const refSelected = ref<DateScope>("month");
     const time = new Time();
     const refCustomTime = ref({
       start: new Time(),
@@ -71,31 +70,31 @@ export const TabsTime = defineComponent({
           v-model:selected={refSelected.value}
           class={s.tabs}
           classPrefix="customTabStyle"
-          onUpdate:selected={(value) => {
-            if (value === "自定义") {
+          onUpdate:selected={(value: DateScope) => {
+            if (value === "custom") {
               refOverlayVisible.value = true;
             }
           }}
         >
-          <Tab name="本月">
+          <Tab name="month">
             <props.comp
               startDate={timeList[0].start.format()}
               endDate={timeList[0].end.format()}
             />
           </Tab>
-          <Tab name="上月">
+          <Tab name="last_month">
             <props.comp
               startDate={timeList[1].start.format()}
               endDate={timeList[1].end.format()}
             />
           </Tab>
-          <Tab name="今年">
+          <Tab name="year">
             <props.comp
               startDate={timeList[2].start.format()}
               endDate={timeList[2].end.format()}
             />
           </Tab>
-          <Tab name="自定义">
+          <Tab name="custom">
             <props.comp
               startDate={refCustomTime.value.start.format()}
               endDate={refCustomTime.value.end.format()}

@@ -6,7 +6,7 @@ import {
   ref,
 } from "vue";
 import s from "./Charts.module.scss";
-import { ItemsCreateName } from "../ItemsList";
+import { ItemsCreateName } from "@/shared/i18n-simple";
 import * as echarts from "echarts";
 export const Charts = defineComponent({
   name: "Charts",
@@ -164,7 +164,7 @@ export const Bars = defineComponent({
                 </div>
                 <div
                   class={s.bar}
-                // style={{ height: `calc($percent * 42px )` }}
+                  // style={{ height: `calc($percent * 42px )` }}
                 >
                   <div class={s.bar_inner}></div>
                 </div>
