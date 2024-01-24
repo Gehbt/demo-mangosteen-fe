@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { PropType, defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";
@@ -6,8 +6,6 @@ import s from "./ItemsList.module.scss";
 import { ItemSummary } from "./ItemSummary";
 import { TabsTime } from "@/layouts/TabsTimeLayout";
 import { httpClient } from "@/shared";
-import { Button } from "./Button";
-import { ItemsCreateName, i18nTagKind } from "@/shared/i18n-simple";
 
 export const ItemsList = defineComponent({
   name: "ItemsList",
@@ -15,61 +13,52 @@ export const ItemsList = defineComponent({
     return () => <TabsTime comp={ItemSummary} title="蓝莓记账" />;
   },
 });
-
+const useTags = () => {
+  const refExpensesTags = ref<TagType<"expenses">[]>([]);
+  const refIncomeTags = ref<TagType<"income">[]>([]);
+  const tagKindTransfer: Record<TagKindType, Ref<TagType[]>> = {
+    expenses: refExpensesTags,
+    income: refIncomeTags,
+  };
+  const fetchTags = async (kind: TagKindType) => {
+    const response_tags = await httpClient.get<Resources<TagType>>("/tags", {
+      kind,
+      _mock: "tagIndex",
+      ownedTagNumber: tagKindTransfer[kind].value.length,
+    });
+    console.log("response :>> ", response_tags);
+    if (response_tags.data) {
+      tagKindTransfer[kind].value.push(...response_tags.data.resources);
+    }
+  };
+  return {
+    fetchTags,
+    refExpensesTags,
+    refIncomeTags,
+  };
+};
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
   setup(props, context) {
     const router = useRouter();
     const selectedTab = ref<TagKindType>("expenses");
-    onMounted(async () => {
-      const response_expenses = await httpClient.get<
-        Resources<TagType<"expenses">>
-      >("/tags", {
-        kind: "expenses",
-        _mock: "tagIndex",
-        page: 1,
-        ownedNumber: refExpensesTagsLength.value,
-      });
-      console.log("response_exp :>> ", response_expenses);
-      refExpensesTags.value = response_expenses.data.resources;
+    const { fetchTags, refExpensesTags, refIncomeTags } = useTags();
 
-      const response_income = await httpClient.get<
-        Resources<TagType<"income">>
-      >("/tags", {
-        kind: "income",
-        _mock: "tagIndex",
-        ownedNumber: refIncomeTagsLength,
-      });
-      console.log("response_inc :>> ", response_income);
-      refIncomeTags.value = response_income.data.resources;
+    // ! preload data
+    onMounted(async () => {
+      fetchTags("expenses");
+      fetchTags("income");
     });
-    const refExpensesTags = ref<TagType<"expenses">[]>([]);
-    const refExpensesTagsLength = computed(() => refExpensesTags.value.length);
-    const refIncomeTags = ref<TagType<"income">[]>([]);
-    const refIncomeTagsLength = computed(() => refIncomeTags.value.length);
 
     const updateSelected = (tabName: TagKindType) =>
       (selectedTab.value = tabName);
-
-    const getMoreTags = async () => {
-      console.log("selectedTab.value :>> ", selectedTab.value);
-      // const response_expenses = await httpClient.get<
-      //   Resources<TagType<"expenses">>
-      // >("/tags", {
-      //   kind: "expenses",
-      //   _mock: "tagIndex",
-      //   page: 1,
-      // });
-      // console.log("response_exp :>> ", response_expenses);
-      // refExpensesTags.value = response_expenses.data.resources;
-    };
     return () => (
       <MainLayout
         title="记一笔"
         icon={svgs.back}
         toggle={() => {
           console.log("back :>> /start");
-          router.replace("/start");
+          router.push("/start");
         }}
         class={s.layout} // todo: layout
       >
@@ -80,60 +69,18 @@ export const ItemsCreate = defineComponent({
             class={s.tabs}
           >
             <Tab name="expenses">
-              <div class={s.tags_wrapper}>
-                <div class={[s.tag, s.selected]}>
-                  <button
-                    onClick={() => {
-                      router.replace("/tags/create");
-                    }}
-                    class={s.sign}
-                  >
-                    <svg-icon name={svgs.round_add} class={s.createTag} />
-                  </button>
-                  <div class={s.name}>新增</div>
-                </div>
-                {refExpensesTags.value.map((tag) => (
-                  <div class={[s.tag, s.selected]}>
-                    <div class={s.sign}>{tag.sign}</div>
-                    <div class={s.name}>{tag.name}</div>
-                  </div>
-                ))}
-              </div>
-              <p class={s.load}>
-                {true ? (
-                  <span onClick={getMoreTags}>加载更多</span>
-                ) : (
-                  <span>到底了</span>
-                )}
-              </p>
+              <TagGrid
+                kind="expenses"
+                doFetch={fetchTags}
+                tagsSrc={refExpensesTags}
+              />
             </Tab>
             <Tab name="income">
-              <div class={s.tags_wrapper}>
-                <div class={[s.tag, s.selected]}>
-                  <button
-                    onClick={() => {
-                      router.replace("/tags/create");
-                    }}
-                    class={s.sign}
-                  >
-                    <svg-icon name={svgs.round_add} class={s.createTag} />
-                  </button>
-                  <div class={s.name}>新增</div>
-                </div>
-                {refIncomeTags.value.map((tag) => (
-                  <div class={[s.tag, s.selected]}>
-                    <div class={s.sign}>{tag.sign}</div>
-                    <div class={s.name}>{tag.name}</div>
-                  </div>
-                ))}
-              </div>
-              <p class={s.load}>
-                {true ? (
-                  <span onClick={getMoreTags}>加载更多</span>
-                ) : (
-                  <span>到底了</span>
-                )}
-              </p>
+              <TagGrid
+                kind="income"
+                doFetch={fetchTags}
+                tagsSrc={refIncomeTags}
+              />
             </Tab>
           </Tabs>
           <div class={s.inputPad_wrapper}>
@@ -141,6 +88,66 @@ export const ItemsCreate = defineComponent({
           </div>
         </div>
       </MainLayout>
+    );
+  },
+});
+
+const TagGrid = defineComponent({
+  name: "TagGrid",
+  props: {
+    kind: {
+      type: String as PropType<TagKindType>,
+      required: true,
+    },
+    tagsSrc: {
+      type: Object as PropType<Ref<TagType[]>>,
+      required: true,
+    },
+    doFetch: {
+      type: Function as PropType<(kind: TagKindType) => Promise<void>>,
+      required: true,
+    },
+  },
+  setup(props, context) {
+    const router = useRouter();
+    return () => (
+      <>
+        {/* ?TODO:记录滚动条 */}
+        <div class={s.tags_wrapper}>
+          <div class={[s.tag, s.selected]}>
+            <button
+              onClick={() => {
+                router.push("/tags/create");
+              }}
+              class={s.sign}
+            >
+              <svg-icon name={svgs.round_add} class={s.createTag} />
+            </button>
+            <div class={s.name}>新增</div>
+          </div>
+          {props.tagsSrc.value.map((tag) => (
+            <div class={[s.tag, s.selected]}>
+              <div class={s.sign}>{tag.sign}</div>
+              <div class={s.name}>{tag.name}</div>
+            </div>
+          ))}
+        </div>
+        {/* ?TODO: 使用下拉更新 */}
+        <p class={s.load}>
+          {props.tagsSrc.value.length !== 30 ? (
+            <span
+              class={s.loadMore}
+              onClick={() => {
+                props.doFetch(props.kind);
+              }}
+            >
+              加载更多
+            </span>
+          ) : (
+            <span class={s.noMore}>到底了</span>
+          )}
+        </p>
+      </>
     );
   },
 });

@@ -103,6 +103,7 @@ export default defineConfig({
       ],
     }),
     Components({
+      dts: true,
       resolvers: [VantResolver()],
     }),
   ],

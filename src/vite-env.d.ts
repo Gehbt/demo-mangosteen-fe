@@ -29,6 +29,7 @@ type TagType<T extends TagKindType = TagKindType> = {
 };
 type Resources<T extends unknown> = {
   resources: T[];
+  kind: TagKindType;
   pager: {
     page: number;
     pre_page: number; // 每页个数

@@ -110,6 +110,7 @@ export const httpClient = new Http("/api/v1");
 httpClient.instance.interceptors.response.use(
   async (response) => {
     console.log("response :>> ", response);
+    console.warn("use mock");
     const mock_res = await mock(response.config);
     console.log("mock_res :>> ", mock_res);
     return response;
@@ -117,6 +118,7 @@ httpClient.instance.interceptors.response.use(
   async (error) => {
     console.log("error :>> ", error);
     if (error.config.params._mock) {
+      console.warn("use mock");
       const mock_res_error = await mock(error.config);
       console.log("mock_res_error :>> ", mock_res_error);
       if (mock_res_error) {

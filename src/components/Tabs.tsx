@@ -43,13 +43,14 @@ export const Tabs = defineComponent({
                     context.emit("update:selected", item.props?.name)
                   }
                 >
+                  {/* as DateScope just for polyfill */}
                   {i18nT[item.props?.name as DateScope]}
                 </li>
               ))}
             </ol>
-            <div>
-              {tabs.filter((item) => item.props?.name === props.selected)}
-            </div>
+            {tabs.map((item) => (
+              <div v-show={item.props?.name === props.selected}>{item}</div>
+            ))}
           </div>
         </div>
       );

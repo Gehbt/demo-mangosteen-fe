@@ -26,19 +26,21 @@ const createTag: <T extends TagKindType>(
     id: index,
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
-    kind: kind,
+    kind,
     ...attrs,
   }));
-const createPager = (page: number, ownedNumber: number) => {
-  let tagNumberThisPage = 0;
-  // TODO: reduce param
-  if (ownedNumber <= 30) {
-    tagNumberThisPage = 30 > page * 25 ? 25 : 30 - (page - 1) * 25;
+// TODO: reduce param: page
+// param: page 仅用于代表于第1次和第2次请求
+const createPager = (page: number, ownedTagNumber: number) => {
+  let wantTagNumberThisPage = 0;
+  // page = ownedTagNumber `div` 25
+  if (ownedTagNumber <= 30) {
+    wantTagNumberThisPage = 30 - ownedTagNumber < 25 ? 30 - ownedTagNumber : 25;
   }
   return {
-    tagNumberThisPage,
+    wantTagNumberThisPage,
     pager: {
-      page,
+      page: Math.floor(ownedTagNumber / 25) + 1, // 对应 ownedTagNumber=0 前面除法计算的值为0
       pre_page: 25,
       count: 30,
     },
@@ -47,62 +49,30 @@ const createPager = (page: number, ownedNumber: number) => {
 export const mockTagIndex: Mock<Resources<TagType>> = (
   config: AxiosRequestConfig
 ) => {
-  const { kind, ownedNumber } = config.params as {
-    ownedNumber: number;
+  console.log("mockTagIndex.config :>> ", config);
+  const { kind, ownedTagNumber } = config.params as {
+    ownedTagNumber: number;
     kind: "expenses" | "income";
     _mock: "tagIndex";
   };
-  console.log("config :>> ", config);
+
   // const id = ref(0);
   // const createId = () => {
   //   id.value += 1;
   //   return id.value;
   // };
-  const { tagNumberThisPage, pager } = createPager(1, ownedNumber);
-  if (kind === "expenses") {
-    return {
-      data: {
-        resources: createTag(tagNumberThisPage, "expenses"),
-        pager,
-      },
-      status: 200,
-    } as AxiosResponse<Resources<TagType<"expenses">>>;
-  } else if (kind === "income") {
-    return {
-      data: {
-        resources: createTag(tagNumberThisPage, "income"),
-        pager,
-      },
-      status: 200,
-    } as AxiosResponse<Resources<TagType<"income">>>;
-  } else {
-    return { data: null, status: 400 } as AxiosResponse<null>;
+  const { wantTagNumberThisPage, pager } = createPager(1, ownedTagNumber);
+  if (wantTagNumberThisPage === 0) {
+    return { data: null, status: 204 } as AxiosResponse<null>;
   }
-};
-const mockTagIndexMore = (config: AxiosRequestConfig) => {
-  const { kind, ownedNumber } = config.params;
-  const { tagNumberThisPage, pager } = createPager(2, ownedNumber);
-  if (tagNumberThisPage === 0) {
-    return { data: null, status: 304 } as AxiosResponse<null>;
-  }
-  if (kind === "expenses") {
-    return {
-      data: {
-        resources: createTag(tagNumberThisPage, "expenses"),
-        pager,
-      },
-      status: 200,
-    } as AxiosResponse<Resources<TagType<"expenses">>>;
-  } else if (kind === "income") {
-    return {
-      data: {
-        resources: createTag(tagNumberThisPage, "income"),
-        pager,
-      },
-      status: 200,
-    } as AxiosResponse<Resources<TagType<"income">>>;
-  } else {
-    return { data: null, status: 400 } as AxiosResponse<null>;
-  }
+
+  return {
+    data: {
+      resources: createTag(wantTagNumberThisPage, kind),
+      kind,
+      pager,
+    },
+    status: 200,
+  } as AxiosResponse<Resources<TagType>>;
 };
 // export const mockPager
