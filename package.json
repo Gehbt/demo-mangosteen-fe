@@ -16,6 +16,7 @@
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vueuse/core": "^10.7.2",
+    "@vueuse/router": "^10.7.2",
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
     "echarts": "^5.4.3",
@@ -25,6 +26,7 @@
     "sass": "^1.70.0",
     "svgo": "^3.2.0",
     "svgstore": "^3.0.1",
+    "swiper": "^11.0.5",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-macros": "^2.7.10",
     "unplugin-vue-router": "^0.7.0",

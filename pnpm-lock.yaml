@@ -7,6 +7,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.7.2
     version: 10.7.2(vue@3.4.15)
+  '@vueuse/router':
+    specifier: ^10.7.2
+    version: 10.7.2(vue-router@4.2.5)(vue@3.4.15)
   axios:
     specifier: ^1.6.5
     version: 1.6.5
@@ -34,6 +37,9 @@ dependencies:
   svgstore:
     specifier: ^3.0.1
     version: 3.0.1
+  swiper:
+    specifier: ^11.0.5
+    version: 11.0.5
   unplugin-auto-import:
     specifier: ^0.16.7
     version: 0.16.7(@vueuse/core@10.7.2)
@@ -1440,6 +1446,19 @@ packages:
 
   /@vueuse/metadata@10.7.2:
     resolution: {integrity: sha512-kCWPb4J2KGrwLtn1eJwaJD742u1k5h6v/St5wFe8Quih90+k2a0JP8BS4Zp34XUuJqS2AxFYMb1wjUL8HfhWsQ==}
+    dev: false
+
+  /@vueuse/router@10.7.2(vue-router@4.2.5)(vue@3.4.15):
+    resolution: {integrity: sha512-TE9QtcqtZ793bwJWnlxn1gir7TXHJh5Y0KTIAS2DFOFvz4f3yTPmxAtIHC5e96oBVaVdnzxQQ9EsOhBDfBtCDg==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
+    dependencies:
+      '@vueuse/shared': 10.7.2(vue@3.4.15)
+      vue-demi: 0.14.6(vue@3.4.15)
+      vue-router: 4.2.5(vue@3.4.15)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vueuse/shared@10.7.2(vue@3.4.15):
@@ -3889,6 +3908,11 @@ packages:
     engines: {node: '>= 12'}
     dependencies:
       cheerio: 1.0.0-rc.10
+    dev: false
+
+  /swiper@11.0.5:
+    resolution: {integrity: sha512-rhCwupqSyRnWrtNzWzemnBLMoyYuoDgGgspAm/8iBD3jCvAWycPLH4Z3TB0O5520DHLzMx94yUMH/B9Efpa48w==}
+    engines: {node: '>= 4.7.0'}
     dev: false
 
   /through@2.3.8:

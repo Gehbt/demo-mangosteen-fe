@@ -10,9 +10,7 @@ import { VueRouterAutoImports } from "unplugin-vue-router"; // can`t use in nod 
 import VueRouter from "unplugin-vue-router/vite";
 import vueMacros from "unplugin-vue-macros/vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-
 import Components from "unplugin-vue-components/vite";
-import { VantResolver } from "@vant/auto-import-resolver";
 
 const pathResolve = (dir: string): string => {
   return resolve(__dirname, ".", dir);
@@ -58,15 +56,39 @@ export default defineConfig({
     VueDevTools(),
     // svg({
     // })
+    Components({
+      dts: true,
+      include: [/\.vue$/, /\.tsx$/],
+    }),
     AutoImport({
       vueTemplate: true,
       dts: true,
-      resolvers: [VantResolver()],
       imports: [
         VueRouterAutoImports,
         "vue",
         "pinia",
-        "@vueuse/core",
+        "vue/macros",
+        {
+          "@vueuse/router": ["useRouteQuery", "useRouteParams"],
+          "@vueuse/core": [
+            "templateRef",
+            "useCurrentElement",
+            "syncRef",
+            "reactiveComputed",
+            "refDefault",
+            "reactify",
+            "extendRef",
+            "reactify",
+            "isDefined",
+            "makeDestructurable",
+            "useCloned",
+            "useCounter",
+            "useMemoize",
+            "useCycleList",
+            "useToggle",
+            "useVModel",
+          ],
+        },
         {
           from: "@type_svg_map",
           imports: ["svgs"],
@@ -101,10 +123,6 @@ export default defineConfig({
         //   imports: [["SvgIcons", "SvgIconTsx"]],
         // },
       ],
-    }),
-    Components({
-      dts: true,
-      resolvers: [VantResolver()],
     }),
   ],
   resolve: {

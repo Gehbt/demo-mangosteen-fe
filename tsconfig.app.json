@@ -9,7 +9,6 @@
       "@type_svg_map": ["./src/assets/jsons/type_svg_map.ts"],
       "@emoji_list": ["src/assets/jsons/emoji_list.ts"]
     },
-    "types": ["vite/client", "unplugin-vue-macros/macros-global"],
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ES2022",
@@ -31,13 +30,11 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.d.ts",
+    "src/vite-env.d.ts",
     "src/**/*.tsx",
-    "src/App.tsx",
-    "src/*.vue",
     "src/**/*.vue",
     "./env.d.ts",
-    "env.client.d.ts"
+    "./env.client.d.ts"
   ],
   "exclude": [
     "dist",

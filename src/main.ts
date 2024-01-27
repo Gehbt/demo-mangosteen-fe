@@ -31,4 +31,9 @@ const app = createApp(App);
 app.use(router);
 // 使用 svg-icon 这句很重要{可以用 h , 在setup 返回前 捕获(:=) }不然则是 源代码
 app.component("svg-icon", SvgIcon); // 使用 SvgIcon 是因为 unplugin-vue-components 对 .vue 自动生成
+
+app.config.errorHandler = (err) => {
+  // navigator.sendBeacon("url");
+  console.log("Error: " + err);
+};
 app.mount("#app");

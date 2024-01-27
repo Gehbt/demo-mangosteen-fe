@@ -1,3 +1,4 @@
+// !  achieve
 const trList =  document.querySelector('tbody').querySelectorAll('tr')
 const trArr = Array.from(trList)
 const res = []
