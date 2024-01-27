@@ -12,6 +12,19 @@
 .inputPad_wrapper {
   flex-grow: 0;
   flex-shrink: 0;
+  width: 100%;
+  // visibility: hidden;
+  &.hidden {
+    position: absolute;
+    top: 100vh;
+    transition: transform 2s, visibility 2s;
+    transform: translateY(10%);
+    visibility: hidden;
+  }
+}
+.btn-toggle {
+  position: absolute;
+  bottom: 0px;
 }
 .tags_wrapper {
   display: flex;
@@ -44,7 +57,8 @@
     margin-top: 4px;
   }
   &.selected {
-    .sign {
+    > .sign {
+      border-width: 3px;
       border-color: var(--main);
     }
   }
@@ -89,4 +103,17 @@
   > .noMore {
     color: gray;
   }
+}
+
+.col_in_enter_active {
+  transition: all 0.3s ease;
+}
+.col_in_leave_active {
+  transition: all 0.3s ease;
+}
+
+.col_in_enter_from,
+.col_in_leave_to {
+  transform: translateY(100%);
+  // opacity: 0;
 }

@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from "vue";
+import { PropType, computed, defineComponent, ref } from "vue";
 import s from "./InputPad.module.scss";
 import { DatePicker, Popup } from "vant";
 import { time } from "@/composables/date";
@@ -6,28 +6,48 @@ import { useSL } from "@/composables/save_load";
 
 export const InputPad = defineComponent({
   name: "InputPad",
+  props: {
+    inputDate: {
+      type: Object as PropType<[string, string, string]>,
+      default: ["2015", "01", "01"] as [string, string, string],
+    },
+    inputAmount: {
+      type: String,
+      default: "0",
+    },
+  },
+  emits: ["update:inputAmount", "update:inputDate"],
   setup(props, context) {
-    const refAmount = ref("0");
+    // const refAmount = ref("0");
     const refDot = ref(false);
     const dotNumber = ref(0);
     const appendNumber = (n: number | "." = ".") => {
       if (
         // < 11位数
-        (refDot.value && refAmount.value.length < /* 11+ "." +2 */ 14) ||
-        refAmount.value.length < 11
+        (refDot.value && props.inputAmount.length < /* 11+ "." +2 */ 13) ||
+        props.inputAmount.length < 10
       ) {
         // 第一位数
-        if (refAmount.value === "0" && n !== ".") {
-          refAmount.value = n.toString();
+        if (props.inputAmount === "0" && n !== ".") {
+          // props.inputAmount = n.toString();
+          context.emit("update:inputAmount", n.toString());
         } else {
           // console.log(". n:>> ", refDot.value, dotNumber.value);
           if (!refDot.value) {
             //无小数点
-            refAmount.value += n.toString();
+            // props.inputAmount + n.toString();
+            context.emit(
+              "update:inputAmount",
+              props.inputAmount + n.toString()
+            );
           } else if (refDot.value && dotNumber.value < 4) {
             // 有小数点
             dotNumber.value += 1;
-            refAmount.value += n.toString();
+            // props.inputAmount += n.toString();
+            context.emit(
+              "update:inputAmount",
+              props.inputAmount + n.toString()
+            );
           }
         }
       }
@@ -109,7 +129,8 @@ export const InputPad = defineComponent({
       {
         text: "清空",
         onClick: () => {
-          refAmount.value = "0";
+          // props.inputAmount = "0";
+          context.emit("update:inputAmount", "0");
           refDot.value = false;
           dotNumber.value = 0;
         },
@@ -118,17 +139,15 @@ export const InputPad = defineComponent({
         text: "记录",
         onClick: () => {
           // todo: record
-          console.log("amount :>> ", refAmount.value);
-          refAmount.value = "0";
+          console.log("amount :>> ", props.inputAmount);
+          // props.inputAmount = "0";
+          context.emit("update:inputAmount", "0");
           refDot.value = false;
           dotNumber.value = 0;
         },
       },
     ];
-    const nowDate = time(new Date()).format();
-    const refDate = ref<[string, string, string]>(
-      nowDate.split("-") as [string, string, string]
-    );
+    const refDate = useVModel(props, "inputDate", context.emit);
     const date_format = computed(() => {
       return refDate.value.join("-");
     });
@@ -179,7 +198,7 @@ export const InputPad = defineComponent({
           </span>
           <span class={s.amount}>
             <svg-icon name={svgs.yuan} class={s.yuan} />
-            {refAmount.value}
+            {props.inputAmount}
           </span>
         </div>
         <div class={s.buttons}>

@@ -18,12 +18,13 @@ export const mockTagCreate: Mock<TagType> = (config) => {
   } as AxiosResponse<TagType>;
 };
 const createTag: <T extends TagKindType>(
+  ctxId: number, // state
   n: number,
   kind: T,
   attr?: Record<string, any>
-) => TagType[] = (n = 1, kind, attrs) =>
+) => TagType[] = (ctxId, n = 1, kind, attrs) =>
   Array.from<TagType>({ length: n }).map<TagType>((_, index) => ({
-    id: index,
+    id: index + ctxId,
     name: faker.lorem.word(),
     sign: faker.internet.emoji(),
     kind,
@@ -68,7 +69,7 @@ export const mockTagIndex: Mock<Resources<TagType>> = (
 
   return {
     data: {
-      resources: createTag(wantTagNumberThisPage, kind),
+      resources: createTag(ownedTagNumber, wantTagNumberThisPage, kind),
       kind,
       pager,
     },

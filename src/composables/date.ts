@@ -119,16 +119,11 @@ export const time = (date = new Date()) => {
       // support: YYYY MM DD HH mm ss SSS
       return pattern
         .replace(/YYYY/, year)
-        .replace(/MM/, month)
-        .padStart(2, "0")
-        .replace(/DD/, day)
-        .padStart(2, "0")
-        .replace(/HH/, minute)
-        .padStart(2, "0")
-        .replace(/ss/, second)
-        .padStart(2, "0")
-        .replace(/SSS/, msecond)
-        .padStart(3, "0");
+        .replace(/MM/, month.padStart(2, "0"))
+        .replace(/DD/, day.padStart(2, "0"))
+        .replace(/HH/, minute.padStart(2, "0"))
+        .replace(/ss/, second.padStart(2, "0"))
+        .replace(/SSS/, msecond.padStart(3, "0"));
     },
   };
   return api;
