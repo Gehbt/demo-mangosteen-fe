@@ -7,7 +7,7 @@ const svg_map: object = {};
 svg_list.map((item) => {
   Object.assign(svg_map, { [item]: item });
 });
-JSON.stringify(svg_map);
+// JSON.stringify(svg_map);
 
 writeFile("src/assets/jsons/svg_map.json", JSON.stringify(svg_map), (err) => {
   if (err) throw err;

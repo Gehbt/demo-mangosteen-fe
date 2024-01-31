@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
+import svg from '@svg_map';
 </script>
 
 <template>
+  <SvgIcon :name="svg.blueberry2"></SvgIcon>
   <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

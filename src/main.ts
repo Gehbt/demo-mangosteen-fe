@@ -34,6 +34,6 @@ app.component("svg-icon", SvgIcon); // 使用 SvgIcon 是因为 unplugin-vue-com
 
 app.config.errorHandler = (err) => {
   // navigator.sendBeacon("url");
-  console.log("Error: " + err);
+  console.log(err);
 };
 app.mount("#app");

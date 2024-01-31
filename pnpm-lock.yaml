@@ -61,6 +61,9 @@ dependencies:
   vue:
     specifier: ^3.4.15
     version: 3.4.15(typescript@5.3.3)
+  vue-echarts:
+    specifier: ^6.6.8
+    version: 6.6.8(echarts@5.4.3)(vue@3.4.15)
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.4.15)
@@ -72,6 +75,9 @@ devDependencies:
   '@faker-js/faker':
     specifier: ^8.3.1
     version: 8.3.1
+  '@total-typescript/ts-reset':
+    specifier: ^0.5.1
+    version: 0.5.1
   '@types/lodash-es':
     specifier: ^4.17.12
     version: 4.17.12
@@ -815,6 +821,10 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@total-typescript/ts-reset@0.5.1:
+    resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
+    dev: true
 
   /@trysound/sax@0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -3502,6 +3512,10 @@ packages:
       lodash: 4.17.21
     dev: false
 
+  /resize-detector@0.3.0:
+    resolution: {integrity: sha512-R/tCuvuOHQ8o2boRP6vgx8hXCCy87H1eY9V5imBYeVNyNVpuL9ciReSccLj2gDcax9+2weXy3bc8Vv+NRXeEvQ==}
+    dev: false
+
   /resolve-url@0.2.1:
     resolution: {integrity: sha512-ZuF55hVUQaaczgOIwqWzkEcEidmlD/xl44x1UZnhOXcYuFN2S6+rcxpG+C1N3So0wvNI3DmJICUFfu2SxhBmvg==}
     deprecated: https://github.com/lydell/resolve-url#deprecated
@@ -4436,6 +4450,21 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
+  /vue-demi@0.13.11(vue@3.4.15):
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.15(typescript@5.3.3)
+    dev: false
+
   /vue-demi@0.14.6(vue@3.4.15):
     resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
     engines: {node: '>=12'}
@@ -4449,6 +4478,26 @@ packages:
         optional: true
     dependencies:
       vue: 3.4.15(typescript@5.3.3)
+    dev: false
+
+  /vue-echarts@6.6.8(echarts@5.4.3)(vue@3.4.15):
+    resolution: {integrity: sha512-3EGrxKGCGjHnkhudRQQ4fkK5iJxxXNQ1fXvSWA/7mzR/oV7BBSHYvC3gDbG/WIW0A/Fcx2H8k5H3NDyWgjyi8g==}
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.5
+      '@vue/runtime-core': ^3.0.0
+      echarts: ^5.4.1
+      vue: ^2.6.12 || ^3.1.1
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      '@vue/runtime-core':
+        optional: true
+    dependencies:
+      echarts: 5.4.3
+      resize-detector: 0.3.0
+      vue: 3.4.15(typescript@5.3.3)
+      vue-demi: 0.13.11(vue@3.4.15)
     dev: false
 
   /vue-router@4.2.5(vue@3.4.15):

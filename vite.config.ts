@@ -87,6 +87,8 @@ export default defineConfig({
             "useCycleList",
             "useToggle",
             "useVModel",
+            "useRefHistory",
+            "useStorage",
           ],
         },
         {
