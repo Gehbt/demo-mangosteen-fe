@@ -5,7 +5,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { mockSession, mockTagCreate, mockTagIndex } from "@/mock/mock";
+import { mockSession, mockItemCreate, mockTagIndex } from "@/mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
@@ -77,7 +77,7 @@ export class Http {
 }
 const mock: (
   config: InternalAxiosRequestConfig
-) => Promise<false | AxiosResponse> = async (
+) => Promise<false | AxiosResponse | AxiosError> = async (
   config: InternalAxiosRequestConfig
 ) => {
   if (
@@ -91,13 +91,13 @@ const mock: (
     case "tagIndex":
       return mockTagIndex(config);
     case "itemCreate":
-      return mockTagCreate(config);
+      return mockItemCreate(config);
     //   return true;
     // case "itemIndex":
     //   [response.status, response.data] = mockItemIndex(response.config);
     //   return true;
-    case "tagCreate":
-      return mockTagCreate(config);
+    // case "tagCreate":
+    //   return mockTagCreate(config);
     case "session":
       console.log("session :>> ", config);
       const mock_session = mockSession(config);
@@ -123,7 +123,7 @@ httpClient.instance.interceptors.response.use(
       console.log("mock_res_error :>> ", mock_res_error);
       if (mock_res_error) {
         return mock_res_error;
-      } else return error;
+      } else throw error;
     } else {
       throw error;
     }

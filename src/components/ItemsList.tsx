@@ -9,6 +9,7 @@ import { httpClient } from "@/shared";
 import { Button } from "./Button";
 import { time } from "@/composables";
 import { AxiosError, AxiosResponse } from "axios";
+import { showDialog } from "vant";
 
 export const ItemsList = defineComponent({
   name: "ItemsList",
@@ -71,39 +72,36 @@ export const ItemsCreate = defineComponent({
       (refSelectedTab.value = tabName);
     const amountFloat = computed(() => parseFloat(refAmount.value));
     const handleSubmit = async () => {
-      console.log("object :>> ", {
-        // 带下划线的名字是数据库风格
-        kind: refSelectedTab.value,
-        tag_id: TagIdMap[refSelectedTab.value].value,
-        happpen_at: new Date(refDate.value.join("-")).toISOString(),
-        amount: amountFloat.value,
-      });
-      const response = await httpClient
+      await httpClient
         .post<Resource<ItemType>>(
           "/items",
           {
             // 带下划线的名字是数据库风格
             kind: refSelectedTab.value,
-            tag_id: TagIdMap[refSelectedTab.value].value,
-            happpen_at: new Date(refDate.value.join("-")),
-            amount: parseFloat(refAmount.value),
-          },
+            tags_id: [TagIdMap[refSelectedTab.value].value],
+            happen_at: new Date(refDate.value.join("-")),
+            amount: amountFloat.value,
+          } as ItemType,
           {
             params: {
               _mock: "itemCreate",
             },
           }
         )
-        .catch((err: AxiosError<{ errors: string }>) => {
-          if (err.response?.status === 422) {
-            alert("Error" + err.response.data.errors);
+        .then(() => {
+          // time reset
+          refDate.value = nowDate;
+          refAmount.value = "0";
+          router.push("/items");
+        })
+        .catch((err: AxiosError) => {
+          const error = err as AxiosError;
+          if (error.response?.status === 422) {
+            showDialog({ message: "错误: " + error.message });
+            return;
           }
-          throw err.cause;
+          throw error.cause;
         });
-      // time reset
-      refDate.value = nowDate;
-      refAmount.value = "0";
-      router.push("/items");
     };
     return () => (
       <MainLayout

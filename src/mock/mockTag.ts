@@ -1,34 +1,6 @@
-import { faker } from "@faker-js/faker/locale/zh_CN";
 import { Mock } from "./mock";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { createVNode } from "vue";
 import { fakerZH_CN } from "@faker-js/faker";
-
-export const mockTagCreate: Mock<ItemType> = (
-  config: AxiosRequestConfig<ItemType>
-) => {
-  const json = config.data;
-  // todo 使用报错而不是返回
-  if (!json) {
-    return { data: null, status: 500 } as AxiosResponse<null>;
-  } else if (!json.tags_id) {
-    return { data: null, status: 422 } as AxiosResponse<null>;
-  }
-  return {
-    data: {
-      id: faker.number.int(),
-      user_id: 1312,
-      amount: 9999,
-      note: null,
-      tags_id: json.tags_id,
-      happen_at: fakerZH_CN.date.anytime(),
-      updated_at: fakerZH_CN.date.anytime(),
-      created_at: fakerZH_CN.date.anytime(),
-      kind: json.kind,
-    },
-    status: 200,
-  } as AxiosResponse<ItemType>;
-};
 
 const createTag: <T extends TagKindType>(
   ctxId: number, //* state
@@ -39,7 +11,7 @@ const createTag: <T extends TagKindType>(
   Array.from<TagType>({ length: n }).map<TagType>((_, index) => ({
     id: index + ctxId,
     name: fakerZH_CN.lorem.word(),
-    sign: faker.internet.emoji(),
+    sign: fakerZH_CN.internet.emoji(),
     kind,
     ...attrs,
   }));

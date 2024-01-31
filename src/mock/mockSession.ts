@@ -6,5 +6,5 @@ export const mockSession: Mock<{ jwt: string }> = (config) => {
   return {
     data: { jwt: faker.string.uuid() },
     status: 200,
-  } as unknown as AxiosResponse<{ jwt: string }>;
+  } as AxiosResponse<{ jwt: string }>;
 };
