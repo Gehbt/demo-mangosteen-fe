@@ -1,8 +1,8 @@
 import { PropType, computed, defineComponent, ref } from "vue";
 import s from "./InputPad.module.scss";
 import { DatePicker, Popup } from "vant";
-import { time } from "@/composables/date";
 import { useSL } from "@/composables/save_load";
+import { time } from "@/composables/date";
 
 export const InputPad = defineComponent({
   name: "InputPad",
@@ -15,16 +15,18 @@ export const InputPad = defineComponent({
       type: String,
       default: "0",
     },
+    handleSubmit: func<() => void>().isRequired,
   },
   emits: ["update:inputAmount", "update:inputDate"],
   setup(props, context) {
     // const refAmount = ref("0");
-    const refDot = ref(false);
+    const refNumberWithDot = ref(false);
     const dotNumber = ref(0);
     const appendNumber = (n: number | "." = ".") => {
       if (
         // < 11位数
-        (refDot.value && props.inputAmount.length < /* 11+ "." +2 */ 13) ||
+        (refNumberWithDot.value &&
+          props.inputAmount.length < /* 11+ "." +2 */ 13) ||
         props.inputAmount.length < 10
       ) {
         // 第一位数
@@ -33,14 +35,14 @@ export const InputPad = defineComponent({
           context.emit("update:inputAmount", n.toString());
         } else {
           // console.log(". n:>> ", refDot.value, dotNumber.value);
-          if (!refDot.value) {
+          if (!refNumberWithDot.value) {
             //无小数点
             // props.inputAmount + n.toString();
             context.emit(
               "update:inputAmount",
               props.inputAmount + n.toString()
             );
-          } else if (refDot.value && dotNumber.value < 4) {
+          } else if (refNumberWithDot.value && dotNumber.value < 4) {
             // 有小数点
             dotNumber.value += 1;
             // props.inputAmount += n.toString();
@@ -118,9 +120,9 @@ export const InputPad = defineComponent({
         text: ".",
         onClick: () => {
           // console.log("object :>> ", refDot.value);
-          if (!refDot.value) {
+          if (!refNumberWithDot.value) {
             // 无 dot
-            refDot.value = true;
+            refNumberWithDot.value = true;
             dotNumber.value = 1;
             appendNumber();
           }
@@ -131,18 +133,15 @@ export const InputPad = defineComponent({
         onClick: () => {
           // props.inputAmount = "0";
           context.emit("update:inputAmount", "0");
-          refDot.value = false;
+          refNumberWithDot.value = false;
           dotNumber.value = 0;
         },
       },
       {
-        text: "记录",
+        text: "记帐",
         onClick: () => {
-          // todo: record
-          console.log("amount :>> ", props.inputAmount);
-          // props.inputAmount = "0";
-          context.emit("update:inputAmount", "0");
-          refDot.value = false;
+          props.handleSubmit();
+          refNumberWithDot.value = false;
           dotNumber.value = 0;
         },
       },

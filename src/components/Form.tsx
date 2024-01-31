@@ -68,7 +68,7 @@ export const FormItem = defineComponent({
     const count = ref<number>(props.countFrom);
     const isCounting = computed(() => !!timer.value);
     const useCountDown = () => {
-      timer.value = setInterval(() => {
+      timer.value = window.setInterval(() => {
         count.value -= 1;
         if (count.value === 0) {
           clearInterval(timer.value);

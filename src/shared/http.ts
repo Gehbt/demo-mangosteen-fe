@@ -90,8 +90,8 @@ const mock: (
   switch (config?.params?._mock) {
     case "tagIndex":
       return mockTagIndex(config);
-    // case "itemCreate":
-    //   [response.status, response.data] = mockItemCreate(response.config);
+    case "itemCreate":
+      return mockTagCreate(config);
     //   return true;
     // case "itemIndex":
     //   [response.status, response.data] = mockItemIndex(response.config);
@@ -134,11 +134,10 @@ httpClient.instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  (error: AxiosError) => {
     if (error.response) {
-      const err = error as AxiosError;
       // shared err
-      if (err.response?.status === 429) {
+      if (error.response.status === 429) {
         alert("请求频繁!"); // TODO: dialog
       }
     }

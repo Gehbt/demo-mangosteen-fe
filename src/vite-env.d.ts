@@ -18,16 +18,13 @@ type JSONValue =
 
 type TagKindType = "expenses" | "income";
 type DateScope = "month" | "last_month" | "year" | "custom";
-type TagType<T extends TagKindType = TagKindType> = {
+interface TagType<T extends TagKindType = TagKindType> extends TimeCUD {
   id: number;
   name: string;
   sign: string;
   kind: T;
-  deleted_at?: Date | null;
-  created_at?: Date | null;
-  updated_at?: Date | null;
-};
-type Resources<T extends unknown> = {
+}
+interface Resources<T extends unknown> {
   resources: T[];
   kind: TagKindType;
   pager: {
@@ -35,4 +32,21 @@ type Resources<T extends unknown> = {
     pre_page: number; // 每页个数
     count: number; // 总数
   };
-};
+}
+
+interface ItemType extends TagType {
+  user_id: number;
+  amount: number;
+  tags_id: number[];
+  happen_at: Date | string | null; // read
+  kind: TagKindType;
+  note: null;
+}
+interface Resource<T> {
+  resource: T;
+}
+interface TimeCUD {
+  deleted_at?: Date | string | null;
+  created_at?: Date | string | null;
+  updated_at?: Date | string | null;
+}

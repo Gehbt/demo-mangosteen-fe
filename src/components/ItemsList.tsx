@@ -4,15 +4,16 @@ import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";
 import s from "./ItemsList.module.scss";
 import { ItemSummary } from "./ItemSummary";
-import { TabsTime } from "@/layouts/TabsTimeLayout";
+import { TabsTimeLayout } from "@/layouts/TabsTimeLayout";
 import { httpClient } from "@/shared";
 import { Button } from "./Button";
 import { time } from "@/composables";
+import { AxiosError, AxiosResponse } from "axios";
 
 export const ItemsList = defineComponent({
   name: "ItemsList",
   setup(props, context) {
-    return () => <TabsTime comp={ItemSummary} title="蓝莓记账" />;
+    return () => <TabsTimeLayout comp={ItemSummary} title="蓝莓记账" />;
   },
 });
 const useTags = () => {
@@ -47,11 +48,18 @@ export const ItemsCreate = defineComponent({
     const refSelectedTab = ref<TagKindType>("expenses");
     const refExpTagId = ref<number>(-1);
     const refIncTagId = ref<number>(-1);
+    const TagIdMap: Record<TagKindType, Ref<number>> = {
+      expenses: refExpTagId,
+      income: refIncTagId,
+    };
     const refAmount = ref("0");
-    const nowDate = time(new Date()).format();
-    const refDate = ref<[string, string, string]>(
-      nowDate.split("-") as [string, string, string]
-    );
+    // nowDate: 记录当前时间
+    const nowDate = time(new Date()).format().split("-") as [
+      string,
+      string,
+      string
+    ];
+    const refDate = ref<[string, string, string]>(nowDate);
     const { fetchTags, refExpensesTags, refIncomeTags } = useTags();
 
     // ! preload data
@@ -61,6 +69,42 @@ export const ItemsCreate = defineComponent({
     const refToggle = ref(false);
     const updateSelected = (tabName: TagKindType) =>
       (refSelectedTab.value = tabName);
+    const amountFloat = computed(() => parseFloat(refAmount.value));
+    const handleSubmit = async () => {
+      console.log("object :>> ", {
+        // 带下划线的名字是数据库风格
+        kind: refSelectedTab.value,
+        tag_id: TagIdMap[refSelectedTab.value].value,
+        happpen_at: new Date(refDate.value.join("-")).toISOString(),
+        amount: amountFloat.value,
+      });
+      const response = await httpClient
+        .post<Resource<ItemType>>(
+          "/items",
+          {
+            // 带下划线的名字是数据库风格
+            kind: refSelectedTab.value,
+            tag_id: TagIdMap[refSelectedTab.value].value,
+            happpen_at: new Date(refDate.value.join("-")),
+            amount: parseFloat(refAmount.value),
+          },
+          {
+            params: {
+              _mock: "itemCreate",
+            },
+          }
+        )
+        .catch((err: AxiosError<{ errors: string }>) => {
+          if (err.response?.status === 422) {
+            alert("Error" + err.response.data.errors);
+          }
+          throw err.cause;
+        });
+      // time reset
+      refDate.value = nowDate;
+      refAmount.value = "0";
+      router.push("/items");
+    };
     return () => (
       <MainLayout
         title="记一笔"
@@ -104,20 +148,20 @@ export const ItemsCreate = defineComponent({
           >
             {refToggle.value.toString()}
           </Button>
-          <div>
-            <Transition
-              enterFromClass={s.col_in_enter_from}
-              leaveToClass={s.col_in_leave_to}
-              enterActiveClass={s.col_in_enter_active}
-              leaveActiveClass={s.col_in_leave_active}
-            >
-              <InputPad
-                v-if={refToggle.value}
-                v-model:inputAmount={refAmount.value}
-                v-model:inputDate={refDate.value}
-              />
-            </Transition>
-          </div>
+
+          <Transition
+            enterFromClass={s.col_in_enter_from}
+            leaveToClass={s.col_in_leave_to}
+            enterActiveClass={s.col_in_enter_active}
+            leaveActiveClass={s.col_in_leave_active}
+          >
+            <InputPad
+              v-if={refToggle.value}
+              v-model:inputAmount={refAmount.value}
+              v-model:inputDate={refDate.value}
+              handleSubmit={handleSubmit}
+            />
+          </Transition>
         </div>
       </MainLayout>
     );
