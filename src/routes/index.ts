@@ -1,4 +1,5 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
+import { SwiperView } from "@/components/Swiper";
 import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
 import { Items } from "@/views/Items";
 import { SignIn } from "@/views/SignIn";
@@ -7,14 +8,15 @@ import { Statistics } from "@/views/Statistics";
 import { Tag } from "@/views/Tag";
 import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
-import { Welcome } from "@views/Welcome";
+import { Welcome, Welcome2 } from "@views/Welcome";
 import { RouteRecordRaw } from "vue-router";
 const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",
     path: "0",
-    components: { main: Dsetup, footer: WEndFooter },
+    components: { main: SwiperView, footer: WEndFooter },
   },
+  // TODO: compose and use `scroll-snap`
   {
     name: "w1",
     path: "1",
@@ -45,7 +47,7 @@ export const routes: RouteRecordRaw[] = [
   // { path: "/about", component: Bar },
   {
     path: "/welcome",
-    component: Welcome,
+    component: Welcome2,
     children: [
       {
         name: "w",
@@ -55,7 +57,11 @@ export const routes: RouteRecordRaw[] = [
       ...WelcomeTable,
     ],
   },
-  { path: "/statistics", component: Statistics, name: "statistics" },
+  {
+    path: "/statistics",
+    component: async () => Statistics,
+    name: "statistics",
+  },
   {
     name: "start",
     path: "/start",
@@ -69,12 +75,12 @@ export const routes: RouteRecordRaw[] = [
       {
         name: "itemsList",
         path: "",
-        component: ItemsList,
+        component: async () => ItemsList,
       },
       {
         name: "itemsCreate",
         path: "create",
-        component: ItemsCreate,
+        component: async () => ItemsCreate,
       },
     ],
   },
@@ -86,12 +92,12 @@ export const routes: RouteRecordRaw[] = [
       {
         name: "tagsCreate",
         path: "create",
-        component: TagsCreate,
+        component: async () => TagsCreate,
       },
       {
         name: "tagsId",
         path: ":id/edit",
-        component: TagsEdit,
+        component: async () => TagsEdit,
       },
     ],
   },

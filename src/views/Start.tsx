@@ -1,5 +1,5 @@
 import { Button, Floatbutton } from "@/components/Button";
-import { defineComponent, ref } from "vue";
+import { Transition, defineComponent, ref } from "vue";
 import s from "./Start.module.scss";
 import { Center } from "@/components/Center";
 import { Overlay, OverlayMask } from "@/components/Overlay";
@@ -29,15 +29,17 @@ export const Start = defineComponent({
             <Floatbutton />
           </RouterLink>
         </div>
-
-        <div
-          style={{
-            visibility: overlayVisibleRef.value ? "visible" : "hidden",
-          }}
+        <Transition
+          enterFromClass={s.row_in_enter_from}
+          leaveToClass={s.row_in_leave_to}
+          enterActiveClass={s.row_in_enter_active}
+          leaveActiveClass={s.row_in_leave_active}
         >
-          <Overlay />
-          <OverlayMask onBlurOverlay={blurOverlay} />
-        </div>
+          <div v-show={overlayVisibleRef.value}>
+            <Overlay />
+            <OverlayMask onBlurOverlay={blurOverlay} />
+          </div>
+        </Transition>
       </MainLayout>
     );
   },

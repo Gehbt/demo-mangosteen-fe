@@ -8,11 +8,15 @@
     width: 100%;
   }
 }
-.line-chart {
+.line_chart {
   height: 168px;
+  min-height: 100px;
+  min-width: 80px;
 }
-.pie-chart {
+.pie_chart {
   height: 100vw;
+  min-height: 100px;
+  min-width: 80px;
 }
 .demo3 {
   margin-bottom: 128px;

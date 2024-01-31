@@ -6,7 +6,6 @@ import {
   ref,
 } from "vue";
 import s from "./Charts.module.scss";
-import { ItemsCreateName } from "@/shared/i18n-simple";
 import * as echarts from "echarts";
 export const Charts = defineComponent({
   name: "Charts",
@@ -23,7 +22,7 @@ export const Charts = defineComponent({
     // },
   },
   setup(props, context) {
-    const refCategory = ref<ItemsCreateName>("支出");
+    const refCategory = ref<TagKindType>("expenses");
     return () => (
       <div class={s.wrapper}>
         <span class={s.formItem_name}>类型</span>
@@ -35,15 +34,16 @@ export const Charts = defineComponent({
               refCategory.value = (e.target as SelectHTMLAttributes).value;
             }}
           >
-            <option value="支出" selected class={s.select}>
+            <option value="expenses" selected class={s.select}>
               支出
             </option>
-            <option value="收入">收入</option>
+            <option value="income">收入</option>
           </select>
         </div>
+        <div style={{ width: "100px" }}></div>
         <LineChart />
         <PieChart />
-        <Bars />
+        <BarChart />
       </div>
     );
   },
@@ -53,10 +53,12 @@ export type ChartsType = typeof Charts;
 export const LineChart = defineComponent({
   name: "LineChart",
   setup(props, context) {
-    const refDiv = ref<HTMLDivElement>();
+    const refLine = ref<HTMLDivElement>();
+    const lineChart = ref<echarts.ECharts>();
+    const lineData = ref([150, 230, 224, 218, 135, 147, 260]);
     onMounted(() => {
-      const lineChart = echarts.init(refDiv.value);
-      const option = {
+      lineChart.value = echarts.init(refLine.value, null, {});
+      const option = computed(() => ({
         grid: { left: "30px", top: "20px", right: 0, bottom: " 20px" },
         xAxis: {
           type: "category",
@@ -67,75 +69,84 @@ export const LineChart = defineComponent({
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: lineData.value,
             type: "line",
           },
         ],
-      };
-      lineChart.setOption(option);
+      }));
+      lineChart.value.setOption(option.value);
     });
-    return () => <div ref={refDiv} class={s["line-chart"]}></div>;
+    onUnmounted(() => {
+      lineChart.value?.dispose();
+    });
+    return () => <div ref={refLine} class={s.line_chart} />;
   },
 });
 
 export const PieChart = defineComponent({
   name: "PieChart",
   setup(props, context) {
-    const refDiv2 = ref<HTMLDivElement>();
-    onMounted(() => {
-      const pieChart = echarts.init(refDiv2.value);
-      // 使用刚指定的配置项和数据显示图表。
-      const pieOption = {
-        tooltip: {
-          trigger: "item",
-        },
-        legend: {
-          top: "5%",
-          left: "center",
-        },
-        series: [
-          {
-            name: "Access From",
-            type: "pie",
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: "#fff",
-              borderWidth: 2,
-            },
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 40,
-                fontWeight: "bold",
-              },
-            },
-            labelLine: {
-              show: false,
-            },
-            data: [
-              { value: 1048, name: "Search Engine" },
-              { value: 735, name: "Direct" },
-              { value: 580, name: "Email" },
-              { value: 484, name: "Union Ads" },
-              { value: 300, name: "Video Ads" },
-            ],
+    const refPie = ref<HTMLDivElement>();
+    const pieChart = ref<echarts.ECharts>();
+    onMounted(() =>
+      nextTick(() => {
+        pieChart.value = echarts.init(refPie.value);
+        // 使用刚指定的配置项和数据显示图表。
+        const pieOption = {
+          tooltip: {
+            trigger: "item",
           },
-        ],
-      };
-      pieChart.setOption(pieOption);
+          legend: {
+            top: "5%",
+            left: "center",
+          },
+          series: [
+            {
+              name: "Access From",
+              type: "pie",
+              radius: ["40%", "70%"],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: "#fff",
+                borderWidth: 2,
+              },
+              label: {
+                show: false,
+                position: "center",
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 40,
+                  fontWeight: "bold",
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                { value: 1048, name: "Search Engine" },
+                { value: 735, name: "Direct" },
+                { value: 580, name: "Email" },
+                { value: 484, name: "Union Ads" },
+                { value: 300, name: "Video Ads" },
+              ],
+            },
+          ],
+        };
+        pieChart.value.setOption(pieOption);
+      })
+    );
+    onUnmounted(() => {
+      pieChart.value?.dispose();
     });
-    return () => <div ref={refDiv2} class={s["pie-chart"]}></div>;
+    return () => <div ref={refPie} class={s.pie_chart}></div>;
   },
 });
 
-export const Bars = defineComponent({
-  name: "Bars",
+export const BarChart = defineComponent({
+  name: "BarChart",
   setup(props, context) {
     const data3 = reactive([
       { tag: { id: 1, name: "房租", sign: "x" }, amount: 3000 },

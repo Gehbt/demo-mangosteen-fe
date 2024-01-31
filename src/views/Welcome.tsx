@@ -4,6 +4,9 @@ import s from "./Welcome.module.scss";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 import { Direction, useSwiper } from "@/composables/swiper";
 import { throttle } from "lodash-es";
+import { W1, W2, W3, W4, WEndFooter, WFooter } from "@/components/welcome";
+import { SwiperView } from "@/components/Swiper";
+import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
   setup() {
@@ -20,9 +23,10 @@ export const Welcome = defineComponent({
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
         );
         // [1,2,3,4]
-        if (index <= 3 && index >= 2) {
-          router.replace(`/welcome/${index + dire_effect}`);
-        } else if (index === 4) {
+        // if (index <= 3 && index >= 2) {
+        //   router.replace(`/welcome/${index + dire_effect}`);
+        // } else
+        if (index === 4) {
           router.replace("/start");
         } else {
           router.replace(`/welcome/${index + dire_effect}`);
@@ -87,4 +91,43 @@ export const Welcome = defineComponent({
   // mounted() {
   // useSwiper(this.main)
   // },
+});
+// 使用css`scroll-snap` 实现无缝切换的的版本
+export const Welcome2 = defineComponent({
+  name: "Welcome2",
+  setup(props, context) {
+    const W1F = WFooter(1);
+    const W2F = WFooter(2);
+    const W3F = WFooter(3);
+    return () => (
+      <div class={s.wrapper2}>
+        <header>
+          <svg-icon name={svgs.blueberry2} class={s.main_svg_container} />
+          <h2>蓝莓记账</h2>
+        </header>
+        <main class={s.main}>
+          <Swipe class={s.swiper}>
+            <SwipeItem class={s.swiper_item}>
+              <W1 />
+            </SwipeItem>
+            <SwipeItem class={s.swiper_item}>
+              <W2 />
+            </SwipeItem>
+            <SwipeItem class={s.swiper_item}>
+              <W3 />
+            </SwipeItem>
+            <SwipeItem class={s.swiper_item}>
+              <W4 />
+            </SwipeItem>
+          </Swipe>
+        </main>
+        <footer>
+          {/* <W1F />
+          <W2F />
+          <W3F /> */}
+          <WEndFooter />
+        </footer>
+      </div>
+    );
+  },
 });

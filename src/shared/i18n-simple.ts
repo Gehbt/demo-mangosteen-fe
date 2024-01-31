@@ -12,4 +12,4 @@ export const i18nDateScope: Record<DateScope, ItemsListName> = {
   custom: "自定义",
 };
 export const i18nT = Object.assign({}, i18nTagKind, i18nDateScope);
-console.log("i18nT :>> ", i18nT);
+// console.log("i18nT :>> ", i18nT);

@@ -11,8 +11,8 @@ import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
 import type { ChartsType } from "@/components/statistics/Charts";
 import type { ItemSummaryType } from "@/components/ItemSummary";
-export type ItemsListName = "本月" | "上月" | "今年" | "自定义";
-export const TabsTime = defineComponent({
+
+export const TabsTimeLayout = defineComponent({
   name: "TabsTimeLayout",
   props: {
     comp: {

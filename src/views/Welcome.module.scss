@@ -21,7 +21,7 @@ $color: #000000;
     align-items: center;
     color: #d4d4d4;
   }
-  > main {
+  > .main {
     flex-grow: 1; /* 伸缩 */
     display: flex;
     flex-direction: column;
@@ -32,7 +32,44 @@ $color: #000000;
     flex-shrink: 0;
   }
 }
-
+.wrapper2 {
+  height: calc(100vh - var(--welcome-nav-height));
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(
+    to bottom,
+    var(--welcome-bg-start) 0%,
+    #b942ff 60%,
+    var(--welcome-bg-end) 100%
+  );
+  margin-bottom: var(--welcome-nav-height);
+  > header {
+    padding-top: 66px;
+    flex-shrink: 0; /* 不被压缩 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ebe9e9;
+  }
+  > main {
+    flex-grow: 1; /* 伸缩 */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 16px 16px var(--welcome-nav-gap);
+    > .swiper {
+      display: flex;
+      flex-grow: 1;
+      .swiper_item {
+        display: flex;
+      }
+    }
+  }
+  > footer {
+    flex-shrink: 0;
+  }
+}
 .main_svg_container {
   width: 96px;
   height: 96px;
@@ -55,7 +92,7 @@ $color: #000000;
 }
 
 .slide_fade_enter_from_rev {
-  transform: translateX(-100vw); 
+  transform: translateX(-100vw);
 }
 .slide_fade_leave_to_rev {
   transform: translateX(100vw);

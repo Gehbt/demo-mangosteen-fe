@@ -14,7 +14,9 @@ export const SignIn = defineComponent({
     const refErr: Ref<InvalidateError<typeof formData>> = ref({});
     const refIsSend = ref(false);
     const router = useRouter();
-    const route = useRoute();
+    const jwt = useStorage("jwt", "");
+    const returnTo = useRouteQuery("return_to", "/", { mode: "push" });
+    console.log("returnTo :>> ", returnTo.value);
     const refSmsCodeComponent = ref<typeof FormItem>(); // reference FormItem-smscode
     const clickSendCode = (e?: Event) => {
       formData.email = formData.email.trim();
@@ -106,12 +108,11 @@ export const SignIn = defineComponent({
         console.log("formData.code :>> ", formData.code);
         if (formData.code === "123456") {
           console.log("trick :>> ");
-          localStorage.setItem("jwt", "testjwt");
-          const returnTo = route.query.returnTo?.toString();
+          jwt.value = "testjwt";
           refreshMe()
             .then(
               () => {
-                router.push(returnTo || "/");
+                router.push(returnTo.value);
               },
               () => {
                 alert("登录失败");
@@ -142,16 +143,16 @@ export const SignIn = defineComponent({
             params: { _mock: "session" },
           })
           .then((response) => {
-            console.log("response :>> ", response);
-            localStorage.setItem("jwt", response.data.jwt);
+            console.log("response :>> ", response.data);
+            jwt.value = response.data.jwt;
             // router.push(
             //   "/sign_in?return_to=" + encodeURIComponent(route.fullPath)
             // );
-            const returnTo = route.query["return_to"]?.toString();
-            console.log("returnTo :>> ", returnTo);
+            // const returnTo = route.query["return_to"]?.toString();
+            // console.log("returnTo :>> ", returnTo);
             refreshMe();
             // const returnTo = sessionStorage.getItem("returnTo");
-            router.push(returnTo || "/");
+            router.push(returnTo.value);
           })
           .catch(whenCodeResponseError)
           .finally(() => {
