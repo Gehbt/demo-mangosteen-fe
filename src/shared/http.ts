@@ -5,7 +5,12 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { mockSession, mockItemCreate, mockTagIndex } from "@/mock/mock";
+import {
+  mockSession,
+  mockItemCreate,
+  mockTagIndex,
+  mockTagCreate,
+} from "@/mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
@@ -77,7 +82,7 @@ export class Http {
 }
 const mock: (
   config: InternalAxiosRequestConfig
-) => Promise<false | AxiosResponse | AxiosError> = async (
+) => Promise<false | AxiosResponse | AxiosError<OnAxiosError>> = async (
   config: InternalAxiosRequestConfig
 ) => {
   if (
@@ -96,8 +101,8 @@ const mock: (
     // case "itemIndex":
     //   [response.status, response.data] = mockItemIndex(response.config);
     //   return true;
-    // case "tagCreate":
-    //   return mockTagCreate(config);
+    case "tagCreate":
+      return mockTagCreate(config);
     case "session":
       console.log("session :>> ", config);
       const mock_session = mockSession(config);
@@ -134,7 +139,7 @@ httpClient.instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error: AxiosError) => {
+  (error: AxiosError<OnAxiosError>) => {
     if (error.response) {
       // shared err
       if (error.response.status === 429) {

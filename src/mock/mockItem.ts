@@ -10,25 +10,19 @@ export const mockItemCreate: Mock<ItemType> = (
   console.log("json :>> ", config);
   if (!json) {
     throw {
-      code: "500",
-      message: "无数据",
-      response: { status: 500 },
-    } as AxiosError;
+      response: { data: { error_message: "无数据" }, status: 500 },
+    } as AxiosError<OnAxiosError>;
   } else if (!json.tags_id || json.tags_id[0] === -1) {
     console.log("json.tags_id :>> ", json.tags_id);
     // 无id
     throw {
-      code: "422",
-      message: "未选择tag的id",
-      response: { status: 422 },
-    } as AxiosError;
+      response: { data: { error_message: "未选择tag的id" }, status: 422 },
+    } as AxiosError<OnAxiosError>;
   } else if (!json.amount) {
     // 有id 但无账目
     throw {
-      code: "422",
-      message: "金额不能为0",
-      response: { status: 422 },
-    } as AxiosError;
+      response: { data: { error_message: "金额不能为0" }, status: 422 },
+    } as AxiosError<OnAxiosError>;
   }
   return {
     data: {

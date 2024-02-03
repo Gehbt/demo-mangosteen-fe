@@ -27,6 +27,7 @@
   bottom: 0px;
 }
 .tags_wrapper {
+  cursor: pointer;
   display: flex;
   flex-wrap: wrap;
   padding-top: 16px;
@@ -58,7 +59,7 @@
   }
   &.selected {
     > .sign {
-      border-width: 3px;
+      border-width: 2px;
       border-color: var(--main);
     }
   }

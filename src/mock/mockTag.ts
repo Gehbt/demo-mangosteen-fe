@@ -8,7 +8,7 @@ const createTag: <T extends TagKindType>(
   kind: T,
   attr?: Record<string, any>
 ) => TagType[] = (ctxId = 0, n = 1, kind, attrs) =>
-  Array.from<TagType>({ length: n }).map<TagType>((_, index) => ({
+  Array.from<TagType>({ length: n }).map((_, index) => ({
     id: index + ctxId,
     name: fakerZH_CN.lorem.word(),
     sign: fakerZH_CN.internet.emoji(),
@@ -35,7 +35,7 @@ const createPager = (page: number, ownedTagNumber: number) => {
 export const mockTagIndex: Mock<Resources<TagType>> = (
   config: AxiosRequestConfig
 ) => {
-  console.log("mockTagIndex.config :>> ", config);
+  // console.log("mockTagIndex.config :>> ", config);
   const { kind, ownedTagNumber } = config.params as {
     ownedTagNumber: number;
     kind: "expenses" | "income";
@@ -57,3 +57,26 @@ export const mockTagIndex: Mock<Resources<TagType>> = (
   } as AxiosResponse<Resources<TagType>>;
 };
 // export const mockPager
+export const mockTagCreate: Mock<Resource<TagType>> = (config) => {
+  console.log("mockTagCreate :>> ", config.data);
+  const { kind, name, sign } = config.data as {
+    // todo: type define
+    kind: TagKindType;
+    name: string;
+    sign: string;
+  };
+  return {
+    data: {
+      resource: {
+        id: 5,
+        kind,
+        name,
+        sign,
+        created_at: new Date("2023-12-13").toISOString(),
+        deleted_at: null,
+        updated_at: new Date().toISOString(),
+      },
+    },
+    status: 204,
+  } as AxiosResponse<Resource<TagType>>;
+};

@@ -1,4 +1,4 @@
-import { PropType, Transition, defineComponent, ref } from "vue";
+import { KeepAlive, PropType, Transition, defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";
@@ -8,7 +8,7 @@ import { TabsTimeLayout } from "@/layouts/TabsTimeLayout";
 import { httpClient } from "@/shared";
 import { Button } from "./Button";
 import { time } from "@/composables";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { showDialog } from "vant";
 
 export const ItemsList = defineComponent({
@@ -17,7 +17,7 @@ export const ItemsList = defineComponent({
     return () => <TabsTimeLayout comp={ItemSummary} title="蓝莓记账" />;
   },
 });
-const useTags = () => {
+function useTags() {
   const refExpensesTags = ref<TagType<"expenses">[]>([]);
   const refIncomeTags = ref<TagType<"income">[]>([]);
   const tagKindTransfer: Record<TagKindType, Ref<TagType[]>> = {
@@ -30,7 +30,7 @@ const useTags = () => {
       _mock: "tagIndex",
       ownedTagNumber: tagKindTransfer[kind].value.length,
     });
-    console.log("response :>> ", response_tags);
+    // console.log("response :>> ", response_tags);
     if (response_tags.data) {
       tagKindTransfer[kind].value.push(...response_tags.data.resources);
     }
@@ -41,7 +41,7 @@ const useTags = () => {
     refExpensesTags,
     refIncomeTags,
   };
-};
+}
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
   setup(props, context) {
@@ -94,13 +94,14 @@ export const ItemsCreate = defineComponent({
           refAmount.value = "0";
           router.push("/items");
         })
-        .catch((err: AxiosError) => {
-          const error = err as AxiosError;
-          if (error.response?.status === 422) {
-            showDialog({ message: "错误: " + error.message });
+        .catch((err: AxiosError<OnAxiosError>) => {
+          if (err.status === 422) {
+            showDialog({
+              message: "错误: " + err.response?.data.error_message,
+            });
             return;
           }
-          throw error.cause;
+          throw err.cause;
         });
     };
     return () => (
@@ -198,7 +199,7 @@ const TagGrid = defineComponent({
           <div class={[s.tag, s.selected]}>
             <button
               onClick={() => {
-                router.push("/tags/create");
+                router.push(`/tags/create?kind=${props.kind}`);
               }}
               class={s.sign}
             >
@@ -206,24 +207,26 @@ const TagGrid = defineComponent({
             </button>
             <div class={s.name}>新增</div>
           </div>
-          {props.tagsSrc.value.map((tag) => (
-            <div
-              class={[s.tag, props.selected === tag.id ? s.selected : ""]}
-              onClick={() => {
-                // console.log("tag.id :>> ", tag.id);
+          <KeepAlive>
+            {props.tagsSrc.value.map((tag) => (
+              <div
+                class={[s.tag, props.selected === tag.id ? s.selected : ""]}
+                onClick={() => {
+                  // console.log("tag.id :>> ", tag.id);
 
-                onSelect(tag.id);
-                // console.log("props.selected :>> ", props.selected);
-              }}
-              key={tag.id}
-            >
-              <div class={s.sign}>{tag.sign}</div>
-              <div class={s.name}>
-                {tag.name}
-                {tag.id}
+                  onSelect(tag.id);
+                  // console.log("props.selected :>> ", props.selected);
+                }}
+                key={tag.id}
+              >
+                <div class={s.sign}>{tag.sign}</div>
+                <div class={s.name}>
+                  {tag.name}
+                  {tag.id}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </KeepAlive>
         </div>
         {/* ?TODO: 使用下拉更新 */}
         <p class={s.load}>

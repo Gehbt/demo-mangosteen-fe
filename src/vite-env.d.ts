@@ -50,3 +50,7 @@ interface TimeCUD {
   created_at?: Date | string | null;
   updated_at?: Date | string | null;
 }
+
+type OnAxiosError = {
+  error_message: string;
+};

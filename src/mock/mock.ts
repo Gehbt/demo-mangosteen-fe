@@ -1,12 +1,7 @@
-import {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios";
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 export type Mock<T> = (
   config: InternalAxiosRequestConfig
-) => AxiosResponse<T | null> | AxiosError;
+) => AxiosResponse<T | null> | AxiosError<OnAxiosError>;
 
 export * from "./mockSession";
 export * from "./mockTag";
