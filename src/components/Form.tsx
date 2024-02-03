@@ -22,7 +22,7 @@ export const Form = defineComponent({
 export const FormItem = defineComponent({
   name: "FormItem",
   props: {
-    modelValue: string(),
+    modelValue: string().def(""),
     // {
     //   type: String as PropType<string>,
     //   required: true,
@@ -78,6 +78,7 @@ export const FormItem = defineComponent({
         }
       }, 1000);
     };
+    const model_value = useVModel(props, "modelValue", context.emit);
     context.expose({ useCountDown });
     const content = computed(() => {
       switch (props.clan) {
@@ -92,17 +93,17 @@ export const FormItem = defineComponent({
               ]}
               placeholder={props.placeholder}
               type={props.clan}
-              value={props.modelValue}
-              onChange={(e) => {
-                console.log(
-                  "input value :>> ",
-                  (e.target as HTMLInputElement).value
-                );
-                context.emit(
-                  "update:modelValue",
-                  (e.target as HTMLInputElement).value
-                );
-              }}
+              v-model={model_value.value}
+              // onUpdate:modelValue={(e) => {
+              //   console.log(
+              //     "input value :>> ",
+              //     (e.target as HTMLInputElement).value
+              //   );
+              //   context.emit(
+              //     "update:modelValue",
+              //     (e.target as HTMLInputElement).value
+              //   );
+              // }}
             ></input>
           );
         case "emoji":
@@ -113,10 +114,7 @@ export const FormItem = defineComponent({
                 s.emojiList,
                 props.err_data !== "" ? s.error : "",
               ]}
-              modelValue={props.modelValue}
-              onUpdate:modelValue={(value: string) =>
-                context.emit("update:modelValue", value)
-              }
+              v-model={model_value.value}
             />
           );
         case "date":
@@ -167,13 +165,13 @@ export const FormItem = defineComponent({
                   s.smsCaptcha,
                   props.err_data !== "" ? s.error : "",
                 ]}
-                value={props.modelValue}
-                onInput={(e) => {
-                  context.emit(
-                    "update:modelValue",
-                    (e.target as HTMLInputElement).value
-                  );
-                }}
+                v-model={props.modelValue}
+                // onInput={(e) => {
+                //   context.emit(
+                //     "update:modelValue",
+                //     (e.target as HTMLInputElement).value
+                //   );
+                // }}
                 placeholder={props.placeholder}
               />
               <Button
@@ -207,8 +205,17 @@ export const FormItem = defineComponent({
       <div class={s.formRow}>
         <label class={s.formLabel}>
           <span class={s.formItem_name}>
-            {props.label}
-            <span>{props.clan === "emoji" ? props.modelValue : ""}</span>
+            {props.clan === "emoji" ? (
+              <EmojiLabel
+                label={props.label}
+                emojiValue={props.modelValue}
+                onUpdate:emojiValue={(value) => {
+                  context.emit("update:modelValue", value);
+                }}
+              />
+            ) : (
+              props.label
+            )}
           </span>
           <div class={s.formItem_value}>{content.value}</div>
           <div class={s.formItem_errorHint}>
@@ -216,6 +223,42 @@ export const FormItem = defineComponent({
           </div>
         </label>
       </div>
+    );
+  },
+});
+
+export const EmojiLabel = defineComponent({
+  name: "EmojiLabel",
+  props: {
+    label: string(),
+    emojiValue: string().def(""),
+  },
+  emits: ["update:emojiValue"],
+  setup(props, context) {
+    const refEmoji = useVModel(props, "emojiValue", context.emit);
+    const { history } = useRefHistory(refEmoji);
+    const historyList4 = computed(() => history.value.slice(0, 4));
+    return () => (
+      <span class={s.emojiLabel}>
+        <span class={s.labelItem}>
+          {props.label}
+          <strong>{props.emojiValue}</strong>
+        </span>
+        <span class={s.labelItem}>
+          历史选择
+          {historyList4.value.map((value, index) => (
+            <span
+              key={index}
+              onClick={() => {
+                console.log("value.snapshot :>> ", value.snapshot);
+                context.emit("update:emojiValue", value.snapshot);
+              }}
+            >
+              {value.snapshot}
+            </span>
+          ))}
+        </span>
+      </span>
     );
   },
 });

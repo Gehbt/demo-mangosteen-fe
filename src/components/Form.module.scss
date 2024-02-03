@@ -99,9 +99,9 @@
     height: 40px;
     align-items: center;
     font-size: 1.25rem;
-    span {
-      font-size: 1.75rem;
-    }
+    // span {
+    //   font-size: 1.75rem;
+    // }
   }
   &_value {
     display: flex;
@@ -112,5 +112,12 @@
     color: var(--error-color);
     font-size: 16px;
     height: 20px;
+  }
+}
+.emojiLabel {
+  display: flex;
+  flex-grow: 1;
+  .labelItem {
+    width: 50%;
   }
 }

@@ -57,13 +57,18 @@
   &_inner {
     background: var(--tag-bg);
     width: 80vw;
+    border-radius: 8px;
     > header {
+      border-radius: 8px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
       background: var(--main);
       padding: 12px 16px;
       font-size: 1.75rem;
       color: var(--button-font-theme);
     }
     > main {
+      content: "";
     }
   }
 }

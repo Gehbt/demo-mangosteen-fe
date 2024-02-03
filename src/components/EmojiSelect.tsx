@@ -50,7 +50,7 @@ const emoji_lists: Array<[string, Readonly<Array<[string, string[]]>>]> = [
 export const EmojiSelect = defineComponent({
   name: "EmojiSelect",
   props: {
-    class: any<string | string[]>().def(''),
+    class: any<string | string[]>().def(""),
     // {
     //   type: String as PropType<string | string[]>,
     //   required: false,
@@ -80,12 +80,13 @@ export const EmojiSelect = defineComponent({
     const emoji = computed(() => {
       const selectedPartEmoji = emoji_lists[selectedElementIndex.value][1];
       return selectedPartEmoji.map((item) =>
-        item[1].map((emoji) => (
+        item[1].map((emoji, index) => (
           <li
             onClick={() => {
-              console.log("emoji :>> ", emoji);
+              // console.log("emoji :>> ", emoji);
               exportEmoji(emoji);
             }}
+            key={index}
           >
             {emoji}
           </li>
