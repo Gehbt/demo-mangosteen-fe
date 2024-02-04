@@ -89,6 +89,7 @@ export default defineConfig({
             "useVModel",
             "useRefHistory",
             "useStorage",
+            "useMousePressed",
           ],
         },
         {

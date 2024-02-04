@@ -9,7 +9,7 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(
       return result;
     } else {
       result = fn(...args) as ReturnType<T>;
-      timeOutId = setTimeout(() => {
+      timeOutId = window.setTimeout(() => {
         timeOutId = undefined;
       }, time);
     }

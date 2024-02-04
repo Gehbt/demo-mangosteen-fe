@@ -6,7 +6,7 @@ import { Button } from "./Button";
 export const Form = defineComponent({
   name: "Form",
   props: {
-    onSubmit: func<(e: Event) => void>(),
+    onSubmit: func<(e: Event) => void>().isRequired,
     // {
     //   type: Function as PropType<(e: Event) => void>,
     // },
@@ -27,7 +27,7 @@ export const FormItem = defineComponent({
     //   type: String as PropType<string>,
     //   required: true,
     // },
-    err_data: {
+    errData: {
       type: String as PropType<string | undefined>,
       required: true,
     },
@@ -61,7 +61,7 @@ export const FormItem = defineComponent({
     //   required: false,
     // },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "update:errData"],
   setup(props, context) {
     const refDateVisible = ref(false);
     const timer = ref<number>();
@@ -78,7 +78,7 @@ export const FormItem = defineComponent({
         }
       }, 1000);
     };
-    const model_value = useVModel(props, "modelValue", context.emit);
+    const middleModelValue = useVModel(props, "modelValue", context.emit);
     context.expose({ useCountDown });
     const content = computed(() => {
       switch (props.clan) {
@@ -86,14 +86,15 @@ export const FormItem = defineComponent({
         case "email":
           return (
             <input
-              class={[
-                s.formItem,
-                s.input,
-                props.err_data !== "" ? s.error : "",
-              ]}
+              class={[s.formItem, s.input, props.errData !== "" ? s.error : ""]}
               placeholder={props.placeholder}
               type={props.clan}
-              v-model={model_value.value}
+              value={middleModelValue.value}
+              onInput={(e) => {
+                middleModelValue.value = (e.target as HTMLInputElement).value;
+                // 清理错误
+                context.emit("update:errData", undefined);
+              }}
               // onUpdate:modelValue={(e) => {
               //   console.log(
               //     "input value :>> ",
@@ -112,9 +113,15 @@ export const FormItem = defineComponent({
               class={[
                 s.formItem,
                 s.emojiList,
-                props.err_data !== "" ? s.error : "",
+                props.errData !== "" ? s.error : "",
               ]}
-              v-model={model_value.value}
+              modelValue={middleModelValue.value}
+              onUpdate:modelValue={(value: string) => {
+                console.log("EmojiSelect value :>> ", value);
+                middleModelValue.value = value;
+                // 清理错误
+                context.emit("update:errData", undefined);
+              }}
             />
           );
         case "date":
@@ -130,7 +137,7 @@ export const FormItem = defineComponent({
                 class={[
                   s.formItem,
                   s.input,
-                  props.err_data !== "" ? s.error : "",
+                  props.errData !== "" ? s.error : "",
                 ]}
                 placeholder={props.placeholder}
               />
@@ -163,15 +170,15 @@ export const FormItem = defineComponent({
                   s.formItem,
                   s.input,
                   s.smsCaptcha,
-                  props.err_data !== "" ? s.error : "",
+                  props.errData !== "" ? s.error : "",
                 ]}
-                v-model={props.modelValue}
-                // onInput={(e) => {
-                //   context.emit(
-                //     "update:modelValue",
-                //     (e.target as HTMLInputElement).value
-                //   );
-                // }}
+                // !如果使用v-model,这里会报错
+                // ![Vue warn]: withDirectives can only be used inside render functions.
+                // *或者说原生属性无法使用v-model? 不对,上面用到了(但也改了)
+                value={middleModelValue.value}
+                onInput={(e) => {
+                  middleModelValue.value = (e.target as HTMLInputElement).value;
+                }}
                 placeholder={props.placeholder}
               />
               <Button
@@ -198,7 +205,7 @@ export const FormItem = defineComponent({
         case "custom":
           return context.slots.default?.();
         default:
-          throw new Error("Invalidate Form Item Type");
+          throw "Invalidate Form Item Type";
       }
     });
     return () => (
@@ -211,6 +218,7 @@ export const FormItem = defineComponent({
                 emojiValue={props.modelValue}
                 onUpdate:emojiValue={(value) => {
                   context.emit("update:modelValue", value);
+                  context.emit("update:errData");
                 }}
               />
             ) : (
@@ -219,7 +227,7 @@ export const FormItem = defineComponent({
           </span>
           <div class={s.formItem_value}>{content.value}</div>
           <div class={s.formItem_errorHint}>
-            <span>{props.err_data}</span>
+            <span>{props.errData}</span>
           </div>
         </label>
       </div>

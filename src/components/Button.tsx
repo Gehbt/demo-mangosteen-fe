@@ -21,7 +21,7 @@ export const Button = defineComponent({
     const wrapper_onclick = (e: MouseEvent) => {
       props.onClick?.(e);
       self_disable.value = true;
-      setTimeout(() => {
+      window.setTimeout(() => {
         self_disable.value = false;
       }, 1000);
     };

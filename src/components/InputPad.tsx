@@ -171,7 +171,7 @@ export const InputPad = defineComponent({
                 position="bottom"
                 v-model:show={showPicker.value}
                 onClickOverlay={() => {
-                  setTimeout(() => {
+                  window.setTimeout(() => {
                     // 防止跳动
                     refDate.value = data_record.load();
                   }, 100);
@@ -185,7 +185,7 @@ export const InputPad = defineComponent({
                     showPicker.value = false;
                   }}
                   onCancel={() => {
-                    setTimeout(() => {
+                    window.setTimeout(() => {
                       // 防止跳动
                       refDate.value = data_record.load();
                     }, 100);

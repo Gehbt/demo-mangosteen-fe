@@ -1,4 +1,5 @@
 .wrapper {
+  width: 100%;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -106,15 +107,12 @@
   }
 }
 
-.col_in_enter_active {
-  transition: all 0.3s ease;
-}
+.col_in_enter_active,
 .col_in_leave_active {
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .col_in_enter_from,
 .col_in_leave_to {
   transform: translateY(100%);
-  // opacity: 0;
 }

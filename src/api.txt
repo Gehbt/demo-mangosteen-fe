@@ -4,8 +4,8 @@ RESTful API::
 /welcome/3  ✅
 /welcome/4  ✅
 /start  ✅
-/items/new
-/tags/new
+/items/new -> create
+/tags/new -> create
 /tags/:id
 /items
 /sessions/new  <=>/sign_in  ✅
