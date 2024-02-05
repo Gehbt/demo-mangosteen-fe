@@ -15,10 +15,11 @@ export const SignIn = defineComponent({
     const refIsSend = ref(false);
     const router = useRouter();
     const jwt = useStorage("jwt", "");
+    // TODO: use `decodeURIComponent` (?)
     const returnTo = useRouteQuery("return_to", "/", { mode: "push" });
     console.log("returnTo :>> ", returnTo.value);
     const refSmsCodeComponent = ref<typeof FormItem>(); // reference FormItem-smscode
-    const clickSendCode = (e?: Event) => {
+    const clickSendCode = async (e?: Event) => {
       formData.email = formData.email.trim();
       const email = computed(() => formData.email);
       refErr.value = validate(
@@ -42,7 +43,8 @@ export const SignIn = defineComponent({
       );
       e?.preventDefault();
       if (!errorFree(refErr.value)) {
-        return Promise.reject(refErr.value.email);
+        console.log("refErr.value.email :>> ", refErr.value.email);
+        return;
       } else {
         const whenEmailResponseError = (e: any) => {
           if (e.response?.status === 422) {
@@ -56,9 +58,10 @@ export const SignIn = defineComponent({
         refIsSend.value = true;
         refSmsCodeComponent.value?.useCountDown();
         if (email.value === "100@qq.com") {
-          return Promise.resolve({ msg: true });
+          // console.log("object :>> ", object);
+          return;
         } else {
-          const response = httpClient
+          const response = await httpClient
             .post(
               "/sendmail",
               {
@@ -74,7 +77,8 @@ export const SignIn = defineComponent({
             .finally(() => {
               refIsSend.value = false;
             });
-          return response; // Promise.resolve();
+          console.log("response :>> ", response);
+          return; // Promise.resolve();
         }
       }
     };
@@ -103,7 +107,8 @@ export const SignIn = defineComponent({
       );
       // has Error message
       if (!errorFree(refErr.value)) {
-        return Promise.reject(refErr.value.code);
+        console.log("refErr.value.code :>> ", refErr.value.code);
+        return;
       } else {
         console.log("formData.code :>> ", formData.code);
         if (formData.code === "123456") {
@@ -124,7 +129,7 @@ export const SignIn = defineComponent({
           // const returnTo = sessionStorage.getItem("returnTo");
           // router.push(returnTo || "/");
           refIsSend.value = false;
-          return Promise.resolve();
+          return;
         }
         const whenCodeResponseError = (e: any) => {
           if (e.response?.status === 422) {
@@ -139,11 +144,11 @@ export const SignIn = defineComponent({
         refIsSend.value = true;
 
         await httpClient
-          .post<{ jwt: string }>("/session", toRaw(formData), {
+          .post<JWTResponse>("/session", toRaw(formData), {
             params: { _mock: "session" },
           })
           .then((response) => {
-            console.log("response :>> ", response.data);
+            console.log("response JWT :>> ", response.data);
             jwt.value = response.data.jwt;
             // router.push(
             //   "/sign_in?return_to=" + encodeURIComponent(route.fullPath)
@@ -181,7 +186,7 @@ export const SignIn = defineComponent({
             <FormItem
               label="邮箱"
               modelValue={formData.email}
-              err_data={refErr.value.email?.[0] ?? ""}
+              errData={refErr.value.email?.[0] ?? ""}
               clan="email"
               onUpdate:modelValue={(email: string) => {
                 formData.email = email;
@@ -191,7 +196,7 @@ export const SignIn = defineComponent({
             <FormItem
               label="验证码"
               ref={refSmsCodeComponent}
-              err_data={refErr.value.code?.[0] ?? ""}
+              errData={refErr.value.code?.[0] ?? ""}
               clan="smsCaptcha"
               onToggle={clickSendCode}
               modelValue={formData.code}

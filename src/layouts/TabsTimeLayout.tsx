@@ -116,7 +116,7 @@ export const TabsTimeLayout = defineComponent({
                 <FormItem
                   label="开始时间"
                   modelValue={refCustomTime.value.start.format()}
-                  err_data={refErrBox.value}
+                  errData={refErrBox.value}
                   clan="date"
                   onUpdate:modelValue={(emitTime: string) => {
                     refCustomTime.value.start = new Time(new Date(emitTime));
@@ -125,7 +125,7 @@ export const TabsTimeLayout = defineComponent({
                 <FormItem
                   label="结束时间"
                   modelValue={refCustomTime.value.end.format()}
-                  err_data={refErrBox.value}
+                  errData={refErrBox.value}
                   clan="date"
                   onUpdate:modelValue={(emitTime: string) => {
                     refCustomTime.value.end = new Time(new Date(emitTime));

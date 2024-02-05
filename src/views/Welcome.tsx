@@ -10,7 +10,7 @@ import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
   setup() {
-    const main = ref<HTMLDivElement>();
+    const main = templateRef<HTMLDivElement>("main");
     const route = useRoute();
     const router = useRouter();
     const { isSwiping, direction } = useSwiper(main, {

@@ -2,7 +2,6 @@ import { PropType, computed, defineComponent, ref } from "vue";
 import s from "./InputPad.module.scss";
 import { DatePicker, Popup } from "vant";
 import { useSL } from "@/composables/save_load";
-import { time } from "@/composables/date";
 
 export const InputPad = defineComponent({
   name: "InputPad",
