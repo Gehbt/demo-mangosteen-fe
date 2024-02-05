@@ -63,9 +63,44 @@ export const ItemsCreate = defineComponent({
     const refDate = ref<[string, string, string]>(nowDate);
     const { fetchTags, refExpensesTags, refIncomeTags } = useTags();
 
+    const expenses_tags = useStorage<TagType<"expenses">[]>(
+      "expenses_tags",
+      [],
+      sessionStorage,
+      {
+        mergeDefaults: true,
+      }
+    );
+    const income_tags = useStorage<TagType<"income">[]>(
+      "income_tags",
+      [],
+      sessionStorage,
+      {
+        mergeDefaults: true,
+      }
+    );
     // ! preload data
     onMounted(async () => {
-      Promise.race([fetchTags("expenses"), fetchTags("income")]);
+      if (!expenses_tags.value || expenses_tags.value.length === 0) {
+        fetchTags("expenses");
+      } else {
+        refExpensesTags.value = expenses_tags.value;
+      }
+      if (!income_tags.value || income_tags.value.length === 0) {
+        requestIdleCallback(() => fetchTags("income"));
+      } else {
+        refIncomeTags.value = income_tags.value;
+      }
+    });
+    onBeforeMount(() => {
+      // 记录refExpensesTags和refIncomeTags
+      // console.log("expenses_tags :>> ", expenses_tags);
+      if (!expenses_tags.value || expenses_tags.value.length === 0) {
+        expenses_tags.value = refExpensesTags.value;
+      }
+      if (!income_tags.value || income_tags.value.length === 0) {
+        income_tags.value = refIncomeTags.value;
+      }
     });
     const refToggle = ref(false);
     const updateSelected = (tabName: TagKindType) =>
@@ -95,7 +130,7 @@ export const ItemsCreate = defineComponent({
           router.push("/items");
         })
         .catch((err: AxiosError<OnAxiosError>) => {
-          if (err.status === 422) {
+          if (err.response?.status === 422) {
             showDialog({
               message: "错误: " + err.response?.data.error_message,
             });
@@ -188,10 +223,47 @@ const TagGrid = defineComponent({
   },
   emits: ["update:selected"],
   setup(props, context) {
+    const route = useRoute();
     const router = useRouter();
     const onSelect = (id: number) => {
       context.emit("update:selected", id);
     };
+    // longPress Event
+    const timer = ref<number>();
+    const currentTag = ref<HTMLDivElement>();
+    const longPressAct = (tag: TagType) => {
+      console.log("longPress :>> ", tag);
+      // console.log("router.currentRoute.value :>> ", router.currentRoute.value);
+      // TODO: use `URLSearchParams` && `decodeURIComponent`
+      router.push(
+        `/tags/${tag.id}/edit?return_to=${route.fullPath}&kind=${tag.kind}`
+      );
+    };
+
+    const onTouchStart = (e: TouchEvent, tag: TagType) => {
+      currentTag.value = e.currentTarget as HTMLDivElement;
+      timer.value = window.setTimeout(() => {
+        longPressAct(tag);
+      }, 500);
+    };
+    const pointedElement = ref<HTMLDivElement>();
+    const onTouchMove = (e: TouchEvent) => {
+      pointedElement.value = document.elementFromPoint(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      ) as HTMLDivElement;
+      if (
+        pointedElement.value !== currentTag.value &&
+        currentTag.value?.contains(pointedElement.value) === false
+      ) {
+        clearTimeout(timer.value);
+      }
+    };
+
+    const onTouchEnd = () => {
+      clearTimeout(timer.value);
+    };
+
     return () => (
       <>
         {/* ?TODO:记录滚动条 */}
@@ -207,26 +279,24 @@ const TagGrid = defineComponent({
             </button>
             <div class={s.name}>新增</div>
           </div>
-          <KeepAlive>
-            {props.tagsSrc.value.map((tag) => (
-              <div
-                class={[s.tag, props.selected === tag.id ? s.selected : ""]}
-                onClick={() => {
-                  // console.log("tag.id :>> ", tag.id);
-
-                  onSelect(tag.id);
-                  // console.log("props.selected :>> ", props.selected);
-                }}
-                key={tag.id}
-              >
-                <div class={s.sign}>{tag.sign}</div>
-                <div class={s.name}>
-                  {tag.name}
-                  {tag.id}
-                </div>
+          {props.tagsSrc.value.map((tag) => (
+            <div
+              onTouchmove={onTouchMove}
+              onTouchstart={(e) => onTouchStart(e, tag)}
+              onTouchend={onTouchEnd}
+              class={[s.tag, props.selected === tag.id ? s.selected : ""]}
+              onClick={() => {
+                onSelect(tag.id);
+              }}
+              key={tag.id}
+            >
+              <div class={s.sign}>{tag.sign}</div>
+              <div class={s.name}>
+                {tag.name}
+                {tag.id}
               </div>
-            ))}
-          </KeepAlive>
+            </div>
+          ))}
         </div>
         {/* ?TODO: 使用下拉更新 */}
         <p class={s.load}>

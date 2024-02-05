@@ -2,6 +2,7 @@ import { Mock } from "./mock";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { fakerZH_CN } from "@faker-js/faker";
 
+const OFFSET = 1;
 const createTag: <T extends TagKindType>(
   ctxId: number, //* state
   n: number,
@@ -9,8 +10,8 @@ const createTag: <T extends TagKindType>(
   attr?: Record<string, any>
 ) => TagType[] = (ctxId = 0, n = 1, kind, attrs) =>
   Array.from<TagType>({ length: n }).map((_, index) => ({
-    id: index + ctxId,
-    name: fakerZH_CN.lorem.word(),
+    id: index + ctxId + OFFSET,
+    name: fakerZH_CN.word.noun(),
     sign: fakerZH_CN.internet.emoji(),
     kind,
     ...attrs,
@@ -56,7 +57,7 @@ export const mockTagIndex: Mock<Resources<TagType>> = (
     status: 200,
   } as AxiosResponse<Resources<TagType>>;
 };
-// export const mockPager
+// TODO: return None
 export const mockTagCreate: Mock<Resource<TagType>> = (config) => {
   console.log("mockTagCreate :>> ", config.data);
   const { kind, name, sign } = config.data as {
@@ -77,6 +78,54 @@ export const mockTagCreate: Mock<Resource<TagType>> = (config) => {
         updated_at: new Date().toISOString(),
       },
     },
-    status: 204,
+    status: 200,
   } as AxiosResponse<Resource<TagType>>;
+};
+
+export const mockTagQuery: Mock<Resource<TagType>> = (config) => {
+  console.log("mockTagCreate :>> ", config);
+  const { kind, id } = config.params as {
+    kind: TagKindType;
+    id: number;
+  };
+  return {
+    data: {
+      resource: {
+        id,
+        kind,
+        name: fakerZH_CN.word.noun(),
+        sign: fakerZH_CN.internet.emoji(),
+        created_at: new Date("2023-12-13").toISOString(),
+        deleted_at: null,
+        updated_at: new Date().toISOString(),
+      },
+    },
+    status: 200,
+  } as AxiosResponse<Resource<TagType>>;
+};
+// TODO: return None
+export const mockTagEdit: Mock<Resource<TagType>> = (config) => {
+  console.log("mockTagCreate :>> ", config);
+  const { kind, id } = config.params as {
+    kind: TagKindType;
+    id: number;
+  };
+  return {
+    data: {
+      resource: {
+        id,
+        kind,
+        name: fakerZH_CN.word.noun(),
+        sign: fakerZH_CN.internet.emoji(),
+        created_at: new Date("2023-12-13").toISOString(),
+        deleted_at: null,
+        updated_at: new Date().toISOString(),
+      },
+    },
+    status: 200,
+  } as AxiosResponse<Resource<TagType>>;
+};
+// just mock
+export const mockTagDelete: Mock<null> = (config) => {
+  return { status: 204 } as AxiosResponse<null>;
 };

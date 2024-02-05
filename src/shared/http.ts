@@ -10,6 +10,9 @@ import {
   mockItemCreate,
   mockTagIndex,
   mockTagCreate,
+  mockTagQuery,
+  mockTagEdit,
+  mockTagDelete,
 } from "@/mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
@@ -98,15 +101,17 @@ const mock: (
     case "itemCreate":
       return mockItemCreate(config);
     //   return true;
-    // case "itemIndex":
-    //   [response.status, response.data] = mockItemIndex(response.config);
-    //   return true;
+    case "tagDelete":
+      return mockTagDelete(config);
+    case "tagEdit":
+      return mockTagEdit(config);
     case "tagCreate":
       return mockTagCreate(config);
+    case "tagQuery":
+      return mockTagQuery(config);
     case "session":
       console.log("session :>> ", config);
-      const mock_session = mockSession(config);
-      return mock_session;
+      return mockSession(config);
   }
   return false;
 };
@@ -114,15 +119,15 @@ export const httpClient = new Http("/api/v1");
 // `请求`拦截1: mock
 httpClient.instance.interceptors.response.use(
   async (response) => {
-    console.log("response :>> ", response);
-    console.warn("use mock");
+    // console.log("response :>> ", response);
+    // console.warn("use mock");
     const mock_res = await mock(response.config);
     console.log("mock_res :>> ", mock_res);
     return response;
   },
   async (error) => {
-    console.log("error :>> ", error);
-    if (error.config.params._mock) {
+    console.log("mock error pre:>> ", error);
+    if (error.config?.params?._mock) {
       console.warn("use mock");
       const mock_res_error = await mock(error.config);
       console.log("mock_res_error :>> ", mock_res_error);

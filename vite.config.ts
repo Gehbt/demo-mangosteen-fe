@@ -107,6 +107,9 @@ export default defineConfig({
           ],
         },
         {
+          superjson: [["default", "superjson"]],
+        },
+        {
           from: "vue-types",
           imports: [
             "any",
