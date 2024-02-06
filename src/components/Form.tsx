@@ -147,7 +147,7 @@ export const FormItem = defineComponent({
                 v-model:show={refDateVisible.value}
               >
                 <DatePicker
-                  v-model={computedPicker.value}
+                  modelValue={computedPicker.value}
                   title="选择年月日"
                   onConfirm={(date) => {
                     const emitPicker = (date.selectedValues as string[]).join(

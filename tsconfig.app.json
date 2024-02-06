@@ -45,5 +45,11 @@
     "src/batch",
     "src/scripts",
     "src/assets"
-  ]
+  ],
+  "vueCompilerOptions": {
+    "target": 3,
+    "plugins": [
+      "@vue-macros/volar/jsx-directive",
+    ],
+  },
 }

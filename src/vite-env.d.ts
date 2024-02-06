@@ -26,7 +26,6 @@ interface TagType<T extends TagKindType = TagKindType> extends TimeCUD {
 }
 interface Resources<T extends unknown> {
   resources: T[];
-  kind: TagKindType;
   pager: {
     page: number;
     pre_page: number; // 每页个数
@@ -34,13 +33,15 @@ interface Resources<T extends unknown> {
   };
 }
 
-interface ItemType extends TagType {
+interface ItemUserType extends ItemType {
   user_id: number;
-  amount: number;
   tags_id: number[];
-  happen_at: Date | string | null; // read
-  kind: TagKindType;
   note?: null;
+}
+
+interface ItemType extends TagType {
+  amount: number;
+  happen_at: Date | string | null; // read
 }
 interface Resource<T> {
   resource: T;
@@ -54,5 +55,3 @@ interface TimeCUD {
 type OnAxiosError = {
   error_message: string;
 };
-
-type JWTResponse = { jwt: string };

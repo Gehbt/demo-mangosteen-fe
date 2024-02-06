@@ -106,7 +106,7 @@ export const ItemsCreate = defineComponent({
     const amountFloat = computed(() => parseFloat(refAmount.value));
     const handleSubmit = async () => {
       await httpClient
-        .post<Resource<ItemType>>(
+        .post<Resource<ItemUserType>>(
           "/items",
           {
             // 带下划线的名字是数据库风格
@@ -114,7 +114,7 @@ export const ItemsCreate = defineComponent({
             tags_id: [TagIdMap[refSelectedTab.value].value],
             happen_at: new Date(refDate.value.join("-")),
             amount: amountFloat.value,
-          } as ItemType,
+          } as ItemUserType,
           {
             params: {
               _mock: "itemCreate",
