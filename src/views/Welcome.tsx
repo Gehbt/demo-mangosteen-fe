@@ -10,14 +10,15 @@ import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
   setup() {
-    const main = templateRef<HTMLDivElement>("main");
+    const main = ref<HTMLDivElement>();
     const route = useRoute();
     const router = useRouter();
     const { isSwiping, direction } = useSwiper(main, {
       beforeStart: (e) => e.preventDefault(),
     });
     // 还可以使用 对象(对象替代switch同样的思路)
-    const replace = throttle(
+    // ?TODO: 使用router.go(1 | -1)(缓存)
+    const push = throttle(
       (dire_effect: number) => {
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
@@ -27,9 +28,9 @@ export const Welcome = defineComponent({
         //   router.replace(`/welcome/${index + dire_effect}`);
         // } else
         if (index === 4) {
-          router.replace("/start");
+          router.push("/start");
         } else {
-          router.replace(`/welcome/${index + dire_effect}`);
+          router.push(`/welcome/${index + dire_effect}`);
         }
       },
       500,
@@ -38,9 +39,9 @@ export const Welcome = defineComponent({
     watchEffect(() => {
       if (isSwiping.value) {
         if (direction.value === Direction.l) {
-          replace(1);
+          push(1);
         } else if (direction.value === Direction.r) {
-          replace(-1);
+          router.back();
           route.meta.seq = false;
         }
       }

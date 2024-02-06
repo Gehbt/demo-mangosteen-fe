@@ -71,25 +71,26 @@ export default defineConfig({
         {
           "@vueuse/router": ["useRouteQuery", "useRouteParams"],
           "@vueuse/core": [
-            "templateRef",
-            "useCurrentElement",
-            "syncRef",
-            "reactiveComputed",
-            "refDefault",
-            "reactify",
-            "extendRef",
-            "reactify",
-            "isDefined",
-            "makeDestructurable",
-            "useCloned",
-            "useCounter",
-            "useMemoize",
-            "useCycleList",
-            "useToggle",
-            "useVModel",
-            "useRefHistory",
-            "useStorage",
-            "useMousePressed",
+            // "templateRef", // 是坑,不能取代ref(caseof echarts and useswpier)
+            "useCurrentElement", // log element in console, but in vue_reactive
+            "syncRef", // double-ended computed
+            "reactiveComputed", // conputed for `reactive()`
+            "refDefault", // computed but `?? "default"`
+            "reactify", // compose(apply) `Function` to reactive
+            "extendRef", // ref对象不止步于 .value
+            "isDefined", //  replace `!refValue.value` to isDefined(refValue.value)
+            "makeDestructurable", // support `let { foo, bar } = obj` & `let [foo, bar] = obj`
+            "useCloned", // Reactive deep_clone of a ref
+            "useCounter", // @util: builtin counter
+            "useMemoize", // middleware(apply function) for ref and catch method
+            "useCycleList", // @util: builtin cycle-list
+            "useToggle", // @uitl: bool-switch
+            "useVModel", // junior(次级)/transfer(中转) v-model
+            "useRefHistory", // ref change memo
+            "useStorage", // 在不使用LocalStorage 或 SessionStorage 之外 的Storage时才用到,
+            "useMousePressed", // pressEvent in any scope
+            "useLocalStorage", // 相比useStorage 更语义化
+            "useSessionStorage", // 相比useStorage 更语义化
           ],
         },
         {

@@ -48,6 +48,7 @@ export const TagsEdit = defineComponent({
         <MainLayout
           title="编辑标签"
           icon={svgs.back}
+          // todo: reduce router.replace
           toggle={() => router.replace("/items/create")}
         >
           <TagsForm id={tag_id_number.value} formData={formData.value}>

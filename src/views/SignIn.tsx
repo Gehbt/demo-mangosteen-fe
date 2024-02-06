@@ -14,7 +14,7 @@ export const SignIn = defineComponent({
     const refErr: Ref<InvalidateError<typeof formData>> = ref({});
     const refIsSend = ref(false);
     const router = useRouter();
-    const jwt = useStorage("jwt", "");
+    const jwt = useLocalStorage("jwt", "");
     // TODO: use `decodeURIComponent` (?)
     const returnTo = useRouteQuery("return_to", "/", { mode: "push" });
     console.log("returnTo :>> ", returnTo.value);

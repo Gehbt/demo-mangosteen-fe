@@ -1,6 +1,7 @@
 // Import Swiper Vue.js components
 // import { Swiper, SwiperSlide } from "swiper/vue";
 import { Swipe, SwipeItem } from "vant";
+import { Dsetup, Fsetup } from "./Dsetup";
 // Import Swiper styles
 // import "swiper/css?inline";
 
@@ -19,9 +20,10 @@ export const SwiperView = defineComponent({
             backgroundColor: "#39a9ed",
           }}
         >
-          <SwipeItem>Slide 1</SwipeItem>
-          <SwipeItem>Slide 2</SwipeItem>
-          <SwipeItem>Slide 3</SwipeItem>
+          <SwipeItem>{h(Dsetup)}</SwipeItem>
+          <SwipeItem>
+            <Fsetup />
+          </SwipeItem>
         </Swipe>
       </div>
     );

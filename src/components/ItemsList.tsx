@@ -63,18 +63,16 @@ export const ItemsCreate = defineComponent({
     const refDate = ref<[string, string, string]>(nowDate);
     const { fetchTags, refExpensesTags, refIncomeTags } = useTags();
 
-    const expenses_tags = useStorage<TagType<"expenses">[]>(
+    const expenses_tags = useSessionStorage<TagType<"expenses">[]>(
       "expenses_tags",
       [],
-      sessionStorage,
       {
         mergeDefaults: true,
       }
     );
-    const income_tags = useStorage<TagType<"income">[]>(
+    const income_tags = useSessionStorage<TagType<"income">[]>(
       "income_tags",
       [],
-      sessionStorage,
       {
         mergeDefaults: true,
       }

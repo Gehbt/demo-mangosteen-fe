@@ -53,7 +53,7 @@ export type ChartsType = typeof Charts;
 export const LineChart = defineComponent({
   name: "LineChart",
   setup(props, context) {
-    const refLine = templateRef<HTMLDivElement>("refLine");
+    const refLine = ref<HTMLDivElement>();
     const lineChart = ref<echarts.ECharts>();
     const lineData = ref([150, 230, 224, 218, 135, 147, 260]);
     onMounted(() => {
@@ -86,7 +86,7 @@ export const LineChart = defineComponent({
 export const PieChart = defineComponent({
   name: "PieChart",
   setup(props, context) {
-    const refPie = templateRef<HTMLDivElement>("refPie");
+    const refPie = ref<HTMLDivElement>();
     const pieChart = ref<echarts.ECharts>();
     onMounted(() =>
       nextTick(() => {

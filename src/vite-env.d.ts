@@ -40,7 +40,7 @@ interface ItemType extends TagType {
   tags_id: number[];
   happen_at: Date | string | null; // read
   kind: TagKindType;
-  note: null;
+  note?: null;
 }
 interface Resource<T> {
   resource: T;

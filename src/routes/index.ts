@@ -6,7 +6,6 @@ import { SignIn } from "@/views/SignIn";
 import { Start } from "@/views/Start";
 import { Statistics } from "@/views/Statistics";
 import { Tag } from "@/views/Tag";
-import { Dsetup } from "@components/Dsetup";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
 import { Welcome, Welcome2 } from "@views/Welcome";
 import { RouteRecordRaw } from "vue-router";
@@ -14,7 +13,7 @@ const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",
     path: "0",
-    components: { main: SwiperView, footer: WEndFooter },
+    components: { main: SwiperView, footer: WFooter(0) },
   },
   // TODO: compose and use `scroll-snap`
   {
@@ -88,6 +87,7 @@ export const routes: RouteRecordRaw[] = [
     name: "tags",
     path: "/tags",
     component: Tag,
+    redirect: "/items",
     children: [
       {
         name: "tagsCreate",
