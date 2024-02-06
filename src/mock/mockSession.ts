@@ -1,7 +1,6 @@
+import type { Mock } from "./type.ts";
 import { faker } from "@faker-js/faker/locale/zh_CN";
-import { Mock } from "./mock";
 import { AxiosResponse } from "axios";
-
 export const mockSession: Mock<JWTResponse> = (config) => {
   return {
     data: { jwt: faker.string.uuid() },

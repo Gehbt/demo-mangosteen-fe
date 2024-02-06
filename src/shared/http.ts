@@ -13,7 +13,7 @@ import {
   mockTagQuery,
   mockTagEdit,
   mockTagDelete,
-} from "@/mock/mock";
+} from "@/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
