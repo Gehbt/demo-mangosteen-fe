@@ -1,11 +1,12 @@
 import type { Mock } from "./type.ts";
 import { fakerZH_CN } from "@faker-js/faker";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-export const mockItemCreate: Mock<ItemType> = (
-  config: AxiosRequestConfig<ItemType>
+import { mkPager } from "./mockTag.ts";
+export const mockItemCreate: Mock<ItemUserType> = (
+  config: AxiosRequestConfig<ItemUserType>
 ) => {
   // axios post方法 的AxiosRequestConfig的data是序列化的ItemType
-  const json = JSON.parse(config.data as unknown as string) as ItemType;
+  const json = JSON.parse(config.data as unknown as string) as ItemUserType;
   console.log("json :>> ", config);
   if (!json) {
     throw {
@@ -36,5 +37,75 @@ export const mockItemCreate: Mock<ItemType> = (
       kind: json.kind,
     },
     status: 200,
-  } as AxiosResponse<ItemType>;
+  } as AxiosResponse<ItemUserType>;
+};
+function mkItem(
+  ctxId: number = 0,
+  n: number = 1,
+  config: {
+    bill_end: string;
+    bill_start: string;
+  }
+) {
+  return Array.from<ItemType>({ length: n }).map(
+    (_, index) =>
+      ({
+        amount: window.parseInt(fakerZH_CN.commerce.price()),
+        id: index + ctxId + 1,
+        kind: Math.random() > 0.5 ? "expenses" : "income",
+        sign: fakerZH_CN.internet.emoji(),
+        happen_at: fakerZH_CN.date.between({
+          from: new Date(config.bill_start),
+          to: new Date(config.bill_end),
+        }),
+        name: fakerZH_CN.commerce.product(),
+      } as ItemType)
+  );
+}
+
+export const mockItemIndex: Mock<Resources<ItemType>> = (
+  config: AxiosRequestConfig<Resources<ItemType>>
+) => {
+  console.log("itemIndex json :>> ", config.params);
+  const { bill_end, bill_start, ownItemNumber } = config.params as {
+    bill_end: string;
+    bill_start: string;
+    ownItemNumber: number;
+  };
+
+  const { wantNumberThisPage: wantItemNumberThisPage, pager } =
+    mkPager(ownItemNumber);
+  if (wantItemNumberThisPage === 0) {
+    return { data: null, status: 204 } as AxiosResponse<null>;
+  }
+  return {
+    data: {
+      resources: mkItem(ownItemNumber, wantItemNumberThisPage, {
+        bill_end,
+        bill_start,
+      }),
+      pager,
+    },
+    status: 200,
+  } as AxiosResponse<Resources<ItemType>>;
+};
+
+export const mockItemIndexAmount: Mock<Resource<any>> = (
+  config: AxiosRequestConfig<any>
+) => {
+  console.log("itemIndex json :>> ", config.params);
+  const { bill_end, bill_start, ownItemNumber } = config.params as {
+    bill_end: string;
+    bill_start: string;
+    ownItemNumber: number;
+  };
+  return {
+    data: {
+      resource: {
+        amount_income: 996,
+        amount_expenses: 9999,
+      },
+    },
+    status: 200,
+  } as AxiosResponse<Resource<any>>;
 };

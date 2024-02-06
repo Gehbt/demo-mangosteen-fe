@@ -2,11 +2,8 @@ import { PropType, defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
 import { Time } from "@/composables/date";
-import { Overlay } from "vant";
-import {
-  Overlay as MyOverlay,
-  OverlayMask as MyOverlayMask,
-} from "@/components/Overlay";
+import { Overlay as VOverlay } from "vant";
+import { Overlay, OverlayMask } from "@/components/Overlay";
 import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
 import type { ChartsType } from "@/components/statistics/Charts";
@@ -35,10 +32,24 @@ export const TabsTimeLayout = defineComponent({
     };
     const refSelected = ref<DateScope>("month");
     const time = new Time();
-    const refCustomTime = ref({
-      start: new Time(),
-      end: new Time(),
+    const refCustomTime = ref<
+      | {
+          start: Time;
+          end: Time;
+        }
+      | {
+          start: null;
+          end: null;
+        }
+    >({ start: null, end: null });
+    const refCustomTimeSL = ref({
+      start: new Time(new Date()),
+      end: new Time(new Date()),
     });
+    const refLoadCustomTime = computed(
+      () => !refCustomTime.value.start && !refCustomTime.value.end
+    );
+    // ?TODO: reduce .format
     const timeList = [
       {
         start: time.firstDayOfMonth(),
@@ -78,30 +89,35 @@ export const TabsTimeLayout = defineComponent({
         >
           <Tab name="month">
             <props.comp
+              timeLine="month"
               startDate={timeList[0].start.format()}
               endDate={timeList[0].end.format()}
             />
           </Tab>
           <Tab name="last_month">
             <props.comp
+              timeLine="last_month"
               startDate={timeList[1].start.format()}
               endDate={timeList[1].end.format()}
             />
           </Tab>
           <Tab name="year">
             <props.comp
+              timeLine="year"
               startDate={timeList[2].start.format()}
               endDate={timeList[2].end.format()}
             />
           </Tab>
           <Tab name="custom">
             <props.comp
-              startDate={refCustomTime.value.start.format()}
-              endDate={refCustomTime.value.end.format()}
+              timeLine="custom"
+              v-if={!refLoadCustomTime.value}
+              startDate={refCustomTime.value.start?.format() ?? ""}
+              endDate={refCustomTime.value.end?.format() ?? ""}
             />
           </Tab>
         </Tabs>
-        <Overlay
+        <VOverlay
           show={refOverlayVisible.value}
           class={s.overlay}
           onClick={() => {
@@ -115,20 +131,22 @@ export const TabsTimeLayout = defineComponent({
               <Form onSubmit={onSubmitCustomDate}>
                 <FormItem
                   label="开始时间"
-                  modelValue={refCustomTime.value.start.format()}
+                  modelValue={refCustomTimeSL.value.start.format()}
                   errData={refErrBox.value}
                   clan="date"
                   onUpdate:modelValue={(emitTime: string) => {
-                    refCustomTime.value.start = new Time(new Date(emitTime));
+                    console.log("emitTime :>> ", emitTime);
+                    refCustomTimeSL.value.start = new Time(new Date(emitTime));
                   }}
                 ></FormItem>
                 <FormItem
                   label="结束时间"
-                  modelValue={refCustomTime.value.end.format()}
+                  modelValue={refCustomTimeSL.value.end.format()}
                   errData={refErrBox.value}
                   clan="date"
                   onUpdate:modelValue={(emitTime: string) => {
-                    refCustomTime.value.end = new Time(new Date(emitTime));
+                    console.log("emitTime :>> ", emitTime);
+                    refCustomTimeSL.value.end = new Time(new Date(emitTime));
                   }}
                 ></FormItem>
                 <div class={[s.actions, s.formRow]}>
@@ -138,19 +156,28 @@ export const TabsTimeLayout = defineComponent({
                   >
                     取消
                   </button>
-                  <button type="submit">确认</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      refCustomTime.value.start = refCustomTimeSL.value.start;
+                      refCustomTime.value.end = refCustomTimeSL.value.end;
+                      refOverlayVisible.value = false;
+                    }}
+                  >
+                    确认
+                  </button>
                 </div>
               </Form>
             </main>
           </div>
-        </Overlay>
+        </VOverlay>
         <div
           style={{
             visibility: overlayVisibleRef.value ? "visible" : "hidden",
           }}
         >
-          <MyOverlay />
-          <MyOverlayMask onBlurOverlay={blurOverlay} />
+          <Overlay />
+          <OverlayMask onBlurOverlay={blurOverlay} />
         </div>
       </MainLayout>
     );

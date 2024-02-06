@@ -55,3 +55,10 @@ interface TimeCUD {
 type OnAxiosError = {
   error_message: string;
 };
+
+type JWTResponse = { jwt: string };
+
+interface AmountType {
+  amount_income: number;
+  amount_expenses: number;
+}
