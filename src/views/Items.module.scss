@@ -1,9 +1,13 @@
 .items {
   content: inherit;
+  > :first-child {
+    height: 100vh;
+    width: 100vw;
+  }
 }
 .row_in_enter_active,
 .row_in_leave_active {
-  transition: all 0.8s ease;
+  transition: opacity 0.8s ease;
 }
 
 .row_in_enter_from,

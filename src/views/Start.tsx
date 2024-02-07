@@ -17,18 +17,20 @@ export const Start = defineComponent({
       overlayVisibleRef.value = false;
     };
     return () => (
-      <MainLayout title="蓝莓记账" icon={svgs.menu} toggle={toggleOverlay}>
-        <Center direction="vertical" class={s.svg_wrapper}>
-          <svg-icon name={svgs.piggy2} class={s.svg} />
-        </Center>
-        <div class={s.btn_wrapper}>
-          <RouterLink to="/items/create">
-            <Button class={s.btn}>开始记账</Button>
-          </RouterLink>
-          <RouterLink to="/items/create">
-            <Floatbutton />
-          </RouterLink>
-        </div>
+      <>
+        <MainLayout title="蓝莓记账" icon={svgs.menu} toggle={toggleOverlay}>
+          <Center direction="vertical" class={s.svg_wrapper}>
+            <svg-icon name={svgs.piggy2} class={s.svg} />
+          </Center>
+          <div class={s.btn_wrapper}>
+            <RouterLink to="/items/create">
+              <Button class={s.btn}>开始记账</Button>
+            </RouterLink>
+            <RouterLink to="/items/create">
+              <Floatbutton />
+            </RouterLink>
+          </div>
+        </MainLayout>
         <Transition
           enterFromClass={s.row_in_enter_from}
           leaveToClass={s.row_in_leave_to}
@@ -40,7 +42,7 @@ export const Start = defineComponent({
             <OverlayMask onBlurOverlay={blurOverlay} />
           </div>
         </Transition>
-      </MainLayout>
+      </>
     );
   },
 });
