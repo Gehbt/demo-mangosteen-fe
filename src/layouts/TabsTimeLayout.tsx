@@ -8,19 +8,12 @@ import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
 import type { ChartsType } from "@/components/statistics/Charts";
 import type { ItemSummaryType } from "@/components/ItemSummary";
-
+// 其实应该在component里的
 export const TabsTimeLayout = defineComponent({
   name: "TabsTimeLayout",
   props: {
-    comp: {
-      type: Object as PropType<ChartsType | ItemSummaryType>, //实际上它们的 类型一样
-      required: true,
-    },
+    comp: object<ChartsType | ItemSummaryType>().isRequired,
     title: string().isRequired,
-    // {
-    //   type: String,
-    //   required: true,
-    // },
   },
   setup(props, context) {
     const overlayVisibleRef = ref(false);
@@ -71,106 +64,122 @@ export const TabsTimeLayout = defineComponent({
       refOverlayVisible.value = false;
     };
     return () => (
-      <MainLayout
-        title={props.title}
-        icon={svgs.menu}
-        toggle={toggleOverlay}
-        class={s.layout}
-      >
-        <Tabs
-          v-model:selected={refSelected.value}
-          class={s.tabs}
-          classPrefix="customTabStyle"
-          onUpdate:selected={(value: DateScope) => {
-            if (value === "custom") {
-              refOverlayVisible.value = true;
-            }
-          }}
+      <>
+        <MainLayout
+          title={props.title}
+          icon={svgs.menu}
+          toggle={toggleOverlay}
+          class={s.layout} // todo: layout
         >
-          <Tab name="month">
-            <props.comp
-              timeLine="month"
-              startDate={timeList[0].start.format()}
-              endDate={timeList[0].end.format()}
-            />
-          </Tab>
-          <Tab name="last_month">
-            <props.comp
-              timeLine="last_month"
-              startDate={timeList[1].start.format()}
-              endDate={timeList[1].end.format()}
-            />
-          </Tab>
-          <Tab name="year">
-            <props.comp
-              timeLine="year"
-              startDate={timeList[2].start.format()}
-              endDate={timeList[2].end.format()}
-            />
-          </Tab>
-          <Tab name="custom">
-            <props.comp
-              timeLine="custom"
-              v-if={!refLoadCustomTime.value}
-              startDate={refCustomTime.value.start?.format() ?? ""}
-              endDate={refCustomTime.value.end?.format() ?? ""}
-            />
-          </Tab>
-        </Tabs>
-        <VOverlay
-          show={refOverlayVisible.value}
-          class={s.overlay}
-          onClick={() => {
-            // refOverlayVisible.value = false;
-            // refSelected.value = "本月";
-          }}
-        >
-          <div class={s.overlay_inner}>
-            <header>请选择时间</header>
-            <main>
-              <Form onSubmit={onSubmitCustomDate}>
-                <FormItem
-                  label="开始时间"
-                  modelValue={refCustomTimeSL.value.start.format()}
-                  errData={refErrBox.value}
-                  clan="date"
-                  onUpdate:modelValue={(emitTime: string) => {
-                    console.log("emitTime :>> ", emitTime);
-                    refCustomTimeSL.value.start = new Time(new Date(emitTime));
-                  }}
-                ></FormItem>
-                <FormItem
-                  label="结束时间"
-                  modelValue={refCustomTimeSL.value.end.format()}
-                  errData={refErrBox.value}
-                  clan="date"
-                  onUpdate:modelValue={(emitTime: string) => {
-                    console.log("emitTime :>> ", emitTime);
-                    refCustomTimeSL.value.end = new Time(new Date(emitTime));
-                  }}
-                ></FormItem>
-                <div class={[s.actions, s.formRow]}>
-                  <button
-                    type="button"
-                    onClick={() => (refOverlayVisible.value = false)}
-                  >
-                    取消
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      refCustomTime.value.start = refCustomTimeSL.value.start;
-                      refCustomTime.value.end = refCustomTimeSL.value.end;
-                      refOverlayVisible.value = false;
-                    }}
-                  >
-                    确认
-                  </button>
-                </div>
-              </Form>
-            </main>
+          <div class={s.wrapper}>
+            <Tabs
+              v-model:selected={refSelected.value}
+              class={s.tabs}
+              classPrefix="customTabStyle"
+              onUpdate:selected={(value: DateScope) => {
+                if (value === "custom") {
+                  refOverlayVisible.value = true;
+                }
+              }}
+            >
+              <Tab name="month">
+                <props.comp
+                  timeLine="month"
+                  startDate={timeList[0].start.format()}
+                  endDate={timeList[0].end.format()}
+                />
+              </Tab>
+              <Tab name="last_month">
+                <props.comp
+                  timeLine="last_month"
+                  startDate={timeList[1].start.format()}
+                  endDate={timeList[1].end.format()}
+                />
+              </Tab>
+              <Tab name="year">
+                <props.comp
+                  timeLine="year"
+                  startDate={timeList[2].start.format()}
+                  endDate={timeList[2].end.format()}
+                />
+              </Tab>
+              <Tab name="custom">
+                <props.comp
+                  timeLine="custom"
+                  v-if={!refLoadCustomTime.value}
+                  startDate={refCustomTime.value.start?.format() ?? ""}
+                  endDate={refCustomTime.value.end?.format() ?? ""}
+                />
+              </Tab>
+            </Tabs>
+            <VOverlay
+              show={refOverlayVisible.value}
+              class={s.overlay}
+              onClick={() => {
+                // !DO NOTHING: cause cut off
+                // refOverlayVisible.value = false;
+                // refSelected.value = "month";
+              }}
+            >
+              <div class={s.overlay_inner}>
+                <header>请选择时间</header>
+                <main>
+                  <Form onSubmit={onSubmitCustomDate}>
+                    <FormItem
+                      label="开始时间"
+                      modelValue={refCustomTimeSL.value.start.format()}
+                      errData={refErrBox.value}
+                      clan="date"
+                      onUpdate:modelValue={(emitTime: string) => {
+                        console.log("emitTime :>> ", emitTime);
+                        refCustomTimeSL.value.start = new Time(
+                          new Date(emitTime)
+                        );
+                      }}
+                    ></FormItem>
+                    <FormItem
+                      label="结束时间"
+                      modelValue={refCustomTimeSL.value.end.format()}
+                      errData={refErrBox.value}
+                      clan="date"
+                      onUpdate:modelValue={(emitTime: string) => {
+                        console.log("emitTime :>> ", emitTime);
+                        refCustomTimeSL.value.end = new Time(
+                          new Date(emitTime)
+                        );
+                      }}
+                    ></FormItem>
+                    <div class={[s.actions, s.formRow]}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // back to month
+                          // reset CustomTime, toggle v-if
+                          refCustomTime.value = { end: null, start: null };
+                          refSelected.value = "month";
+                          refOverlayVisible.value = false;
+                        }}
+                      >
+                        取消
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          refCustomTime.value.start =
+                            refCustomTimeSL.value.start;
+                          refCustomTime.value.end = refCustomTimeSL.value.end;
+                          refOverlayVisible.value = false;
+                        }}
+                      >
+                        确认
+                      </button>
+                    </div>
+                  </Form>
+                </main>
+              </div>
+            </VOverlay>
           </div>
-        </VOverlay>
+        </MainLayout>
         <div
           style={{
             visibility: overlayVisibleRef.value ? "visible" : "hidden",
@@ -179,7 +188,7 @@ export const TabsTimeLayout = defineComponent({
           <Overlay />
           <OverlayMask onBlurOverlay={blurOverlay} />
         </div>
-      </MainLayout>
+      </>
     );
   },
 });

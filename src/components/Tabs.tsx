@@ -43,8 +43,8 @@ export const Tabs = defineComponent({
                     context.emit("update:selected", item.props?.name)
                   }
                 >
-                  {/* as DateScope just for polyfill */}
-                  {i18nT[item.props?.name as DateScope]}
+                  {/* as DateScope/TagKindType just for mapping */}
+                  {i18nT[item.props?.name as DateScope | TagKindType]}
                 </li>
               ))}
             </ol>

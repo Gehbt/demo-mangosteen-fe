@@ -1,29 +1,26 @@
 export class Time {
   date: Date;
-  constructor(date = new Date()) {
-    this.date = date;
+  constructor(date: Date | string = new Date()) {
+    this.date = new Date(date);
   }
   format(pattern: string = "YYYY-MM-DD") {
     // support: YYYY MM DD HH mm ss SSS
     const year = this.date.getFullYear().toString();
     const month = (this.date.getMonth() + 1).toString();
     const day = this.date.getDate().toString();
+    const hour = this.date.getHours().toString();
     const minute = this.date.getMinutes().toString();
     const second = this.date.getSeconds().toString();
     const msecond = this.date.getMilliseconds().toString();
 
     return pattern
       .replace(/YYYY/, year)
-      .replace(/MM/, month)
-      .padStart(2, "0")
-      .replace(/DD/, day)
-      .padStart(2, "0")
-      .replace(/HH/, minute)
-      .padStart(2, "0")
-      .replace(/ss/, second)
-      .padStart(2, "0")
-      .replace(/SSS/, msecond)
-      .padStart(3, "0");
+      .replace(/MM/, month.padStart(2, "0"))
+      .replace(/DD/, day.padStart(2, "0"))
+      .replace(/hh/, hour.padStart(2, "0"))
+      .replace(/mm/, minute.padStart(2, "0"))
+      .replace(/ss/, second.padStart(2, "0"))
+      .replace(/SSS/, msecond.padStart(3, "0"));
   }
   firstDayOfMonth() {
     return new Time(

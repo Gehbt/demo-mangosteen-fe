@@ -14,7 +14,7 @@ import {
   mockTagEdit,
   mockTagDelete,
   mockItemIndex,
-  mockItemIndexAmount,
+  // mockItemIndexAmount
 } from "@/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
@@ -98,14 +98,14 @@ const mock: (
     return false;
   }
   const mockWhat = config?.params?._mock;
-  // window.eval(`mock${mockWhat}(config)`)
+  //? return window.eval(`mock${mockWhat}(config)`)
   switch (mockWhat) {
     case "itemCreate":
       return mockItemCreate(config);
     case "itemIndex":
       return mockItemIndex(config);
-    case "itemIndexAmount":
-      return mockItemIndexAmount(config);
+    // case "itemIndexAmount":
+    //   return mockItemIndexAmount(config);
     case "tagCreate":
       return mockTagCreate(config);
     case "tagDelete":

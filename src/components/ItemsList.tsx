@@ -203,21 +203,10 @@ export const ItemsCreate = defineComponent({
 const TagGrid = defineComponent({
   name: "TagGrid",
   props: {
-    kind: {
-      type: String as PropType<TagKindType>,
-      required: true,
-    },
-    tagsSrc: {
-      type: Object as PropType<Ref<TagType[]>>,
-      required: true,
-    },
-    doFetch: {
-      type: Function as PropType<(kind: TagKindType) => Promise<void>>,
-      required: true,
-    },
-    selected: {
-      type: Number as PropType<number>,
-    },
+    kind: string<TagKindType>().isRequired,
+    tagsSrc: object<Ref<TagType[]>>().isRequired,
+    doFetch: func<(kind: TagKindType) => Promise<void>>().isRequired,
+    selected: number(),
   },
   emits: ["update:selected"],
   setup(props, context) {
@@ -298,7 +287,7 @@ const TagGrid = defineComponent({
         </div>
         {/* ?TODO: 使用下拉更新 */}
         <p class={s.load}>
-          {props.tagsSrc.value.length !== 30 ? (
+          {props.tagsSrc.value.length !== 60 ? (
             <span
               class={s.loadMore}
               onClick={() => {

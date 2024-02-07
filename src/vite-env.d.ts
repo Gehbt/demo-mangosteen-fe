@@ -39,7 +39,9 @@ interface ItemUserType extends ItemType {
   note?: null;
 }
 
+// 这里的 ItemType 是错误的设计,实际上 item 应该拥有一个Tags[] 成员(一般长度为1)存储tag的内容而不是继承, 并且amount应该分开展示
 interface ItemType extends TagType {
+  /** **单位为分** 为 *100 了的金额 */
   amount: number;
   happen_at: Date | string | null; // read
 }
@@ -58,7 +60,7 @@ type OnAxiosError = {
 
 type JWTResponse = { jwt: string };
 
-interface AmountType {
-  amount_income: number;
-  amount_expenses: number;
-}
+// interface AmountType {
+//   amount_income: number;
+//   amount_expenses: number;
+// }

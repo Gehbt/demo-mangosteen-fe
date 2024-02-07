@@ -19,17 +19,22 @@ const mkTag: <T extends TagKindType>(
 // TODO: reduce param: page
 // param: page 仅用于代表于第1次和第2次请求
 export const mkPager = (ownedTagNumber: number) => {
+  const maxNumber = 60;
+  const onePageNumber = 25;
   let wantTagNumberThisPage = 0;
   // page = ownedTagNumber `div` 25
-  if (ownedTagNumber <= 30) {
-    wantTagNumberThisPage = 30 - ownedTagNumber < 25 ? 30 - ownedTagNumber : 25;
+  if (ownedTagNumber <= maxNumber) {
+    wantTagNumberThisPage =
+      maxNumber - ownedTagNumber < onePageNumber
+        ? maxNumber - ownedTagNumber
+        : onePageNumber;
   }
   return {
     wantNumberThisPage: wantTagNumberThisPage,
     pager: {
-      page: Math.floor(ownedTagNumber / 25) + 1, // 对应 ownedTagNumber=0 前面除法计算的值为0
-      pre_page: 25,
-      count: 30,
+      page: Math.floor(ownedTagNumber / onePageNumber) + 1, // 对应 ownedTagNumber=0 前面除法计算的值为0
+      pre_page: onePageNumber,
+      count: maxNumber,
     },
   };
 };

@@ -26,7 +26,7 @@
     }
     gap: 2px;
     strong {
-      font-size: x-large;
+      font-size: large; // 最大容量 9 (包括小数点) 数位>=9位就会溢出
     }
   }
 }
