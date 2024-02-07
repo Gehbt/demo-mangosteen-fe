@@ -64,3 +64,9 @@ type JWTResponse = { jwt: string };
 //   amount_income: number;
 //   amount_expenses: number;
 // }
+
+type UserType = {
+  email: string;
+  user_id: number;
+  name: string;
+};

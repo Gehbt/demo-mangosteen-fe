@@ -16,6 +16,7 @@ export const TabsTimeLayout = defineComponent({
     title: string().isRequired,
   },
   setup(props, context) {
+    const route = useRoute();
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {
       overlayVisibleRef.value = true;
@@ -131,7 +132,7 @@ export const TabsTimeLayout = defineComponent({
                       errData={refErrBox.value}
                       clan="date"
                       onUpdate:modelValue={(emitTime: string) => {
-                        console.log("emitTime :>> ", emitTime);
+                        // console.log("emitTime :>> ", emitTime);
                         refCustomTimeSL.value.start = new Time(
                           new Date(emitTime)
                         );
@@ -143,7 +144,7 @@ export const TabsTimeLayout = defineComponent({
                       errData={refErrBox.value}
                       clan="date"
                       onUpdate:modelValue={(emitTime: string) => {
-                        console.log("emitTime :>> ", emitTime);
+                        // console.log("emitTime :>> ", emitTime);
                         refCustomTimeSL.value.end = new Time(
                           new Date(emitTime)
                         );
@@ -185,7 +186,7 @@ export const TabsTimeLayout = defineComponent({
             visibility: overlayVisibleRef.value ? "visible" : "hidden",
           }}
         >
-          <Overlay />
+          <Overlay parentPath={route.fullPath} />
           <OverlayMask onBlurOverlay={blurOverlay} />
         </div>
       </>

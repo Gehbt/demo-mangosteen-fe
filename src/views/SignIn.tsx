@@ -16,7 +16,7 @@ export const SignIn = defineComponent({
     const router = useRouter();
     const jwt = useLocalStorage("jwt", "");
     // TODO: use `decodeURIComponent` (?)
-    const returnTo = useRouteQuery("return_to", "/", { mode: "push" });
+    const returnTo = useRouteQuery("return_to", "/start", { mode: "push" });
     console.log("returnTo :>> ", returnTo.value);
     const refSmsCodeComponent = ref<typeof FormItem>(); // reference FormItem-smscode
     const clickSendCode = async (e?: Event) => {

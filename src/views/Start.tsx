@@ -9,6 +9,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 export const Start = defineComponent({
   name: "Start",
   setup(props, context) {
+    const route = useRoute();
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {
       overlayVisibleRef.value = true;
@@ -38,7 +39,7 @@ export const Start = defineComponent({
           leaveActiveClass={s.row_in_leave_active}
         >
           <div v-show={overlayVisibleRef.value}>
-            <Overlay />
+            <Overlay parentPath={route.fullPath} />
             <OverlayMask onBlurOverlay={blurOverlay} />
           </div>
         </Transition>
