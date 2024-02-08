@@ -70,3 +70,7 @@ type UserType = {
   user_id: number;
   name: string;
 };
+type LineChartTypeOne = { happen_at: string; amount: number };
+type LineChartType = { happen_at: string; amount: number }[];
+type LineChartViewTypeOne = [date_str: string, price: string];
+type LineChartViewType = [date_str: string, price: string][];

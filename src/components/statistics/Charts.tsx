@@ -7,6 +7,9 @@ import {
 } from "vue";
 import s from "./Charts.module.scss";
 import * as echarts from "echarts";
+import { Time } from "@/composables";
+import { amountToPrice } from "../ItemSummary";
+import { httpClient } from "@/shared";
 export const Charts = defineComponent({
   name: "Charts",
   props: {
@@ -16,10 +19,29 @@ export const Charts = defineComponent({
   },
   setup(props, context) {
     const refCategory = ref<TagKindType>("expenses");
+    const refLineData = ref<LineChartViewType>([]);
+    onMounted(async () => {
+      const lineResponse = await httpClient.get<Resource<LineChartType>>(
+        "/item/chart/line",
+        {
+          bill_end: new Date().toDateString(),
+          bill_start: new Date().toDateString(),
+          _mock: "lineChart",
+        }
+      );
+      console.log("lineResponse :>> ", lineResponse.data.resource);
+      refLineData.value = lineResponse.data.resource.map((lineChartDataOne) => [
+        lineChartDataOne.happen_at,
+        amountToPrice(lineChartDataOne.amount),
+      ]);
+      // TODO: 防御性: 当一些date缺失时amount补正为0
+    });
+
     return () => (
       <div class={s.wrapper}>
         <span class={s.formItem_name}>类型</span>
         <div class={s.formItem_value}>
+          {/* TODO: change to vant-ver Select */}
           <select
             class={[s.formItem, s.selecter]}
             value={refCategory.value}
@@ -27,14 +49,16 @@ export const Charts = defineComponent({
               refCategory.value = (e.target as SelectHTMLAttributes).value;
             }}
           >
-            <option value="expenses" selected class={s.select}>
+            <option value="expenses" selected class={[s.select, s.option]}>
               支出
             </option>
-            <option value="income">收入</option>
+            <option value="income" class={s.option}>
+              收入
+            </option>
           </select>
         </div>
         {/* echarts 需要展示时的宽高,且不能是display: none的 */}
-        <LineChart />
+        <LineChart data={refLineData.value} />
         <PieChart />
         <BarChart />
       </div>
@@ -45,33 +69,76 @@ export type ChartsType = typeof Charts;
 
 export const LineChart = defineComponent({
   name: "LineChart",
+  props: {
+    data: array<[string, string]>().isRequired,
+  },
   setup(props, context) {
     const refLine = ref<HTMLDivElement>();
-    const lineChart = ref<echarts.ECharts>();
-    const lineData = ref([150, 230, 224, 218, 135, 147, 260]);
+    // !chart对象不能使用ref引用
+    // ?但可以用 shallowRef
+    // *思考可能ECharts对象触发了部分更新
+    const lineChart = shallowRef<echarts.ECharts>();
+    // const lineChart: { value: echarts.ECharts | undefined } = {
+    //   value: undefined,
+    // };
     onMounted(() => {
       if (refLine.value === undefined) {
         return;
       }
-      lineChart.value = echarts.init(refLine.value, null, {});
-      const option = computed(() => ({
-        grid: { left: "30px", top: "20px", right: 0, bottom: " 20px" },
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: lineData.value,
-            type: "line",
-          },
-        ],
-      }));
+      lineChart.value = echarts.init(refLine.value);
+      const option = computed(
+        () =>
+          ({
+            grid: { left: "50px", top: "20px", right: "10px", bottom: " 20px" },
+            tooltip: {
+              show: true,
+              trigger: "axis",
+              formatter: (item: { value: unknown }[]) => {
+                const [date, price] = item[0].value as [string, number];
+                return `${new Time(new Date(date)).format(
+                  "YYYY年MM月DD日"
+                )} ￥${price}`;
+              },
+            },
+
+            xAxis: {
+              type: "time",
+              boundaryGap: ["2%", "2%"],
+              axisLabel: {
+                formatter: (value: string) =>
+                  new Time(new Date(value)).format("MM-DD"),
+              },
+              axisTick: {
+                alignWithLabel: true,
+              },
+            },
+            yAxis: {
+              show: true,
+              type: "value",
+              splitLine: {
+                show: true,
+                lineStyle: {
+                  type: "dashed",
+                },
+              },
+              axisLabel: {
+                show: true,
+              },
+            },
+            series: [
+              {
+                data: props.data,
+                type: "line",
+              },
+            ],
+          } as echarts.EChartsOption)
+      );
       lineChart.value.setOption(option.value);
+      watch(option, () => {
+        lineChart.value?.setOption(option.value);
+      });
     });
+
     onUnmounted(() => {
       lineChart.value?.dispose();
     });

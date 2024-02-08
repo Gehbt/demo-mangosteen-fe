@@ -51,7 +51,7 @@ function mkItem(
     (_, index) =>
       ({
         amount: window.parseFloat(
-          fakerZH_CN.commerce.price({ min: 0, max: 100000 })
+          fakerZH_CN.commerce.price({ min: 0, max: 1000_00 })
         ),
         id: index + ctxId + 1,
         kind: Math.random() > 0.5 ? "expenses" : "income",

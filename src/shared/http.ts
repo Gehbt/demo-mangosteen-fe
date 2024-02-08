@@ -14,6 +14,7 @@ import {
   mockTagEdit,
   mockTagDelete,
   mockItemIndex,
+  mockLineChart,
   // mockItemIndexAmount
 } from "@/mock";
 
@@ -116,6 +117,8 @@ const mock: (
       return mockTagIndex(config);
     case "tagQuery":
       return mockTagQuery(config);
+    case "lineChart":
+      return mockLineChart(config);
     case "session":
       console.log("session :>> ", config);
       return mockSession(config);

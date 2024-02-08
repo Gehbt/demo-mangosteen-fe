@@ -7,6 +7,10 @@
     border-radius: var(--input-radius);
     padding: 0 8px;
     width: 100%;
+    .option {
+      font-size: large;
+      background-color: #91cc75;
+    }
   }
 }
 .line_chart {

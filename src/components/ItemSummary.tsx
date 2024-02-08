@@ -4,7 +4,7 @@ import { Floatbutton } from "./Button";
 import { httpClient } from "@/shared";
 import { Time } from "@/composables";
 export type ItemSummaryType = typeof ItemSummary;
-const amountToRealPrice = (amount: number) => (amount / 100).toFixed(2);
+export const amountToPrice = (amount: number) => (amount / 100).toFixed(2);
 export const ItemSummary = defineComponent({
   props: {
     timeLine: string<DateScope>().isRequired,
@@ -128,15 +128,15 @@ const ItemSummaryTab = defineComponent({
           }}
         >
           <span>收入</span>
-          <strong>{amountToRealPrice(props.income)}</strong>
+          <strong>{amountToPrice(props.income)}</strong>
         </li>
         <li onClick={() => {}}>
           <span>净收入</span>
-          <strong>{amountToRealPrice(props.balance)}</strong>
+          <strong>{amountToPrice(props.balance)}</strong>
         </li>
         <li onClick={() => {}}>
           <span>支出</span>
-          <strong>{amountToRealPrice(props.expenses)}</strong>
+          <strong>{amountToPrice(props.expenses)}</strong>
         </li>
       </ul>
     );
@@ -196,7 +196,7 @@ export const Money = defineComponent({
     return () => (
       <span class={[s.amount, props.item.kind === "expenses" ? s.exp : s.inc]}>
         <strong>{props.item.kind === "expenses" ? "-" : "+"}</strong>￥
-        {amountToRealPrice(props.item.amount)}
+        {amountToPrice(props.item.amount)}
       </span>
     );
   },

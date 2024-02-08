@@ -71,7 +71,7 @@ export default defineConfig({
         {
           "@vueuse/router": ["useRouteQuery", "useRouteParams"],
           "@vueuse/core": [
-            // "templateRef", // 是坑,不能取代ref(caseof echarts and useswpier)
+            "templateRef", // 是坑,不能取代ref(caseof echarts and useswpier) <- (解决:原因为 此时return的html上的ref只能使用字符串(创建时的字符串)而不是ref对象)
             "useCurrentElement", // log element in console, but in vue_reactive
             "syncRef", // double-ended computed
             "reactiveComputed", // conputed for `reactive()`
