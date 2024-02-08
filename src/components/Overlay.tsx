@@ -14,6 +14,14 @@ export const Overlay = defineComponent({
     // *使用 SessionStorage 是方便开发实际上应该使用 LocalStorage
     const me = useSessionStorage<UserType | null>("me", null, {
       mergeDefaults: true,
+      serializer: {
+        read(raw) {
+          return superjson.parse(raw);
+        },
+        write(value) {
+          return superjson.stringify(value);
+        },
+      },
     });
     onMounted(async () => {
       console.log("overlay onMounted :>> ");
@@ -21,9 +29,7 @@ export const Overlay = defineComponent({
         console.log("do fetchMe :>> ");
         me.value = await fetchMe()
           .then((response) => {
-            console.log("fetchMe response :>> ", response);
-            // FIXME: 无奈之举: 当直接赋值会得到[object object]
-            return JSON.stringify(response.data) as unknown as UserType;
+            return response.data;
           })
           .catch((err: AxiosError) => {
             console.log("fetchMe err :>> ", err);
@@ -33,18 +39,18 @@ export const Overlay = defineComponent({
     });
     return () => (
       <div class={s.overlay}>
-        {!me.value ? (
-          <SignInCard />
-        ) : (
-          <MeCard
-            // FIXME: 无奈之举: 当直接赋值会得到[object object]
-            meData={JSON.parse(me.value as unknown as string) as UserType}
-            onSignout={() => {
-              // TODO:应该修改jwt
-              me.value = null;
-            }}
-          />
-        )}
+        <SignInCard v-if={!me.value} />
+        <MeCard
+          v-else
+          meData={
+            me.value /* jsx的 v-if 还没类型收窄能力 */ ??
+            ({ name: "出错了" } as UserType)
+          }
+          onSignout={() => {
+            // ?TODO:应该还要修改jwt
+            me.value = null;
+          }}
+        />
         <nav>
           <ul class={s.action_list}>
             <li>
@@ -81,7 +87,7 @@ export const MeCard = defineComponent({
   setup(props, context) {
     return () => (
       <section class={s.currentUser}>
-        <h1>{props.meData?.name}</h1>
+        <h1>{props.meData.name}</h1>
         <p
           onClick={() => {
             showConfirmDialog({ message: "你确定要退出登录吗?" })
