@@ -1,5 +1,6 @@
 @use "../Form.module";
 .wrapper {
+  width: 100vw;
   padding: 16px;
   .selecter {
     border: 1px solid var(--input-border-color);

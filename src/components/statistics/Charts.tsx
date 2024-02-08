@@ -10,16 +10,9 @@ import * as echarts from "echarts";
 export const Charts = defineComponent({
   name: "Charts",
   props: {
+    timeLine: string<DateScope>().isRequired,
     startDate: string().isRequired,
-    // {
-    //   type: String as PropType<string>,
-    //   required: true,
-    // },
     endDate: string().isRequired,
-    // {
-    //   type: String as PropType<string>,
-    //   required: true,
-    // },
   },
   setup(props, context) {
     const refCategory = ref<TagKindType>("expenses");
@@ -40,7 +33,7 @@ export const Charts = defineComponent({
             <option value="income">收入</option>
           </select>
         </div>
-        <div style={{ width: "100px" }}></div>
+        {/* echarts 需要展示时的宽高,且不能是display: none的 */}
         <LineChart />
         <PieChart />
         <BarChart />
@@ -57,6 +50,9 @@ export const LineChart = defineComponent({
     const lineChart = ref<echarts.ECharts>();
     const lineData = ref([150, 230, 224, 218, 135, 147, 260]);
     onMounted(() => {
+      if (refLine.value === undefined) {
+        return;
+      }
       lineChart.value = echarts.init(refLine.value, null, {});
       const option = computed(() => ({
         grid: { left: "30px", top: "20px", right: 0, bottom: " 20px" },
@@ -88,56 +84,57 @@ export const PieChart = defineComponent({
   setup(props, context) {
     const refPie = ref<HTMLDivElement>();
     const pieChart = ref<echarts.ECharts>();
-    onMounted(() =>
-      nextTick(() => {
-        pieChart.value = echarts.init(refPie.value);
-        // 使用刚指定的配置项和数据显示图表。
-        const pieOption = {
-          tooltip: {
-            trigger: "item",
-          },
-          legend: {
-            top: "5%",
-            left: "center",
-          },
-          series: [
-            {
-              name: "Access From",
-              type: "pie",
-              radius: ["40%", "70%"],
-              avoidLabelOverlap: false,
-              itemStyle: {
-                borderRadius: 10,
-                borderColor: "#fff",
-                borderWidth: 2,
-              },
-              label: {
-                show: false,
-                position: "center",
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: 40,
-                  fontWeight: "bold",
-                },
-              },
-              labelLine: {
-                show: false,
-              },
-              data: [
-                { value: 1048, name: "Search Engine" },
-                { value: 735, name: "Direct" },
-                { value: 580, name: "Email" },
-                { value: 484, name: "Union Ads" },
-                { value: 300, name: "Video Ads" },
-              ],
+    onMounted(() => {
+      if (refPie.value === undefined) {
+        return;
+      }
+      pieChart.value = echarts.init(refPie.value);
+      // 使用刚指定的配置项和数据显示图表。
+      const pieOption = {
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          top: "5%",
+          left: "center",
+        },
+        series: [
+          {
+            name: "Access From",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: "#fff",
+              borderWidth: 2,
             },
-          ],
-        };
-        pieChart.value.setOption(pieOption);
-      })
-    );
+            label: {
+              show: false,
+              position: "center",
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 40,
+                fontWeight: "bold",
+              },
+            },
+            labelLine: {
+              show: false,
+            },
+            data: [
+              { value: 1048, name: "Search Engine" },
+              { value: 735, name: "Direct" },
+              { value: 580, name: "Email" },
+              { value: 484, name: "Union Ads" },
+              { value: 300, name: "Video Ads" },
+            ],
+          },
+        ],
+      };
+      pieChart.value.setOption(pieOption);
+    });
     onUnmounted(() => {
       pieChart.value?.dispose();
     });
@@ -173,10 +170,7 @@ export const BarChart = defineComponent({
                   </span>
                   <span> ￥{amount} </span>
                 </div>
-                <div
-                  class={s.bar}
-                  // style={{ height: `calc($percent * 42px )` }}
-                >
+                <div class={s.bar}>
                   <div class={s.bar_inner}></div>
                 </div>
               </div>

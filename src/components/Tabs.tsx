@@ -1,20 +1,14 @@
-import { PropType, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { i18nT } from "@/shared/i18n-simple";
 import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
   props: {
     classPrefix: string().def(""),
-    // {
-    //   type: String,
-    //   default: "",
-    // },
-    selected: string<TagKindType | DateScope>(),
-    // {
-    //   type: String as PropType<ItemsCreateName | ItemsListName>,
-    //   default: "支出",
-    //   required: true,
-    // },
+    selected: string<
+      TagKindType | DateScope
+    >() /* v-model:selected !== selected */,
+    lessRender: bool().def(false),
   },
   emits: ["update:selected"],
   setup(props, context) {
@@ -48,9 +42,23 @@ export const Tabs = defineComponent({
                 </li>
               ))}
             </ol>
-            {tabs.map((item) => (
-              <div v-show={item.props?.name === props.selected}>{item}</div>
-            ))}
+            {props.lessRender
+              ? tabs.map((item) => (
+                  <div
+                    v-if={item.props?.name === props.selected}
+                    key={item.props?.name}
+                  >
+                    {item}
+                  </div>
+                ))
+              : tabs.map((item) => (
+                  <div
+                    v-show={item.props?.name === props.selected}
+                    key={item.props?.name}
+                  >
+                    {item}
+                  </div>
+                ))}
           </div>
         </div>
       );

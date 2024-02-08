@@ -37,3 +37,10 @@
     }
   }
 }
+// ?TODO: use opacity to reduce render
+.show {
+  opacity: 1;
+}
+.hide {
+  opacity: 0;
+}

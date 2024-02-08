@@ -1,4 +1,4 @@
-import { KeepAlive, PropType, Transition, defineComponent, ref } from "vue";
+import { Transition, defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Tab, Tabs } from "./Tabs";
 import { InputPad } from "./InputPad";

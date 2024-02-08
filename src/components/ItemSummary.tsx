@@ -7,7 +7,7 @@ export type ItemSummaryType = typeof ItemSummary;
 const amountToRealPrice = (amount: number) => (amount / 100).toFixed(2);
 export const ItemSummary = defineComponent({
   props: {
-    timeLine: string().isRequired,
+    timeLine: string<DateScope>().isRequired,
     startDate: string().isRequired,
     endDate: string().isRequired,
   },

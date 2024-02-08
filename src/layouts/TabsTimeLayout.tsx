@@ -1,4 +1,4 @@
-import { PropType, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
 import { Time } from "@/composables/date";
@@ -16,6 +16,7 @@ export const TabsTimeLayout = defineComponent({
     title: string().isRequired,
   },
   setup(props, context) {
+    const lessRender = inject<boolean>("lessRender") ?? false;
     const route = useRoute();
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {
@@ -74,6 +75,7 @@ export const TabsTimeLayout = defineComponent({
         >
           <div class={s.wrapper}>
             <Tabs
+              lessRender={lessRender}
               v-model:selected={refSelected.value}
               class={s.tabs}
               classPrefix="customTabStyle"
