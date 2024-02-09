@@ -54,6 +54,7 @@ export const SignIn = defineComponent({
           } else {
             console.error("Error: " + e.response.data.errors);
           }
+          refIsSend.value = false;
         };
         refIsSend.value = true;
         refSmsCodeComponent.value?.useCountDown();
@@ -61,8 +62,8 @@ export const SignIn = defineComponent({
           // console.log("object :>> ", object);
           return;
         } else {
-          const response = await httpClient
-            .post(
+          await httpClient
+            .post<null>(
               "/sendmail",
               {
                 email: email.value,
@@ -73,11 +74,7 @@ export const SignIn = defineComponent({
                 },
               }
             )
-            .catch(whenEmailResponseError)
-            .finally(() => {
-              refIsSend.value = false;
-            });
-          console.log("response :>> ", response);
+            .catch(whenEmailResponseError);
           return; // Promise.resolve();
         }
       }
@@ -139,13 +136,14 @@ export const SignIn = defineComponent({
           } else {
             console.error("Error: " + e.response.data.errors);
           }
+          refIsSend.value = false;
         };
 
         refIsSend.value = true;
 
         await httpClient
           .post<JWTResponse>("/session", toRaw(formData), {
-            params: { _mock: "session" },
+            // params: { _mock: "session" },
           })
           .then((response) => {
             console.log("response JWT :>> ", response.data);
@@ -159,10 +157,7 @@ export const SignIn = defineComponent({
             // const returnTo = sessionStorage.getItem("returnTo");
             router.push(returnTo.value);
           })
-          .catch(whenCodeResponseError)
-          .finally(() => {
-            refIsSend.value = false;
-          });
+          .catch(whenCodeResponseError);
       }
     };
     const hasCode6 = computed(() => formData.code.length === 6);
@@ -217,7 +212,6 @@ export const SignIn = defineComponent({
             >
               登录
             </Button>
-            {/* </FormItem> */}
           </Form>
         </div>
       </MainLayout>

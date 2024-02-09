@@ -1,5 +1,5 @@
 <template>
-  <svg aria-hidden="true" :width="props.w" :height="props.h ?? props.w" :color="props.color">
+  <svg :aria-hidden="true" :width="props.w" :height="props.h ?? props.w" :color="props.color">
     <use :href="symbolId" />
   </svg>
 </template>

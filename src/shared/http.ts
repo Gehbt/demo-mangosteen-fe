@@ -132,7 +132,9 @@ httpClient.instance.interceptors.response.use(
     console.log("response :>> ", response);
     // console.warn("use mock");
     const mock_res = await mock(response.config);
-    console.log("mock_res :>> ", mock_res);
+    if (!!mock_res) {
+      console.log("mock_res :>> ", mock_res);
+    }
     return response;
   },
   async (error) => {
@@ -170,9 +172,10 @@ httpClient.instance.interceptors.response.use(
 httpClient.instance.interceptors.request.use(
   (config) => {
     const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      config.headers.Authorization = `Bearer ${jwt}`;
+    if (!!jwt) {
+      config.headers.Authorization = `Bearer-${jwt}`;
     }
+    console.log("request :>> ", config);
     return config;
   },
   // 很难请求时失败
