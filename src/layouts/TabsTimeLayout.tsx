@@ -8,6 +8,7 @@ import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
 import type { ChartsType } from "@/components/statistics/Charts";
 import type { ItemSummaryType } from "@/components/ItemSummary";
+export const lessRenderSymbol = Symbol("lessRender") as InjectionKey<boolean>;
 // 其实应该在component里的
 export const TabsTimeLayout = defineComponent({
   name: "TabsTimeLayout",
@@ -16,7 +17,7 @@ export const TabsTimeLayout = defineComponent({
     title: string().isRequired,
   },
   setup(props, context) {
-    const lessRender = inject<boolean>("lessRender") ?? false;
+    const lessRender = inject(lessRenderSymbol, false);
     const route = useRoute();
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {

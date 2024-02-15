@@ -14,6 +14,7 @@
     "svgo-color": "svgo -f ./src/assets/icons -o ./src/assets/icons/filter"
   },
   "dependencies": {
+    "@unhead/vue": "^1.8.10",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vueuse/components": "^10.7.2",
     "@vueuse/core": "^10.7.2",

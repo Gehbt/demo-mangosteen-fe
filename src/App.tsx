@@ -1,3 +1,4 @@
+import type { HeadType } from "DefineHeadType";
 import { defineComponent } from "vue";
 import { RouterView } from "vue-router";
 export const App = defineComponent({
@@ -9,4 +10,14 @@ export const App = defineComponent({
       </div>
     );
   },
+  head: {
+    title: "蓝莓记账",
+    link: [
+      // vant样式
+      {
+        rel: "stylesheet",
+        href: "https://fastly.jsdelivr.net/npm/vant@4/lib/index.css",
+      },
+    ],
+  } as HeadType,
 });
