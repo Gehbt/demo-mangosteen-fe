@@ -7,7 +7,7 @@ const command = "ls -d ./src/*/";
 // ./src/batch   ./src/composables  ./src/routes   ./src/shared   ./src/vite_plugins
 const doDir = ["composables", "shared", "mock"];
 doDir.map((dir) => {
-  let exludeFile = ["index", "type"];
+  let exludeFile = ["index", "type", "types.d"];
   const dir_list = readdirSync("./src/" + dir).map((p) => basename(p, ".ts"));
   const asm = dir_list.map((file) => {
     // 不为一些文件生成导出

@@ -1,4 +1,4 @@
-import type { Mock } from "./type.ts";
+import type { Mock } from "Mock-Type";
 import { faker } from "@faker-js/faker/locale/zh_CN";
 import { AxiosResponse } from "axios";
 export const mockSession: Mock<JWTResponse> = (config) => {

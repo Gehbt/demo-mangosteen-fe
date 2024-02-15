@@ -1,4 +1,4 @@
-import type { Mock } from "./type.ts";
+import type { Mock } from "Mock-Type";
 import { fakerZH_CN } from "@faker-js/faker";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { mkPager } from "./mockTag.ts";

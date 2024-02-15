@@ -1,4 +1,4 @@
-import type { Mock } from "./type.ts";
+import type { Mock } from "Mock-Type";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { fakerZH_CN } from "@faker-js/faker";
 
