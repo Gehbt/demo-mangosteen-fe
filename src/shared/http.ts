@@ -15,6 +15,7 @@ import {
   mockTagDelete,
   mockItemIndex,
   mockLineChart,
+  mockLineChartLess,
   // mockItemIndexAmount
 } from "@/mock";
 
@@ -119,6 +120,8 @@ const mock: (
       return mockTagQuery(config);
     case "lineChart":
       return mockLineChart(config);
+    case "lineChartLess":
+      return mockLineChartLess(config);
     case "session":
       console.log("session :>> ", config);
       return mockSession(config);
