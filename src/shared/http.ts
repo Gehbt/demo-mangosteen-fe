@@ -16,6 +16,7 @@ import {
   mockItemIndex,
   mockLineChart,
   mockLineChartLess,
+  mockPieChart,
   // mockItemIndexAmount
 } from "@/mock";
 
@@ -122,6 +123,8 @@ const mock: (
       return mockLineChart(config);
     case "lineChartLess":
       return mockLineChartLess(config);
+    case "pieChart":
+      return mockPieChart(config);
     case "session":
       console.log("session :>> ", config);
       return mockSession(config);
@@ -181,7 +184,7 @@ httpClient.instance.interceptors.request.use(
     console.log("request :>> ", config);
     return config;
   },
-  // 很难请求时失败
+  // 很难请求时失败,但还是标记了
   (error) => {
     throw error;
   }

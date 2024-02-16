@@ -3,6 +3,7 @@
   width: 100vw;
   padding: 16px;
   .selecter {
+    font-size: 1.2rem;
     border: 1px solid var(--input-border-color);
     border-radius: var(--input-radius);
     padding: 0 8px;
@@ -13,16 +14,16 @@
     }
   }
 }
-select {
-  font-size: 1.2rem;
-}
+
 .line_chart {
   height: 248px;
   min-height: 100px;
   min-width: 80px;
+  margin-bottom: 12px;
 }
 .pie_chart {
   height: 100vw;
+  // max-width: 280px;
   min-height: 100px;
   min-width: 80px;
 }
@@ -69,21 +70,14 @@ select {
       left: 0;
       height: 100%;
       width: 42px;
+      transition: width 500ms ease;
     }
   }
-  &:nth-child(1) {
-    .bar_inner {
-      background: #eba953;
-    }
-  }
-  &:nth-child(2) {
-    .bar_inner {
-      background: #53a867;
-    }
-  }
-  &:nth-child(3) {
-    .bar_inner {
-      background: #91cc75;
+  @for $i from 1 to 9 {
+    &:nth-child(#{$i}) {
+      .bar_inner {
+        background: hsl(calc(#{$i} * 40) 80% 40%);
+      }
     }
   }
 }

@@ -70,7 +70,11 @@ type UserType = {
   user_id: number;
   name: string;
 };
-type LineChartTypeOne = { happen_at: string; amount: number };
+type LineChartTypeOne = {
+  happen_at: string;
+  amount: number;
+  kind: TagKindType;
+};
 type LineChartType = LineChartTypeOne[];
 type LineChartViewTypeOne = [date_str: string, price: string];
 type LineChartViewType = LineChartViewTypeOne[];
@@ -79,3 +83,15 @@ declare module "DefineHeadType" {
   import { MergeHead, UseHeadInput } from "@unhead/vue";
   export type HeadType<T extends MergeHead = {}> = UseHeadInput<T>;
 }
+
+type PieChartTypeOne = {
+  amount: number;
+  tag: { id: number; name: string; sign: string };
+  tag_id: number;
+};
+type PieChartType = PieChartTypeOne[];
+type PieChartViewTypeOne = { value: number; name: string; id: number };
+type PieChartViewType = PieChartViewTypeOne[];
+
+type BarChartTypeOne = PieChartTypeOne;
+type BarChartType = BarChartTypeOne[];

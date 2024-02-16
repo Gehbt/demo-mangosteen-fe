@@ -9,8 +9,9 @@ import s from "./Charts.module.scss";
 import * as echarts from "echarts";
 import { Time } from "@/composables";
 import { amountToPrice } from "../ItemSummary";
-import { httpClient } from "@/shared";
+import { httpClient, i18nT } from "@/shared";
 import { mkLineData } from "@/mock";
+import { Picker, Popup } from "vant";
 const amountPad = (config: {
   startDate: string;
   endDate: string;
@@ -21,6 +22,7 @@ const amountPad = (config: {
     bill_start: config.startDate,
     bill_end: config.endDate,
     init_amount: 0,
+    kind: "expenses",
   });
 };
 // hold on
@@ -45,6 +47,7 @@ const mergePaddingSafe = (src: LineChartType, pad: LineChartType) => {
         {
           amount: src[0].amount + pad[0].amount,
           happen_at: pad[0].happen_at,
+          kind: src[0].kind,
         },
         ...mergePadding(src.slice(1), pad.slice(1)),
       ];
@@ -54,14 +57,81 @@ const mergePaddingSafe = (src: LineChartType, pad: LineChartType) => {
   }
   return mergePadding(src, pad);
 };
-export const Charts = defineComponent({
-  name: "Charts",
+
+export const ChartsControl = defineComponent({
+  name: "ChartsControl",
   props: {
     timeLine: string<DateScope>().isRequired,
     startDate: string().isRequired,
     endDate: string().isRequired,
   },
   setup(props, context) {
+    const refCategory = ref<TagKindType>("expenses");
+    watch(refCategory, () => {
+      console.log("refCategory.value :>> ", refCategory.value);
+    });
+    const refShowPicker = ref<boolean>(false);
+    const columns: { text: "收入" | "支出"; value: TagKindType }[] = [
+      { text: "支出", value: "expenses" },
+      { text: "收入", value: "income" },
+    ];
+    return () => (
+      <>
+        <div class={s.wrapper}>
+          <span class={s.formItem_name}>类型</span>
+          <div class={s.formItem_value}>
+            <input
+              type="text"
+              readonly="true"
+              v-model={i18nT[refCategory.value]}
+              class={[s.formItem, s.selecter]}
+              onClick={() => {
+                refShowPicker.value = true;
+              }}
+            />
+          </div>
+          <Charts
+            timeLine={props.timeLine}
+            startDate={props.startDate}
+            endDate={props.endDate}
+            kind={refCategory.value}
+            key={refCategory.value}
+          ></Charts>
+          <Popup position="bottom" v-model:show={refShowPicker.value}>
+            <Picker
+              title="标题"
+              columns={columns}
+              onConfirm={({
+                selectedValues,
+              }: {
+                selectedValues: [TagKindType];
+              }) => {
+                refCategory.value = selectedValues[0];
+                refShowPicker.value = false;
+              }}
+              // @confirm="onConfirm"
+              onCancel={() => {
+                refShowPicker.value = false;
+              }}
+              // @change="onChange"
+            />
+          </Popup>
+        </div>
+      </>
+    );
+  },
+});
+export const Charts = defineComponent({
+  name: "Charts",
+  props: {
+    timeLine: string<DateScope>().isRequired,
+    startDate: string().isRequired,
+    endDate: string().isRequired,
+    kind: string<TagKindType>().isRequired,
+  },
+  setup(props, context) {
+    // * line charts
+    // TODO: 可以放到具体的组件内,或者抽象成一层
     // desiredNumber在Layout 只有custom里需要计算,并且只在提交时需要验证
     // 简单来说就是放在Layout层里需要四个变量 这里只需一个
     // * Layout层 保证了 0 < desiredNumber < 367
@@ -69,30 +139,29 @@ export const Charts = defineComponent({
       new Time(props.endDate),
       new Time(props.startDate)
     );
-    const refCategory = ref<TagKindType>("expenses");
+    // 为custom日期做缓存
     const inCustomTimeLine =
       props.timeLine !== "custom"
         ? props.timeLine
         : `custom?startDate=${props.startDate}&endDate=${props.endDate}`;
     const refLineData = useSessionStorage<LineChartViewType>(
-      `chart_line_data_${inCustomTimeLine}`,
+      `chart_line-kind_${props.kind}-${inCustomTimeLine}`,
       []
     );
+    // 后端的资源
     const refLineResource = ref<LineChartType>([]);
     const padData: LineChartType = amountPad({
       startDate: props.startDate,
       endDate: props.endDate,
       desiredNumber,
     });
+    // 合并pad的数据
     const refMergedData = computed(() =>
       mergePaddingSafe(refLineResource.value, padData)
     );
-    const refPieData = useSessionStorage<LineChartViewType>(
-      `chart_pie_data_${inCustomTimeLine}`,
-      []
-    );
-    console.log("desiredNumber :>> ", desiredNumber);
 
+    // console.log("desiredNumber :>> ", desiredNumber);
+    // linedata转换成view的版本
     const lineChartDataToView = (l: LineChartType) =>
       l.map<LineChartViewTypeOne>((lineChartDataOne) => [
         lineChartDataOne.happen_at,
@@ -103,6 +172,7 @@ export const Charts = defineComponent({
         const lineResponse = await httpClient.get<Resource<LineChartType>>(
           "/item/chart/line",
           {
+            kind: props.kind,
             desiredNumber,
             bill_start: props.startDate,
             bill_end: props.endDate,
@@ -115,36 +185,55 @@ export const Charts = defineComponent({
       }
     };
     onMounted(getLine);
-
-    return () => (
-      <div class={s.wrapper}>
-        <span class={s.formItem_name}>类型</span>
-        <div class={s.formItem_value}>
-          {/* TODO: change to vant-ver Select */}
-          <select
-            class={[s.formItem, s.selecter]}
-            value={refCategory.value}
-            onChange={(e) => {
-              refCategory.value = (e.target as SelectHTMLAttributes).value;
-            }}
-          >
-            <option value="expenses" selected class={[s.select, s.option]}>
-              支出
-            </option>
-            <option value="income" class={s.option}>
-              收入
-            </option>
-          </select>
-        </div>
-        {/* echarts 需要展示时的宽高,且不能是display: none的 */}
-        <LineChart data={refLineData.value} />
-        <PieChart />
-        <BarChart />
-      </div>
+    // pie
+    const refPieData = useSessionStorage<PieChartViewType>(
+      `chart_pie-kind_${props.kind}-${inCustomTimeLine}`,
+      []
     );
+    const refBarData = useSessionStorage<BarChartType>(
+      `chart_bar-kind_${props.kind}-${inCustomTimeLine}`,
+      []
+    );
+    const pieDataToView = (p: PieChartType) =>
+      p
+        .sort((a, b) => b.amount - a.amount) // 要从大到小排序
+        .map<PieChartViewTypeOne>((item, index) => ({
+          value: item.amount,
+          name: item.tag.name,
+          id: index + 1, // id 从1开始(也可不加)
+        }));
+
+    const getPie = async () => {
+      if (!refPieData.value || !refPieData.value.length) {
+        const pieResponse = await httpClient.get<Resource<PieChartTypeOne[]>>(
+          "/item/chart/pie",
+          {
+            _mock: "pieChart",
+            kind: props.kind,
+            // 应该没用
+            bill_start: props.startDate,
+            bill_end: props.endDate,
+          }
+        );
+        console.log("pieResponse :>> ", pieResponse.data.resource);
+        refBarData.value = pieResponse.data.resource;
+        refPieData.value = pieDataToView(pieResponse.data.resource);
+      }
+    };
+    onMounted(getPie);
+    return () => {
+      return (
+        <>
+          {/* echarts 需要展示时的宽高,且不能是display: none的 */}
+          <LineChart data={refLineData.value} />
+          <PieChart data={refPieData.value} />
+          <BarChart data={refBarData.value} />
+        </>
+      );
+    };
   },
 });
-export type ChartsType = typeof Charts;
+export type ChartsType = typeof ChartsControl;
 
 export const LineChart = defineComponent({
   name: "LineChart",
@@ -165,7 +254,7 @@ export const LineChart = defineComponent({
         return;
       }
       lineChart.value = echarts.init(refLine.value);
-      const option = computed(
+      const option = computed<echarts.EChartsOption>(
         () =>
           ({
             grid: {
@@ -200,7 +289,7 @@ export const LineChart = defineComponent({
             ],
             xAxis: {
               type: "time",
-              boundaryGap: ["2%", "2%"],
+              boundaryGap: ["2%", "3%"],
               axisLabel: {
                 formatter: (value) => {
                   return new Time(value).format("MM-DD");
@@ -247,59 +336,71 @@ export const LineChart = defineComponent({
 
 export const PieChart = defineComponent({
   name: "PieChart",
+  props: {
+    data: array<PieChartViewTypeOne>(),
+  },
   setup(props, context) {
     const refPie = ref<HTMLDivElement>();
-    const pieChart = ref<echarts.ECharts>();
+    const pieChart = shallowRef<echarts.ECharts>();
     onMounted(() => {
       if (refPie.value === undefined) {
         return;
       }
       pieChart.value = echarts.init(refPie.value);
       // 使用刚指定的配置项和数据显示图表。
-      const pieOption = {
-        tooltip: {
-          trigger: "item",
-        },
-        legend: {
-          top: "0%",
-          left: "center",
-        },
-        series: [
-          {
-            name: "Access From",
-            type: "pie",
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: "#fff",
-              borderWidth: 2,
-            },
-            label: {
-              show: false,
-              position: "center",
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 40,
-                fontWeight: "bold",
+      const pieOption = computed<echarts.EChartsOption>(
+        () =>
+          ({
+            tooltip: {
+              trigger: "item",
+              formatter: (item: {
+                value: number;
+                name: string;
+                percent: number;
+              }) => {
+                return `${item.name}: <strong>￥${amountToPrice(
+                  item.value
+                )}</strong> (${item.percent}%)`;
               },
             },
-            labelLine: {
-              show: false,
+            legend: {
+              top: "0%",
+              left: "center",
             },
-            data: [
-              { value: 1048, name: "Search Engine" },
-              { value: 735, name: "Direct" },
-              { value: 580, name: "Email" },
-              { value: 484, name: "Union Ads" },
-              { value: 300, name: "Video Ads" },
+            series: [
+              {
+                name: "收入与支出",
+                type: "pie",
+                radius: ["40%", "70%"],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                  borderRadius: 10,
+                  borderColor: "#fff",
+                  borderWidth: 2,
+                },
+                label: {
+                  show: false,
+                  position: "center",
+                },
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: 40,
+                    // fontWeight: "bold",
+                  },
+                },
+                labelLine: {
+                  show: false,
+                },
+                data: props.data,
+              },
             ],
-          },
-        ],
-      };
-      pieChart.value.setOption(pieOption);
+          } as echarts.EChartsOption)
+      );
+      pieChart.value.setOption(pieOption.value);
+      watch(pieOption, () => {
+        pieChart.value?.setOption(pieOption.value);
+      });
     });
     onUnmounted(() => {
       pieChart.value?.dispose();
@@ -310,22 +411,20 @@ export const PieChart = defineComponent({
 
 export const BarChart = defineComponent({
   name: "BarChart",
+  props: {
+    data: array<BarChartTypeOne>().isRequired,
+  },
   setup(props, context) {
-    const data3 = reactive([
-      { tag: { id: 1, name: "房租", sign: "x" }, amount: 3000 },
-      { tag: { id: 2, name: "吃饭", sign: "x" }, amount: 1000 },
-      { tag: { id: 3, name: "娱乐", sign: "x" }, amount: 900 },
-    ]);
-    const betterData3 = computed(() => {
-      const total = data3.reduce((sum, item) => sum + item.amount, 0);
-      return data3.map((item) => ({
+    const barDataView = computed(() => {
+      const total = props.data.reduce((sum, item) => sum + item.amount, 0);
+      return props.data.map((item) => ({
         ...item,
         percent: Math.round((item.amount / total) * 100) + "%",
       }));
     });
     return () => (
       <div class={s.demo3}>
-        {betterData3.value.map(({ tag, amount, percent }) => {
+        {barDataView.value.map(({ tag, amount, percent }) => {
           return (
             <div class={s.topItem}>
               <div class={s.sign}>{tag.sign}</div>
@@ -334,10 +433,10 @@ export const BarChart = defineComponent({
                   <span>
                     {tag.name} - {percent}
                   </span>
-                  <span> ￥{amount} </span>
+                  <span> ￥{amountToPrice(amount)} </span>
                 </div>
                 <div class={s.bar}>
-                  <div class={s.bar_inner}></div>
+                  <div class={s.bar_inner} style={{ width: percent }}></div>
                 </div>
               </div>
             </div>

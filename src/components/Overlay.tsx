@@ -11,6 +11,7 @@ export const Overlay = defineComponent({
     parentPath: string().isRequired,
   },
   setup(props, context) {
+    const router = useRouter();
     // *使用 SessionStorage 是方便开发实际上应该使用 LocalStorage
     const jwt = useLocalStorage<string | null>("jwt", null);
     const me = useSessionStorage<UserType | null>("me", null, {
@@ -51,6 +52,7 @@ export const Overlay = defineComponent({
             // ?TODO:应该还要修改jwt
             me.value = null;
             jwt.value = null;
+            router.push("/start");
           }}
         />
         <nav>
