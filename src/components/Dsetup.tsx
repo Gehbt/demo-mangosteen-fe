@@ -20,7 +20,9 @@ export const Dsetup = defineSetupComponent(() => {
   // ! useLess only effect in unplugin-vue-router
   definePage({
     name: "/welcome/hidings",
-    meta: {},
+    meta: {
+      content: "dsetup",
+    },
   });
 
   const itemss = [{ text: 1 }, { text: 2 }];

@@ -35,6 +35,7 @@ export default defineConfig({
     VueRouter({
       routesFolder: ["src/views"],
       extensions: [".vue", ".tsx"],
+      _inspect: true,
     }),
     vueMacros({
       plugins: {
