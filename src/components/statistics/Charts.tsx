@@ -176,6 +176,8 @@ export const Charts = defineComponent({
             desiredNumber,
             bill_start: props.startDate,
             bill_end: props.endDate,
+          },
+          {
             _mock: "lineChartLess",
           }
         );
@@ -208,11 +210,13 @@ export const Charts = defineComponent({
         const pieResponse = await httpClient.get<Resource<PieChartTypeOne[]>>(
           "/item/chart/pie",
           {
-            _mock: "pieChart",
             kind: props.kind,
             // 应该没用
             bill_start: props.startDate,
             bill_end: props.endDate,
+          },
+          {
+            _mock: "pieChart",
           }
         );
         console.log("pieResponse :>> ", pieResponse.data.resource);

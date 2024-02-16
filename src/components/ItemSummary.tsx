@@ -63,12 +63,17 @@ export const ItemSummary = defineComponent({
     //   // income.value = response.data.resource.amount_income;
     // };
     const fetchItems = async () => {
-      const response = await httpClient.get<Resources<ItemType>>("/items", {
-        bill_start: props.startDate,
-        bill_end: props.endDate,
-        ownItemNumber: capacity.value,
-        _mock: "itemIndex",
-      });
+      const response = await httpClient.get<Resources<ItemType>>(
+        "/items",
+        {
+          bill_start: props.startDate,
+          bill_end: props.endDate,
+          ownItemNumber: capacity.value,
+        },
+        {
+          _mock: "itemIndex",
+        }
+      );
       console.log("fetchItems response :>> ", response.data);
       if (response.data && response.data.resources.length !== 0) {
         itemData.value.push(...response.data.resources);

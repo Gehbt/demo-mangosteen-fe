@@ -25,11 +25,17 @@ function useTags() {
     income: refIncomeTags,
   };
   const fetchTags = async (kind: TagKindType) => {
-    const response_tags = await httpClient.get<Resources<TagType>>("/tags", {
-      kind,
-      _mock: "tagIndex",
-      ownedTagNumber: tagKindTransfer[kind].value.length,
-    });
+    const response_tags = await httpClient.get<Resources<TagType>>(
+      "/tags",
+      {
+        kind,
+        ownedTagNumber: tagKindTransfer[kind].value.length,
+      },
+      {
+        _mock: "tagIndex",
+        _loading: true,
+      }
+    );
     // console.log("response :>> ", response_tags);
     if (response_tags.data) {
       tagKindTransfer[kind].value.push(...response_tags.data.resources);
@@ -116,9 +122,7 @@ export const ItemsCreate = defineComponent({
             amount: amountFloat.value,
           } as ItemUserType,
           {
-            params: {
-              _mock: "itemCreate",
-            },
+            _mock: "itemCreate",
           }
         )
         .then(() => {

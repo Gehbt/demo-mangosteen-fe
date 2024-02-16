@@ -45,7 +45,6 @@ export const mockTagIndex: Mock<Resources<TagType>> = (
   const { kind, ownedTagNumber } = config.params as {
     ownedTagNumber: number;
     kind: "expenses" | "income";
-    _mock: "tagIndex";
   };
 
   const { wantNumberThisPage: wantTagNumberThisPage, pager } =

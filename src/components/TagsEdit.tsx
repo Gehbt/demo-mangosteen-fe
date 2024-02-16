@@ -37,11 +37,16 @@ export const TagsEdit = defineComponent({
       sign: "",
     });
     const onDelete = async ({ withItem }: { withItem: boolean }) => {
-      await httpClient.delete(`/tags${tag_id_number.value}`, {
-        // TODO: mock
-        _mock: "tagDelete",
-        with_item: withItem.toString(),
-      });
+      await httpClient.delete(
+        `/tags${tag_id_number.value}`,
+        {
+          // TODO: mock
+          with_item: withItem.toString(),
+        },
+        {
+          _mock: "tagDelete",
+        }
+      );
     };
     return () => (
       <>
@@ -186,7 +191,8 @@ export const TagsForm = defineComponent({
       } else if (props.id) {
         const response = await httpClient
           .patch(`/tags/${props.id}`, formData.value, {
-            params: { _mock: "tagEdit", id: props.id },
+            params: { id: props.id },
+            _mock: "tagEdit",
           })
           .catch((err: AxiosError<OnAxiosError>) => {
             if (err.response?.status === 422) {
@@ -202,7 +208,7 @@ export const TagsForm = defineComponent({
       } else {
         const response = await httpClient
           .post("/tags", formData.value, {
-            params: { _mock: "tagCreate" },
+            _mock: "tagCreate",
           })
           .catch((err: AxiosError<OnAxiosError>) => {
             if (err.response?.status === 422) {
@@ -226,8 +232,10 @@ export const TagsForm = defineComponent({
       const response = await httpClient.get<Resource<TagType>>(
         `/tags/${props.id}?kind=${kind.value}`,
         {
-          _mock: "tagQuery",
           id: props.id,
+        },
+        {
+          _mock: "tagQuery",
         }
       );
       console.log("response.data :>> ", response.data);

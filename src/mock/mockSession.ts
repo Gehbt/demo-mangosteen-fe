@@ -1,3 +1,4 @@
+// @deprecated have impl in be
 import type { Mock } from "Mock-Type";
 import { faker } from "@faker-js/faker/locale/zh_CN";
 import { AxiosResponse } from "axios";

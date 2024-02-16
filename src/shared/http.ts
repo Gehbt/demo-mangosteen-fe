@@ -19,6 +19,7 @@ import {
   mockPieChart,
   // mockItemIndexAmount
 } from "@/mock";
+import { ToastWrapperInstance, closeToast, showLoadingToast } from "vant";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
@@ -88,6 +89,9 @@ export class Http {
   // CRUD
   // create, read, update, delete
 }
+const toastSwitch: { value: ToastWrapperInstance | undefined } = {
+  value: undefined,
+};
 const mock: (
   config: InternalAxiosRequestConfig
 ) => Promise<false | AxiosResponse | AxiosError<OnAxiosError>> = async (
@@ -100,7 +104,7 @@ const mock: (
   ) {
     return false;
   }
-  const mockWhat = config?.params?._mock;
+  const mockWhat = config._mock;
   //? return window.eval(`mock${mockWhat}(config)`)
   switch (mockWhat) {
     case "itemCreate":
@@ -126,12 +130,28 @@ const mock: (
     case "pieChart":
       return mockPieChart(config);
     case "session":
-      console.log("session :>> ", config);
+      // console.log("session :>> ", config);
       return mockSession(config);
   }
   return false;
 };
 export const httpClient = new Http("/api/v1");
+// 拦截0: 关闭toast
+httpClient.instance.interceptors.response.use(
+  (response) => {
+    if (toastSwitch.value) {
+      // 这里使用了 指定toast的close()方法而不是 closeToast()方法只是尝试
+      toastSwitch.value.close();
+    }
+    return response;
+  },
+  (error) => {
+    if (toastSwitch.value) {
+      closeToast();
+    }
+    throw error;
+  }
+);
 // `请求`拦截1: mock
 httpClient.instance.interceptors.response.use(
   async (response) => {
@@ -145,7 +165,7 @@ httpClient.instance.interceptors.response.use(
   },
   async (error) => {
     console.log("mock error pre:>> ", error);
-    if (error.config?.params?._mock) {
+    if (error.config._mock) {
       console.warn("use mock");
       const mock_res_error = await mock(error.config);
       console.log("mock_res_error :>> ", mock_res_error);
@@ -172,6 +192,7 @@ httpClient.instance.interceptors.response.use(
     throw error;
   }
 );
+
 // 请求拦截
 // 把代码放入请求头
 // TODO: Trim
@@ -180,6 +201,12 @@ httpClient.instance.interceptors.request.use(
     const jwt = localStorage.getItem("jwt");
     if (!!jwt) {
       config.headers.Authorization = `Bearer-${jwt}`;
+    }
+    if (config?._loading === true) {
+      toastSwitch.value = showLoadingToast({
+        message: "加载中",
+        forbidClick: true,
+      });
     }
     console.log("request :>> ", config);
     return config;
