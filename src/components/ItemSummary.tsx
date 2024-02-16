@@ -72,6 +72,7 @@ export const ItemSummary = defineComponent({
         },
         {
           _mock: "itemIndex",
+          _loading: true,
         }
       );
       console.log("fetchItems response :>> ", response.data);

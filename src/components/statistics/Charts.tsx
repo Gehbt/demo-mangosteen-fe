@@ -179,6 +179,7 @@ export const Charts = defineComponent({
           },
           {
             _mock: "lineChartLess",
+            _loading: true,
           }
         );
         console.log("lineResponse :>> ", lineResponse.data.resource);

@@ -123,6 +123,7 @@ export const ItemsCreate = defineComponent({
           } as ItemUserType,
           {
             _mock: "itemCreate",
+            _loading: true,
           }
         )
         .then(() => {

@@ -37,6 +37,7 @@ export const TagsEdit = defineComponent({
       sign: "",
     });
     const onDelete = async ({ withItem }: { withItem: boolean }) => {
+      // useless
       await httpClient.delete(
         `/tags${tag_id_number.value}`,
         {
@@ -45,6 +46,7 @@ export const TagsEdit = defineComponent({
         },
         {
           _mock: "tagDelete",
+          _loading: true,
         }
       );
     };
