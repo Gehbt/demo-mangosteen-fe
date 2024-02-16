@@ -1,7 +1,41 @@
-export class Time {
-  date: Date;
-  constructor(date: Date | string = new Date()) {
-    this.date = new Date(date);
+type TimeUnitType =
+  | "year"
+  | "month"
+  | "day"
+  | "hour"
+  | "minute"
+  | "second"
+  | "millisecond";
+export interface ITime {
+  format: (pattern?: string) => string;
+  firstDayOfMonth: () => ITime;
+  firstDayOfYear: () => ITime;
+  lastDayOfMonth: () => ITime;
+  lastDayOfYear: () => ITime;
+  getRaw: () => Date;
+  add: (amount: number, unit: TimeUnitType) => ITime;
+  toISOString(): string;
+  getTimestamp(): number;
+}
+const OFFSET_DAY = 1;
+export class Time implements ITime {
+  private date: Date;
+  constructor(date: Date | string | number | Time | undefined = new Date()) {
+    if (typeof date === "undefined") {
+      this.date = new Date();
+    } else if (date instanceof Time) {
+      // 新建数据而不是 引用原数据
+      this.date = new Date(date.getRaw());
+    } else if (
+      // 符合Date的入参
+      typeof date === "string" ||
+      typeof date === "number" ||
+      date instanceof Date
+    ) {
+      this.date = new Date(date);
+    } else {
+      throw new Error("Invalid date");
+    }
   }
   format(pattern: string = "YYYY-MM-DD") {
     // support: YYYY MM DD HH mm ss SSS
@@ -41,17 +75,10 @@ export class Time {
   getRaw() {
     return this.date;
   }
-  add(
-    amount: number,
-    unit:
-      | "year"
-      | "month"
-      | "day"
-      | "hour"
-      | "minute"
-      | "second"
-      | "millisecond"
-  ) {
+  getTimestamp() {
+    return this.date.getTime();
+  }
+  add(amount: number, unit: TimeUnitType) {
     // return new Time but not change this.date
     const date = new Date(this.date.getTime());
     switch (unit) {
@@ -103,7 +130,19 @@ export class Time {
     }
     return new Time(date);
   }
+  toISOString() {
+    return this.date.toISOString();
+  }
+  static dateSubduct<T extends ITime>(t_start: T, t_end: T) {
+    return (
+      Time.msToDay(t_start.getTimestamp() - t_end.getTimestamp()) + OFFSET_DAY
+    );
+  }
+  static msToDay(ms: number) {
+    return ms / 1000 / 60 / 60 / 24;
+  }
 }
+
 export const time = (date = new Date()) => {
   const year = date.getFullYear().toString();
   const month = (date.getMonth() + 1).toString();

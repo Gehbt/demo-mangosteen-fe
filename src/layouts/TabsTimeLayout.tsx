@@ -1,8 +1,8 @@
 import { defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
-import { Time } from "@/composables/date";
-import { Overlay as VOverlay } from "vant";
+import { ITime, Time } from "@/composables";
+import { Overlay as VOverlay, showDialog } from "vant";
 import { Overlay, OverlayMask } from "@/components/Overlay";
 import { Tab, Tabs } from "@/components/Tabs";
 import { Form, FormItem } from "@/components/Form";
@@ -30,17 +30,20 @@ export const TabsTimeLayout = defineComponent({
     const time = new Time();
     const refCustomTime = ref<
       | {
-          start: Time;
-          end: Time;
+          start: ITime;
+          end: ITime;
         }
       | {
           start: null;
           end: null;
         }
     >({ start: null, end: null });
-    const refCustomTimeSL = ref({
-      start: new Time(new Date()),
-      end: new Time(new Date()),
+    const refCustomTimeSL = ref<{
+      start: ITime;
+      end: ITime;
+    }>({
+      start: new Time(),
+      end: new Time(),
     });
     const refLoadCustomTime = computed(
       () => !refCustomTime.value.start && !refCustomTime.value.end
@@ -66,6 +69,7 @@ export const TabsTimeLayout = defineComponent({
       e.preventDefault();
       refOverlayVisible.value = false;
     };
+    console.log("timeList :>> ", timeList);
     return () => (
       <>
         <MainLayout
@@ -121,6 +125,7 @@ export const TabsTimeLayout = defineComponent({
               class={s.overlay}
               onClick={() => {
                 // !DO NOTHING: cause cut off
+                // TODO: click overlay should clonse
                 // refOverlayVisible.value = false;
                 // refSelected.value = "month";
               }}
@@ -169,10 +174,29 @@ export const TabsTimeLayout = defineComponent({
                       <button
                         type="button"
                         onClick={() => {
-                          refCustomTime.value.start =
-                            refCustomTimeSL.value.start;
-                          refCustomTime.value.end = refCustomTimeSL.value.end;
-                          refOverlayVisible.value = false;
+                          const desiredNumber = Time.dateSubduct(
+                            refCustomTimeSL.value.end,
+                            refCustomTimeSL.value.start
+                          );
+                          if (desiredNumber > 366 || desiredNumber < 0) {
+                            if (desiredNumber > 366) {
+                              showDialog({
+                                message: "不支持查询超过一年的时间",
+                              });
+                            } else {
+                              showDialog({
+                                message: "查询的时间错误",
+                              });
+                            }
+                            refCustomTime.value = { end: null, start: null };
+                            refSelected.value = "month";
+                            refOverlayVisible.value = false;
+                          } else {
+                            refCustomTime.value.start =
+                              refCustomTimeSL.value.start;
+                            refCustomTime.value.end = refCustomTimeSL.value.end;
+                            refOverlayVisible.value = false;
+                          }
                         }}
                       >
                         确认

@@ -1,3 +1,4 @@
+import { Time } from "@/composables";
 import { fakerZH_CN } from "@faker-js/faker";
 import { AxiosResponse } from "axios";
 import type { Mock } from "Mock-Type";
@@ -21,7 +22,7 @@ export const mkLineData = (
         // TODO: 使用传入的时间
         happen_at:
           config.init_happen_at ??
-          new Date(`2024-01-${index + 1}`).toISOString(),
+          new Time(config.bill_start).add(index, "day").toISOString(),
       } as LineChartTypeOne)
   );
 };
@@ -29,7 +30,7 @@ export const mkLineData = (
 export const mockLineChart: Mock<Resource<LineChartType>> = (config) => {
   const { bill_end, bill_start, desiredNumber } = config.params as {
     // TODO: 前端计算的天数
-    desiredNumber?: number;
+    desiredNumber: number;
     bill_start: string;
     bill_end: string;
   };
@@ -37,7 +38,10 @@ export const mockLineChart: Mock<Resource<LineChartType>> = (config) => {
   console.log("bill_end :>> ", bill_end);
   return {
     data: {
-      resource: mkLineData(desiredNumber ?? 30, { bill_start, bill_end }),
+      resource: mkLineData(desiredNumber ?? 28, {
+        bill_start,
+        bill_end,
+      }),
     },
     status: 200,
   } as AxiosResponse<Resource<LineChartType>>;
@@ -45,15 +49,13 @@ export const mockLineChart: Mock<Resource<LineChartType>> = (config) => {
 export const mockLineChartLess: Mock<Resource<LineChartType>> = (config) => {
   const { bill_end, bill_start, desiredNumber } = config.params as {
     // TODO: 前端计算的天数
-    desiredNumber?: number;
+    desiredNumber: number;
     bill_start: string;
     bill_end: string;
   };
-  console.log("bill_start :>> ", bill_start);
-  console.log("bill_end :>> ", bill_end);
   return {
     data: {
-      resource: mkLineData(desiredNumber ?? 30, {
+      resource: mkLineData(desiredNumber ?? 28, {
         bill_start,
         bill_end,
       }).filter((data) => Math.random() > 0.5),

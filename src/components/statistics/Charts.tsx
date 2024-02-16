@@ -10,6 +10,50 @@ import * as echarts from "echarts";
 import { Time } from "@/composables";
 import { amountToPrice } from "../ItemSummary";
 import { httpClient } from "@/shared";
+import { mkLineData } from "@/mock";
+const amountPad = (config: {
+  startDate: string;
+  endDate: string;
+  desiredNumber: number;
+}) => {
+  // TODO: 计算 desiredNumber
+  return mkLineData(config.desiredNumber, {
+    bill_start: config.startDate,
+    bill_end: config.endDate,
+    init_amount: 0,
+  });
+};
+// hold on
+function compareSeqFn(a: LineChartTypeOne, b: LineChartTypeOne) {
+  return a.happen_at < b.happen_at ? -1 : 1;
+}
+// ! 假定 src是符合happen_at排列的
+const mergePaddingSafe = (src: LineChartType, pad: LineChartType) => {
+  if (src.length > pad.length) throw new Error("Invalid src length");
+  function mergePadding(src: LineChartType, pad: LineChartType): LineChartType {
+    if (src.length === 0 && /* 防御 */ pad.length === 0) {
+      return [];
+    }
+    if (src.length === 0) {
+      return pad;
+    }
+    if (pad.length === 0) {
+      return src;
+    }
+    if (src[0].happen_at === pad[0].happen_at) {
+      return [
+        {
+          amount: src[0].amount + pad[0].amount,
+          happen_at: pad[0].happen_at,
+        },
+        ...mergePadding(src.slice(1), pad.slice(1)),
+      ];
+    } else {
+      return [pad[0], ...mergePadding(src, pad.slice(1))];
+    }
+  }
+  return mergePadding(src, pad);
+};
 export const Charts = defineComponent({
   name: "Charts",
   props: {
@@ -18,24 +62,59 @@ export const Charts = defineComponent({
     endDate: string().isRequired,
   },
   setup(props, context) {
+    // desiredNumber在Layout 只有custom里需要计算,并且只在提交时需要验证
+    // 简单来说就是放在Layout层里需要四个变量 这里只需一个
+    // * Layout层 保证了 0 < desiredNumber < 367
+    const desiredNumber = Time.dateSubduct(
+      new Time(props.endDate),
+      new Time(props.startDate)
+    );
     const refCategory = ref<TagKindType>("expenses");
-    const refLineData = ref<LineChartViewType>([]);
-    onMounted(async () => {
-      const lineResponse = await httpClient.get<Resource<LineChartType>>(
-        "/item/chart/line",
-        {
-          bill_end: new Date().toDateString(),
-          bill_start: new Date().toDateString(),
-          _mock: "lineChart",
-        }
-      );
-      console.log("lineResponse :>> ", lineResponse.data.resource);
-      refLineData.value = lineResponse.data.resource.map((lineChartDataOne) => [
+    const inCustomTimeLine =
+      props.timeLine !== "custom"
+        ? props.timeLine
+        : `custom?startDate=${props.startDate}&endDate=${props.endDate}`;
+    const refLineData = useSessionStorage<LineChartViewType>(
+      `chart_line_data_${inCustomTimeLine}`,
+      []
+    );
+    const refLineResource = ref<LineChartType>([]);
+    const padData: LineChartType = amountPad({
+      startDate: props.startDate,
+      endDate: props.endDate,
+      desiredNumber,
+    });
+    const refMergedData = computed(() =>
+      mergePaddingSafe(refLineResource.value, padData)
+    );
+    const refPieData = useSessionStorage<LineChartViewType>(
+      `chart_pie_data_${inCustomTimeLine}`,
+      []
+    );
+    console.log("desiredNumber :>> ", desiredNumber);
+
+    const lineChartDataToView = (l: LineChartType) =>
+      l.map<LineChartViewTypeOne>((lineChartDataOne) => [
         lineChartDataOne.happen_at,
         amountToPrice(lineChartDataOne.amount),
       ]);
-      // TODO: 防御性: 当一些date缺失时amount补正为0
-    });
+    const getLine = async () => {
+      if (!refLineData.value || !refLineData.value.length) {
+        const lineResponse = await httpClient.get<Resource<LineChartType>>(
+          "/item/chart/line",
+          {
+            desiredNumber,
+            bill_start: props.startDate,
+            bill_end: props.endDate,
+            _mock: "lineChartLess",
+          }
+        );
+        console.log("lineResponse :>> ", lineResponse.data.resource);
+        refLineResource.value = lineResponse.data.resource;
+        refLineData.value = lineChartDataToView(refMergedData.value);
+      }
+    };
+    onMounted(getLine);
 
     return () => (
       <div class={s.wrapper}>
@@ -89,24 +168,43 @@ export const LineChart = defineComponent({
       const option = computed(
         () =>
           ({
-            grid: { left: "50px", top: "20px", right: "10px", bottom: " 20px" },
+            grid: {
+              left: "0px",
+              top: "20px",
+              right: "10px",
+              bottom: " 40px",
+              containLabel: true,
+            },
             tooltip: {
               show: true,
               trigger: "axis",
               formatter: (item: { value: unknown }[]) => {
                 const [date, price] = item[0].value as [string, number];
-                return `${new Time(new Date(date)).format(
-                  "YYYY年MM月DD日"
-                )} ￥${price}`;
+                return `${new Time(date).format("YYYY年MM月DD日")} ￥${price}`;
               },
             },
-
+            dataZoom: [
+              {
+                right: "5%",
+                left: "12%",
+                bottom: "10px",
+                type: "slider",
+                labelFormatter(value, valueStr) {
+                  return new Time(valueStr).format("MM月DD日");
+                },
+              },
+              {
+                height: "40px",
+                type: "inside",
+              },
+            ],
             xAxis: {
               type: "time",
               boundaryGap: ["2%", "2%"],
               axisLabel: {
-                formatter: (value: string) =>
-                  new Time(new Date(value)).format("MM-DD"),
+                formatter: (value) => {
+                  return new Time(value).format("MM-DD");
+                },
               },
               axisTick: {
                 alignWithLabel: true,
@@ -134,6 +232,7 @@ export const LineChart = defineComponent({
           } as echarts.EChartsOption)
       );
       lineChart.value.setOption(option.value);
+      // 更新触发重绘
       watch(option, () => {
         lineChart.value?.setOption(option.value);
       });
@@ -162,7 +261,7 @@ export const PieChart = defineComponent({
           trigger: "item",
         },
         legend: {
-          top: "5%",
+          top: "0%",
           left: "center",
         },
         series: [
