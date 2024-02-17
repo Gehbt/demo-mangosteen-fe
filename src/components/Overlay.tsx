@@ -1,7 +1,7 @@
 import { defineComponent, ref } from "vue";
 import s from "./Overlay.module.scss";
 import { RouterLink } from "vue-router/auto";
-import { fetchMe } from "@/shared";
+import { fetchMe, httpClient } from "@/shared";
 import type { AxiosError, AxiosResponse } from "axios";
 import { showConfirmDialog } from "vant";
 export const Overlay = defineComponent({
@@ -29,16 +29,18 @@ export const Overlay = defineComponent({
       console.log("overlay onMounted :>> ");
       if (!me.value) {
         console.log("do fetchMe :>> ");
-        me.value = await fetchMe()
-          .then((response) => {
-            return response.data;
-          })
-          .catch((err: AxiosError) => {
-            console.log("fetchMe err :>> ", err);
-            return null;
-          });
+        me.value = await fetchMe().catch((err: AxiosError) => {
+          console.log("fetchMe err :>> ", err);
+          return null;
+        });
       }
     });
+    const handleLogout = async () => {
+      await httpClient.head<JWTResponse>("/logout").then((response) => {
+        // 接收过期的token
+        jwt.value = response.data.jwt;
+      });
+    };
     return () => (
       <div class={s.overlay}>
         <SignInCard v-if={!me.value} />
@@ -48,10 +50,9 @@ export const Overlay = defineComponent({
             me.value /* jsx的 v-if 还没类型收窄能力 */ ??
             ({ name: "出错了" } as UserType)
           }
-          onSignout={() => {
-            // ?TODO:应该还要修改jwt
+          onSignout={async () => {
             me.value = null;
-            jwt.value = null;
+            await handleLogout();
             router.push("/start");
           }}
         />

@@ -25,6 +25,7 @@ type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;
 type PatchConfig = Omit<AxiosRequestConfig, "url" | "data">;
 type DeleteConfig = Omit<AxiosRequestConfig, "params">;
+type HeadConfig = Omit<AxiosRequestConfig, "params">;
 export class Http {
   instance: AxiosInstance;
   constructor(baseURL: string) {
@@ -84,6 +85,13 @@ export class Http {
       url,
       params: query,
       method: "DELECT",
+    });
+  }
+  head<R = unknown>(url: string, config?: HeadConfig) {
+    return this.instance.request<R>({
+      ...config,
+      url,
+      method: "Head",
     });
   }
   // CRUD
@@ -155,7 +163,7 @@ httpClient.instance.interceptors.response.use(
 // `请求`拦截1: mock
 httpClient.instance.interceptors.response.use(
   async (response) => {
-    console.log("response :>> ", response);
+    // console.log("response :>> ", response);
     // console.warn("use mock");
     const mock_res = await mock(response.config);
     if (!!mock_res) {
@@ -200,7 +208,7 @@ httpClient.instance.interceptors.request.use(
   (config) => {
     const jwt = localStorage.getItem("jwt");
     if (!!jwt) {
-      config.headers.Authorization = `Bearer-${jwt}`;
+      config.headers.Authorization = `Bearer ${jwt}`;
     }
     if (config?._loading === true) {
       toastSwitch.value = showLoadingToast({

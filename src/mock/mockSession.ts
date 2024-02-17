@@ -1,10 +1,10 @@
 // @deprecated have impl in be
 import type { Mock } from "Mock-Type";
-import { faker } from "@faker-js/faker/locale/zh_CN";
+import { fakerZH_CN } from "@faker-js/faker";
 import { AxiosResponse } from "axios";
 export const mockSession: Mock<JWTResponse> = (config) => {
   return {
-    data: { jwt: faker.string.uuid() },
+    data: { jwt: fakerZH_CN.string.uuid() },
     status: 200,
   } as AxiosResponse<JWTResponse>;
 };
