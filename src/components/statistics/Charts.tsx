@@ -32,27 +32,30 @@ function compareSeqFn(a: LineChartTypeOne, b: LineChartTypeOne) {
 // ! 假定 src是符合happen_at排列的
 const mergePaddingSafe = (src: LineChartType, pad: LineChartType) => {
   if (src.length > pad.length) throw new Error("Invalid src length");
-  function mergePadding(src: LineChartType, pad: LineChartType): LineChartType {
-    if (src.length === 0 && /* 防御 */ pad.length === 0) {
+  function mergePadding(
+    src: LineChartType,
+    pad: LineChartType,
+    MAX_RECURSIVE = 400 // 最大367
+  ): LineChartType {
+    if (MAX_RECURSIVE <= 0) {
+      throw new Error("mergePadding MAX_RECURSIVE!");
+    } else if (src.length === 0 && /* 防御 */ pad.length === 0) {
       return [];
-    }
-    if (src.length === 0) {
+    } else if (src.length === 0) {
       return pad;
-    }
-    if (pad.length === 0) {
+    } else if (pad.length === 0) {
       return src;
-    }
-    if (src[0].happen_at === pad[0].happen_at) {
+    } else if (src[0].happen_at === pad[0].happen_at) {
       return [
         {
           amount: src[0].amount + pad[0].amount,
           happen_at: pad[0].happen_at,
           kind: src[0].kind,
         },
-        ...mergePadding(src.slice(1), pad.slice(1)),
+        ...mergePadding(src.slice(1), pad.slice(1), MAX_RECURSIVE - 1),
       ];
     } else {
-      return [pad[0], ...mergePadding(src, pad.slice(1))];
+      return [pad[0], ...mergePadding(src, pad.slice(1), MAX_RECURSIVE - 1)];
     }
   }
   return mergePadding(src, pad);

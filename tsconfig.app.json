@@ -31,13 +31,13 @@
     "sourceMap": true
   },
   "include": [
+    "src/types/*.d.ts",
     "src/**/*.ts",
     "src/vite-env.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "./env.d.ts",
     "./env.client.d.ts",
-    "src/axios.d.ts"
   ],
   "exclude": [
     "dist",

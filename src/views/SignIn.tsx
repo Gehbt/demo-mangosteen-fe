@@ -143,7 +143,7 @@ export const SignIn = defineComponent({
 
         await httpClient
           .post<JWTResponse>("/session", toRaw(formData), {
-            // params: { _mock: "session" },
+            _loading: true,
           })
           .then((response) => {
             console.log("response JWT :>> ", response.data);

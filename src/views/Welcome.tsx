@@ -89,9 +89,6 @@ export const Welcome = defineComponent({
       </div>
     );
   },
-  // mounted() {
-  // useSwiper(this.main)
-  // },
 });
 // 使用css`scroll-snap` 实现无缝切换的的版本
 export const Welcome2 = defineComponent({

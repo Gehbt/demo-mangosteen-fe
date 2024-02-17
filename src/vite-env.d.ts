@@ -79,11 +79,6 @@ type LineChartType = LineChartTypeOne[];
 type LineChartViewTypeOne = [date_str: string, price: string];
 type LineChartViewType = LineChartViewTypeOne[];
 
-declare module "DefineHeadType" {
-  import { MergeHead, UseHeadInput } from "@unhead/vue";
-  export type HeadType<T extends MergeHead = {}> = UseHeadInput<T>;
-}
-
 type PieChartTypeOne = {
   amount: number;
   tag: { id: number; name: string; sign: string };

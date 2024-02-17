@@ -50,6 +50,7 @@
     margin-left: 8px;
     flex-grow: 1;
     flex-shrink: 1;
+    transition: all 500ms ease;
     .bar_text {
       color: var(--text-muted);
       display: flex;
@@ -70,7 +71,7 @@
       left: 0;
       height: 100%;
       width: 42px;
-      transition: width 500ms ease;
+      transition: all 500ms ease;
     }
   }
   @for $i from 1 to 9 {
