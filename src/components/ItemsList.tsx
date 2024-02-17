@@ -10,6 +10,8 @@ import { Button } from "./Button";
 import { time } from "@/composables";
 import { AxiosError } from "axios";
 import { showDialog } from "vant";
+import { HeadType } from "DefineHeadType";
+// import type { HeadType } from "DefineHeadType";
 
 export const ItemsList = defineComponent({
   name: "ItemsList",
@@ -50,15 +52,41 @@ function useTags() {
 }
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
+  head: {
+    title: "记一笔",
+  } as HeadType,
   setup(props, context) {
     const router = useRouter();
     const refSelectedTab = ref<TagKindType>("expenses");
-    const refExpTagId = ref<number>(-1);
-    const refIncTagId = ref<number>(-1);
+    const refExpTagId = ref<number>(0);
+    const refIncTagId = ref<number>(0);
     const TagIdMap: Record<TagKindType, Ref<number>> = {
       expenses: refExpTagId,
       income: refIncTagId,
     };
+
+    // 点击控制 inputpad
+    const refManualToggle = ref(false);
+    // 实际控制 inputpad
+    const refUnfold = ref(false);
+    // 点击 按钮 控制
+    watch([refManualToggle], () => {
+      refUnfold.value = !refUnfold.value;
+    });
+    // 点击 id 触发展开
+    watch([refExpTagId, refIncTagId], () => {
+      // 仅在 折叠时展开
+      if (refUnfold.value === false) {
+        refUnfold.value = true;
+      }
+    });
+    // 在切换tab时折叠
+    watch(refSelectedTab, () => {
+      refUnfold.value = false;
+    });
+    watchEffect(() => {
+      console.log("Effect!");
+    });
     const refAmount = ref("0");
     // nowDate: 记录当前时间
     const nowDate = time(new Date()).format().split("-") as [
@@ -106,7 +134,6 @@ export const ItemsCreate = defineComponent({
         income_tags.value = refIncomeTags.value;
       }
     });
-    const refToggle = ref(false);
     const updateSelected = (tabName: TagKindType) =>
       (refSelectedTab.value = tabName);
     const amountFloat = computed(() => parseFloat(refAmount.value));
@@ -180,10 +207,10 @@ export const ItemsCreate = defineComponent({
           <Button
             // class={[!refToggle.value ? s["btn-toggle"] : ""]}
             onClick={() => {
-              refToggle.value = !refToggle.value;
+              refManualToggle.value = !refManualToggle.value;
             }}
           >
-            {refToggle.value.toString()}
+            点击{refUnfold.value ? "折叠" : "展开"}
           </Button>
 
           <Transition
@@ -193,7 +220,7 @@ export const ItemsCreate = defineComponent({
             leaveActiveClass={s.col_in_leave_active}
           >
             <InputPad
-              v-if={refToggle.value}
+              v-if={refUnfold.value}
               v-model:inputAmount={refAmount.value}
               v-model:inputDate={refDate.value}
               handleSubmit={handleSubmit}
