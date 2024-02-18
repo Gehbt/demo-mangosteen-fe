@@ -1,7 +1,9 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
 import { SwiperView } from "@/components/Swiper";
 import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
+import { Export } from "@/views/Export";
 import { Items } from "@/views/Items";
+import { Notify } from "@/views/Notify";
 import { SignIn } from "@/views/SignIn";
 import { Start } from "@/views/Start";
 import { Statistics } from "@/views/Statistics";
@@ -105,5 +107,15 @@ export const routes: RouteRecordRaw[] = [
     name: "signIn",
     path: "/sign_in",
     component: SignIn,
+  },
+  {
+    name: "Export",
+    path: "/export",
+    component: Export,
+  },
+  {
+    name: "Notify",
+    path: "/notify",
+    component: Notify,
   },
 ];
