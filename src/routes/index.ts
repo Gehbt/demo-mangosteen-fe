@@ -8,7 +8,7 @@ import { Statistics } from "@/views/Statistics";
 import { Tag } from "@/views/Tag";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
 import { Welcome, Welcome2 } from "@views/Welcome";
-import { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
 const WelcomeTable: RouteRecordRaw[] = [
   {
     name: "hiding",

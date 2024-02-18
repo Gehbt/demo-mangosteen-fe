@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { httpClient } from "./http";
 
 export let refreshState: Promise<UserType> | undefined;

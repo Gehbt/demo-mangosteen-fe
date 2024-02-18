@@ -1,11 +1,11 @@
-import { PropType, Ref, defineComponent, reactive, ref, toRaw } from "vue";
+import { type Ref, defineComponent, ref, toRaw } from "vue";
 import s from "./TagsEdit.module.scss";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "./Button";
 import {
   type RulesType,
   validate,
-  InvalidateError,
+  type InvalidateError,
   errorFree,
 } from "@/composables/validate";
 import { Form, FormItem } from "./Form";

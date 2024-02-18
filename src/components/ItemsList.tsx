@@ -10,7 +10,7 @@ import { Button } from "./Button";
 import { time } from "@/composables";
 import { AxiosError } from "axios";
 import { showDialog } from "vant";
-import { HeadType } from "DefineHeadType";
+import type { HeadType } from "DefineHeadType";
 // import type { HeadType } from "DefineHeadType";
 
 export const ItemsList = defineComponent({
@@ -296,7 +296,7 @@ const TagGrid = defineComponent({
             >
               <svg-icon name={svgs.round_add} class={s.createTag} />
             </button>
-            <div class={s.name}>新增</div>
+            <div class={s.name}>新增预设</div>
           </div>
           {props.tagsSrc.value.map((tag) => (
             <div

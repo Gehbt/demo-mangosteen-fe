@@ -1,4 +1,4 @@
-import { Transition, VNode, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import s from "./Items.module.scss";
 import { RouterView } from "vue-router/auto";
 

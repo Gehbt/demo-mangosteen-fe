@@ -1,4 +1,4 @@
-import { PropType, computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import s from "./EmojiSelect.module.scss";
 import {
   face,

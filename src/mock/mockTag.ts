@@ -1,5 +1,5 @@
 import type { Mock } from "Mock-Type";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import { fakerZH_CN } from "@faker-js/faker";
 
 const OFFSET = 1;

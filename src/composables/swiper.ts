@@ -1,4 +1,5 @@
-import { Ref, computed, onMounted, onUnmounted, ref } from "vue";
+// !错误的hooks 不要在纯ts里用vue的api
+import { type Ref, computed, onMounted, onUnmounted, ref } from "vue";
 import { throttle } from "lodash-es";
 type Point = { x: number; y: number };
 export enum Direction {

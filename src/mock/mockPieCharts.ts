@@ -1,5 +1,5 @@
 import { fakerZH_CN } from "@faker-js/faker";
-import { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 import type { Mock } from "Mock-Type";
 const mkPieData = (n = 5, config?: {}) =>
   Array.from({ length: n }).map<PieChartTypeOne>((_, i) => ({

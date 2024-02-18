@@ -1,6 +1,6 @@
 import type { Mock } from "Mock-Type";
 import { fakerZH_CN } from "@faker-js/faker";
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { mkPager } from "./mockTag.ts";
 export const mockItemCreate: Mock<ItemUserType> = (
   config: AxiosRequestConfig<ItemUserType>

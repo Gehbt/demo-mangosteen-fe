@@ -28,7 +28,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "verbatimModuleSyntax": true, // type { ... }
   },
   "include": [
     "src/types/*.d.ts",

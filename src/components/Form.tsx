@@ -1,4 +1,4 @@
-import { PropType, computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import s from "./Form.module.scss";
 import { EmojiSelect } from "./EmojiSelect";
 import { DatePicker, Popup } from "vant";

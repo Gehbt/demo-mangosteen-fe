@@ -1,11 +1,15 @@
-import { Ref, defineComponent, reactive, ref, toRaw } from "vue";
 import s from "./SignIn.module.scss";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Form, FormItem } from "@/components/Form";
 import { Button } from "@/components/Button";
-import { InvalidateError, validate, errorFree } from "@/composables/validate";
+import {
+  type InvalidateError,
+  validate,
+  errorFree,
+} from "@/composables/validate";
 import { httpClient } from "@/shared/http";
 import { refreshMe } from "@/shared/me";
+import { AxiosError } from "axios";
 
 export const SignIn = defineComponent({
   name: "SignIn",
@@ -128,13 +132,13 @@ export const SignIn = defineComponent({
           refIsSend.value = false;
           return;
         }
-        const whenCodeResponseError = (e: any) => {
+        const whenCodeResponseError = (e: AxiosError<{ errors: string[] }>) => {
           if (e.response?.status === 422) {
             // 绕过前端从接口发送才可能发生
             refErr.value.email = e.response.data.errors;
             alert("Email格式错误!"); // TODO: dialog
           } else {
-            console.error("Error: " + e.response.data.errors);
+            console.error("Error: " + e.response?.data.errors);
           }
           refIsSend.value = false;
         };
@@ -146,6 +150,7 @@ export const SignIn = defineComponent({
             _loading: true,
           })
           .then((response) => {
+            console.log("response :>> ", response);
             console.log("response JWT :>> ", response.data);
             jwt.value = response.data.jwt;
             // router.push(

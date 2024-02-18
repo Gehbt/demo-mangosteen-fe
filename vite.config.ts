@@ -65,10 +65,10 @@ export default defineConfig({
       vueTemplate: true,
       dts: true,
       imports: [
-        VueRouterAutoImports,
         "vue",
         "pinia",
         "vue/macros",
+        VueRouterAutoImports,
         {
           "@vueuse/router": ["useRouteQuery", "useRouteParams"],
           "@vueuse/core": [

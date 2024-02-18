@@ -1,7 +1,7 @@
 import { defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
-import { ITime, Time } from "@/composables";
+import { type ITime, Time } from "@/composables";
 import { Overlay as VOverlay, showDialog } from "vant";
 import { Overlay, OverlayMask } from "@/components/Overlay";
 import { Tab, Tabs } from "@/components/Tabs";

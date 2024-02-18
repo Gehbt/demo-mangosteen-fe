@@ -1,6 +1,6 @@
 import { Time } from "@/composables";
 import { fakerZH_CN } from "@faker-js/faker";
-import { AxiosResponse } from "axios";
+import { type AxiosResponse } from "axios";
 import type { Mock } from "Mock-Type";
 export const mkLineData = (
   n: number,

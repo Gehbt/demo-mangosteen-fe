@@ -1,9 +1,9 @@
 import axios, {
   AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from "axios";
 import {
   mockSession,
@@ -19,7 +19,7 @@ import {
   mockPieChart,
   // mockItemIndexAmount
 } from "@/mock";
-import { ToastWrapperInstance, closeToast, showLoadingToast } from "vant";
+import { type ToastWrapperInstance, closeToast, showLoadingToast } from "vant";
 
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
 type PostConfig = Omit<AxiosRequestConfig, "url" | "data" | "method">;

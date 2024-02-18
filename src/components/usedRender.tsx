@@ -1,4 +1,4 @@
-import { FunctionalComponent, defineComponent, ref } from "vue";
+import { type FunctionalComponent, defineComponent, ref } from "vue";
 interface myPropType {
   age: number;
   name: string;

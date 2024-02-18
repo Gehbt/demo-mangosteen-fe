@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { ChartsControl } from "@/components/statistics/Charts";
 import { TabsTimeLayout, lessRenderSymbol } from "@/layouts/TabsTimeLayout";
-import { HeadType } from "DefineHeadType";
+import type { HeadType } from "DefineHeadType";
 export const Statistics = defineComponent({
   name: "Statistics",
   head: {

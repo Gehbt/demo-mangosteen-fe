@@ -1,5 +1,5 @@
 /** @deprecated: use .vue version */
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, type PropType } from "vue";
 // import svg from "@svg_map";
 export default defineComponent({
   name: "SvgIcon",
