@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 import s from "./ItemSummary.module.scss";
 import { Floatbutton } from "./Button";
 import { httpClient } from "@/shared";
@@ -51,17 +51,6 @@ export const ItemSummary = defineComponent({
     });
     //* 实际上 expenses,income,balance 应该由后端查询给出
     const balance = computed(() => income.value - expenses.value);
-
-    // const fetchItemAmount = async () => {
-    //   const response = await httpClient.get<Resource<AmountType>>("/items", {
-    //     bill_start: props.startDate,
-    //     bill_end: props.endDate,
-    //     ownItemNumber: capacity.value,
-    //     _mock: "itemIndexAmount",
-    //   });
-    //   // expenses.value = response.data.resource.amount_expenses;
-    //   // income.value = response.data.resource.amount_income;
-    // };
     const fetchItems = async () => {
       const response = await httpClient.get<Resources<ItemType>>(
         "/items",
@@ -81,7 +70,9 @@ export const ItemSummary = defineComponent({
       }
     };
     // onMounted(fetchItemAmount);
-
+    onBeforeMount(() => {
+      sessionStorage.setItem("skipStart", "yes");
+    });
     onMounted(async () => {
       if (!itemData.value || itemData.value.length === 0) {
         fetchItems();

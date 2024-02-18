@@ -1,14 +1,19 @@
-import { Transition, VNode, defineComponent, ref, watchEffect } from "vue";
+import { Transition, type VNode, defineComponent, ref, watchEffect } from "vue";
 import { RouterView } from "vue-router/auto";
 import s from "./Welcome.module.scss";
-import { RouteLocationNormalizedLoaded } from "vue-router";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { Direction, useSwiper } from "@/composables/swiper";
 import { throttle } from "lodash-es";
 import { W1, W2, W3, W4, WEndFooter, WFooter } from "@/components/welcome";
-import { SwiperView } from "@/components/Swiper";
 import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
+  beforeRouteEnter() {
+    const router = useRouter();
+    if (localStorage.getItem("skipWelcome") === "yes") {
+      router.replace("/start");
+    }
+  },
   setup() {
     const main = ref<HTMLDivElement>();
     const route = useRoute();
@@ -18,7 +23,7 @@ export const Welcome = defineComponent({
     });
     // 还可以使用 对象(对象替代switch同样的思路)
     // ?TODO: 使用router.go(1 | -1)(缓存)
-    const push = throttle(
+    const toNextPage = throttle(
       (dire_effect: number) => {
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
@@ -39,7 +44,7 @@ export const Welcome = defineComponent({
     watchEffect(() => {
       if (isSwiping.value) {
         if (direction.value === Direction.l) {
-          push(1);
+          toNextPage(1);
         } else if (direction.value === Direction.r) {
           router.back();
           route.meta.seq = false;
@@ -90,7 +95,8 @@ export const Welcome = defineComponent({
     );
   },
 });
-// 使用css`scroll-snap` 实现无缝切换的的版本
+//// 使用css`scroll-snap` 实现无缝切换的的版本
+// 使用 vant 实现无缝切换的的版本
 export const Welcome2 = defineComponent({
   name: "Welcome2",
   setup(props, context) {

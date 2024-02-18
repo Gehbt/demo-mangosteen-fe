@@ -1,13 +1,19 @@
 import { Button, Floatbutton } from "@/components/Button";
-import { Transition, defineComponent, ref } from "vue";
 import s from "./Start.module.scss";
 import { Center } from "@/components/Center";
 import { Overlay, OverlayMask } from "@/components/Overlay";
 import { RouterLink } from "vue-router/auto";
 import { MainLayout } from "@/layouts/MainLayout";
+import { Transition } from "vue";
 
 export const Start = defineComponent({
   name: "Start",
+  beforeRouteEnter() {
+    const router = useRouter();
+    if (sessionStorage.getItem("skipStart") === "yes") {
+      router.replace("/items");
+    }
+  },
   setup(props, context) {
     const route = useRoute();
     const overlayVisibleRef = ref(false);
