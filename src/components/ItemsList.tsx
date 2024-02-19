@@ -7,7 +7,13 @@ import { ItemSummary } from "./ItemSummary";
 import { TabsTimeLayout } from "@/layouts/TabsTimeLayout";
 import { httpClient } from "@/shared";
 import { Button } from "./Button";
-import { time } from "@/composables";
+import {
+  time,
+  type InvalidateError,
+  type RulesType,
+  validate,
+  errorFree,
+} from "@/composables";
 import { AxiosError } from "axios";
 import { showDialog } from "vant";
 import type { HeadType } from "DefineHeadType";
@@ -20,14 +26,14 @@ export const ItemsList = defineComponent({
   },
 });
 function useTags() {
-  const refExpensesTags = ref<TagType<"expenses">[]>([]);
-  const refIncomeTags = ref<TagType<"income">[]>([]);
-  const tagKindTransfer: Record<TagKindType, Ref<TagType[]>> = {
+  const refExpensesTags = ref<ITag<"expenses">[]>([]);
+  const refIncomeTags = ref<ITag<"income">[]>([]);
+  const tagKindTransfer: Record<TagKindType, Ref<ITag[]>> = {
     expenses: refExpensesTags,
     income: refIncomeTags,
   };
   const fetchTags = async (kind: TagKindType) => {
-    const response_tags = await httpClient.get<Resources<TagType>>(
+    const response_tags = await httpClient.get<Resources<ITag>>(
       "/tags",
       {
         kind,
@@ -50,6 +56,49 @@ function useTags() {
     refIncomeTags,
   };
 }
+const rules: RulesType<IItemQuery> = [
+  {
+    clan: "required",
+    key: "amount",
+    required: true,
+    msg: "金额必须填写",
+  },
+  {
+    clan: "required",
+    key: "happen_at",
+    required: true,
+    msg: "时间必须填写",
+  },
+  { clan: "required", key: "tag_ids", required: true, msg: "tag_ids必须填写" },
+  {
+    clan: "pattern",
+    key: "amount",
+    reversePattern: true,
+    pattern: /^0$/,
+    msg: "金额数值不能为0",
+  },
+  {
+    clan: "pattern",
+    key: "amount",
+    reversePattern: true,
+    pattern: /^-?\d{1,10}(\.\d{1,2})?$/,
+    msg: "金额数值错误",
+  },
+  {
+    clan: "pattern",
+    key: "kind",
+    msg: "错误的金额种类",
+    pattern: /^expenses|income$/,
+    reversePattern: true,
+  },
+  {
+    clan: "pattern",
+    key: "tag_ids",
+    pattern: /\[\d+(,\s*\d+)*\]/,
+    msg: "错误的标签id",
+    reversePattern: true,
+  },
+];
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
   head: {
@@ -97,21 +146,28 @@ export const ItemsCreate = defineComponent({
     const refDate = ref<[string, string, string]>(nowDate);
     const { fetchTags, refExpensesTags, refIncomeTags } = useTags();
 
-    const expenses_tags = useSessionStorage<TagType<"expenses">[]>(
+    const expenses_tags = useSessionStorage<ITag<"expenses">[]>(
       "expenses_tags",
       [],
       {
         mergeDefaults: true,
       }
     );
-    const income_tags = useSessionStorage<TagType<"income">[]>(
-      "income_tags",
-      [],
-      {
-        mergeDefaults: true,
-      }
-    );
+    const income_tags = useSessionStorage<ITag<"income">[]>("income_tags", [], {
+      mergeDefaults: true,
+    });
     // ! preload data
+    onBeforeMount(() => {
+      // 记录refExpensesTags和refIncomeTags
+      // console.log("expenses_tags :>> ", expenses_tags);
+      if (!expenses_tags.value || expenses_tags.value.length === 0) {
+        expenses_tags.value = refExpensesTags.value;
+      }
+      if (!income_tags.value || income_tags.value.length === 0) {
+        income_tags.value = refIncomeTags.value;
+      }
+    });
+
     onMounted(async () => {
       if (!expenses_tags.value || expenses_tags.value.length === 0) {
         fetchTags("expenses");
@@ -124,35 +180,35 @@ export const ItemsCreate = defineComponent({
         refIncomeTags.value = income_tags.value;
       }
     });
-    onBeforeMount(() => {
-      // 记录refExpensesTags和refIncomeTags
-      // console.log("expenses_tags :>> ", expenses_tags);
-      if (!expenses_tags.value || expenses_tags.value.length === 0) {
-        expenses_tags.value = refExpensesTags.value;
-      }
-      if (!income_tags.value || income_tags.value.length === 0) {
-        income_tags.value = refIncomeTags.value;
-      }
-    });
     const updateSelected = (tabName: TagKindType) =>
       (refSelectedTab.value = tabName);
     const amountFloat = computed(() => parseFloat(refAmount.value));
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: Event) => {
+      const formData: ComputedRef<IItemQuery> = computed(() => ({
+        // 带下划线的名字是数据库风格
+        kind: refSelectedTab.value,
+        tag_ids: JSON.stringify([TagIdMap[refSelectedTab.value].value]),
+        happen_at: new Date(refDate.value.join("-")).toISOString(),
+        amount: amountFloat.value,
+      }));
+      const errData: Ref<InvalidateError<IItemQuery>> = ref({
+        amount: [],
+        happen_at: [],
+        kind: [],
+        tag_ids: [],
+      });
+
+      errData.value = validate(formData.value, rules);
+      // DO vaildate
+      if (!errorFree(errData.value)) {
+        return;
+      }
+      e.preventDefault();
       await httpClient
-        .post<Resource<ItemUserType>>(
-          "/items",
-          {
-            // 带下划线的名字是数据库风格
-            kind: refSelectedTab.value,
-            tags_id: [TagIdMap[refSelectedTab.value].value],
-            happen_at: new Date(refDate.value.join("-")),
-            amount: amountFloat.value,
-          } as ItemUserType,
-          {
-            _mock: "itemCreate",
-            _loading: true,
-          }
-        )
+        .post<Resource<IItemUser>>("/items", formData, {
+          _mock: "itemCreate",
+          _loading: true,
+        })
         .then(() => {
           // time reset
           refDate.value = nowDate;
@@ -236,7 +292,7 @@ const TagGrid = defineComponent({
   name: "TagGrid",
   props: {
     kind: string<TagKindType>().isRequired,
-    tagsSrc: object<Ref<TagType[]>>().isRequired,
+    tagsSrc: object<Ref<ITag[]>>().isRequired,
     doFetch: func<(kind: TagKindType) => Promise<void>>().isRequired,
     selected: number(),
   },
@@ -250,7 +306,7 @@ const TagGrid = defineComponent({
     // longPress Event
     const timer = ref<number>();
     const currentTag = ref<HTMLDivElement>();
-    const longPressAct = (tag: TagType) => {
+    const longPressAct = (tag: ITag) => {
       console.log("longPress :>> ", tag);
       // console.log("router.currentRoute.value :>> ", router.currentRoute.value);
       // TODO: use `URLSearchParams` && `decodeURIComponent`
@@ -259,7 +315,7 @@ const TagGrid = defineComponent({
       );
     };
 
-    const onTouchStart = (e: TouchEvent, tag: TagType) => {
+    const onTouchStart = (e: TouchEvent, tag: ITag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;
       timer.value = window.setTimeout(() => {
         longPressAct(tag);

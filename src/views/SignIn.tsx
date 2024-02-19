@@ -6,16 +6,18 @@ import {
   type InvalidateError,
   validate,
   errorFree,
+  type RulesType,
 } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
 import { refreshMe } from "@/shared/me";
 import { AxiosError } from "axios";
+import { emailRules, codeRules } from "@/static";
 
 export const SignIn = defineComponent({
   name: "SignIn",
   setup(props, context) {
-    const formData = reactive({ email: "", code: "" });
-    const refErr: Ref<InvalidateError<typeof formData>> = ref({});
+    const formData = ref({ email: "", code: "" });
+    const refErr: Ref<InvalidateError<typeof formData.value>> = ref({});
     const refIsSend = ref(false);
     const router = useRouter();
     const jwt = useLocalStorage("jwt", "");
@@ -24,39 +26,21 @@ export const SignIn = defineComponent({
     console.log("returnTo :>> ", returnTo.value);
     const refSmsCodeComponent = ref<typeof FormItem>(); // reference FormItem-smscode
     const clickSendCode = async (e?: Event) => {
-      formData.email = formData.email.trim();
-      const email = computed(() => formData.email);
-      refErr.value = validate(
-        toRaw(formData),
-        [
-          {
-            key: "email",
-            clan: "required",
-            msg: "必填",
-            required: true,
-          },
-          {
-            key: "email",
-            clan: "pattern",
-            msg: "格式错误",
-            pattern:
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-          },
-        ],
-        true
-      );
+      formData.value.email = formData.value.email.trim();
+      const email = computed(() => formData.value.email);
+      refErr.value = validate(formData.value, emailRules);
       e?.preventDefault();
       if (!errorFree(refErr.value)) {
         console.log("refErr.value.email :>> ", refErr.value.email);
         return;
       } else {
-        const whenEmailResponseError = (e: any) => {
+        const whenEmailResponseError = (e: AxiosError<OnAxiosError>) => {
           if (e.response?.status === 422) {
             // 绕过前端从接口发送才可能发生
-            refErr.value.email = e.response.data.errors;
+            refErr.value.email = [e.response.data.error_message];
             alert("Email格式错误!"); // TODO: dialog
           } else {
-            console.error("Error: " + e.response.data.errors);
+            console.error("Error: " + e.response?.data.error_message);
           }
           refIsSend.value = false;
         };
@@ -88,31 +72,14 @@ export const SignIn = defineComponent({
       console.log("onsubmit :>> ");
       refErr.value.email = [];
       refErr.value.code = [];
-      refErr.value = validate(
-        toRaw(formData),
-        [
-          {
-            key: "code",
-            clan: "required",
-            msg: "必填",
-            required: true,
-          },
-          {
-            key: "code",
-            clan: "pattern",
-            msg: "长度错误",
-            pattern: /^(.{6})$/,
-          },
-        ],
-        true
-      );
+      refErr.value = validate(formData.value, codeRules);
       // has Error message
       if (!errorFree(refErr.value)) {
         console.log("refErr.value.code :>> ", refErr.value.code);
         return;
       } else {
-        console.log("formData.code :>> ", formData.code);
-        if (formData.code === "123456") {
+        console.log("formData.code :>> ", formData.value.code);
+        if (formData.value.code === "123456") {
           console.log("trick :>> ");
           jwt.value = "testjwt";
           refreshMe()
@@ -132,13 +99,13 @@ export const SignIn = defineComponent({
           refIsSend.value = false;
           return;
         }
-        const whenCodeResponseError = (e: AxiosError<{ errors: string[] }>) => {
+        const whenCodeResponseError = (e: AxiosError<OnAxiosError>) => {
           if (e.response?.status === 422) {
             // 绕过前端从接口发送才可能发生
-            refErr.value.email = e.response.data.errors;
+            refErr.value.email = [e.response.data.error_message];
             alert("Email格式错误!"); // TODO: dialog
           } else {
-            console.error("Error: " + e.response?.data.errors);
+            console.error("Error: " + e.response?.data.error_message);
           }
           refIsSend.value = false;
         };
@@ -146,10 +113,10 @@ export const SignIn = defineComponent({
         refIsSend.value = true;
 
         await httpClient
-          .post<JWTResponse>("/session", toRaw(formData), {
+          .post<JWTResponse>("/session", formData.value, {
             _loading: true,
           })
-          .then((response) => {
+          .then(async (response) => {
             console.log("response :>> ", response);
             console.log("response JWT :>> ", response.data);
             jwt.value = response.data.jwt;
@@ -158,14 +125,14 @@ export const SignIn = defineComponent({
             // );
             // const returnTo = route.query["return_to"]?.toString();
             // console.log("returnTo :>> ", returnTo);
-            refreshMe();
+            await refreshMe();
             // const returnTo = sessionStorage.getItem("returnTo");
             router.push(returnTo.value);
           })
           .catch(whenCodeResponseError);
       }
     };
-    const hasCode6 = computed(() => formData.code.length === 6);
+    const hasCode6 = computed(() => formData.value.code.length === 6);
     const disableSentLogin = computed(
       () => !(hasCode6.value && refIsSend.value)
     );
@@ -185,11 +152,11 @@ export const SignIn = defineComponent({
           <Form onSubmit={onSubmitFormData}>
             <FormItem
               label="邮箱"
-              modelValue={formData.email}
+              modelValue={formData.value.email}
               errData={refErr.value.email?.[0] ?? ""}
               clan="email"
               onUpdate:modelValue={(email: string) => {
-                formData.email = email;
+                formData.value.email = email;
               }}
               placeholder={"请输入邮箱,获取验证码"}
             ></FormItem>
@@ -199,10 +166,10 @@ export const SignIn = defineComponent({
               errData={refErr.value.code?.[0] ?? ""}
               clan="smsCaptcha"
               onToggle={clickSendCode}
-              modelValue={formData.code}
+              modelValue={formData.value.code}
               onUpdate:modelValue={(code: string) => {
                 console.log("code :>> ", code);
-                formData.code = code;
+                formData.value.code = code;
               }}
               placeholder={"请输入六位数字"}
               countFrom={3}

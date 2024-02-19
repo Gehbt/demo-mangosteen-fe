@@ -2,18 +2,19 @@ import type { Mock } from "Mock-Type";
 import { fakerZH_CN } from "@faker-js/faker";
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { mkPager } from "./mockTag.ts";
-export const mockItemCreate: Mock<ItemUserType> = (
-  config: AxiosRequestConfig<ItemUserType>
+export const mockItemCreate: Mock<IItemUser> = (
+  config: AxiosRequestConfig<IItemUser>
 ) => {
+  // TODO: 修改这个类型转换
   // axios post方法 的AxiosRequestConfig的data是序列化的ItemType
-  const json = JSON.parse(config.data as unknown as string) as ItemUserType;
+  const json = JSON.parse(config.data as unknown as string) as IItemUser;
   console.log("json :>> ", config);
   if (!json) {
     throw {
       response: { data: { error_message: "无数据" }, status: 500 },
     } as AxiosError<OnAxiosError>;
-  } else if (!json.tags_id || json.tags_id[0] === -1) {
-    console.log("json.tags_id :>> ", json.tags_id);
+  } else if (!json.tag_ids || json.tag_ids[0] === -1) {
+    console.log("json.tag_ids :>> ", json.tag_ids);
     // 无id
     throw {
       response: { data: { error_message: "未选择tag的id" }, status: 422 },
@@ -30,14 +31,14 @@ export const mockItemCreate: Mock<ItemUserType> = (
       user_id: fakerZH_CN.number.int(),
       amount: window.parseInt(fakerZH_CN.finance.amount()),
       note: null,
-      tags_id: json.tags_id,
+      tag_ids: json.tag_ids,
       happen_at: fakerZH_CN.date.anytime(),
       // updated_at: fakerZH_CN.date.anytime(),/* useleess */
       // created_at: fakerZH_CN.date.anytime(),/* useleess */
       kind: json.kind,
     },
     status: 200,
-  } as AxiosResponse<ItemUserType>;
+  } as AxiosResponse<IItemUser>;
 };
 function mkItem(
   ctxId: number = 0,

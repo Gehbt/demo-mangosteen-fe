@@ -8,8 +8,8 @@ const mkTag: <T extends TagKindType>(
   n: number,
   kind: T,
   attr?: Record<string, any>
-) => TagType[] = (ctxId = 0, n = 1, kind, attrs) =>
-  Array.from<TagType>({ length: n }).map((_, index) => ({
+) => ITag[] = (ctxId = 0, n = 1, kind, attrs) =>
+  Array.from<ITag>({ length: n }).map((_, index) => ({
     id: index + ctxId + OFFSET,
     name: fakerZH_CN.commerce.product(),
     sign: fakerZH_CN.internet.emoji(),
@@ -38,7 +38,7 @@ export const mkPager = (ownedTagNumber: number) => {
     },
   };
 };
-export const mockTagIndex: Mock<Resources<TagType>> = (
+export const mockTagIndex: Mock<Resources<ITag>> = (
   config: AxiosRequestConfig
 ) => {
   // console.log("mockTagIndex.config :>> ", config);
@@ -59,10 +59,10 @@ export const mockTagIndex: Mock<Resources<TagType>> = (
       pager,
     },
     status: 200,
-  } as AxiosResponse<Resources<TagType>>;
+  } as AxiosResponse<Resources<ITag>>;
 };
 // TODO: return None
-export const mockTagCreate: Mock<Resource<TagType>> = (config) => {
+export const mockTagCreate: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config.data);
   const { kind, name, sign } = config.data as {
     // todo: type define
@@ -83,10 +83,10 @@ export const mockTagCreate: Mock<Resource<TagType>> = (config) => {
       },
     },
     status: 200,
-  } as AxiosResponse<Resource<TagType>>;
+  } as AxiosResponse<Resource<ITag>>;
 };
 
-export const mockTagQuery: Mock<Resource<TagType>> = (config) => {
+export const mockTagQuery: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config);
   const { kind, id } = config.params as {
     kind: TagKindType;
@@ -105,10 +105,10 @@ export const mockTagQuery: Mock<Resource<TagType>> = (config) => {
       },
     },
     status: 200,
-  } as AxiosResponse<Resource<TagType>>;
+  } as AxiosResponse<Resource<ITag>>;
 };
 // TODO: return None
-export const mockTagEdit: Mock<Resource<TagType>> = (config) => {
+export const mockTagEdit: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config);
   const { kind, id } = config.params as {
     kind: TagKindType;
@@ -127,7 +127,7 @@ export const mockTagEdit: Mock<Resource<TagType>> = (config) => {
       },
     },
     status: 200,
-  } as AxiosResponse<Resource<TagType>>;
+  } as AxiosResponse<Resource<ITag>>;
 };
 // just mock
 export const mockTagDelete: Mock<null> = (config) => {

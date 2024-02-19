@@ -4,20 +4,27 @@ interface FormDataType {
 interface RuleTypeBase<K extends Record<string, unknown>> {
   key: keyof K;
   msg: string;
-  clan: keyof RuleOptionType;
+  clan: keyof RuleOption;
 }
-interface RuleOptionType {
-  required: boolean;
+interface PatternOption {
   pattern: RegExp;
+  reversePattern?: true;
 }
-type RuleOptions = keyof RuleOptionType;
+interface RequiredOption {
+  required: boolean;
+}
+// 定义所以类型的
+type RuleOption = {
+  pattern: PatternOption;
+  required: RequiredOption;
+};
+
+type RuleOptions = keyof RuleOption;
 type RuleType<
   K extends Record<string, unknown>,
-  T extends RuleOptions = RuleOptions
-> = T extends RuleOptions
-  ? Omit<RuleTypeBase<K>, "clan"> & { clan: T } & {
-      [k in T]: RuleOptionType[T];
-    }
+  Rule extends RuleOptions = RuleOptions
+> = Rule extends RuleOptions
+  ? Omit<RuleTypeBase<K>, "clan"> & { clan: Rule } & RuleOption[Rule]
   : never;
 
 // 多个rule
@@ -31,9 +38,14 @@ export type InvalidateError<T> = {
 export function validate<T extends FormDataType>(
   formData: T,
   rules: RulesType<T>,
-  reversePattern: boolean = false
+  config?: {
+    // TODO?: extends
+    // reversePattern?: boolean;
+  }
 ): InvalidateError<T> {
   const errors: InvalidateError<T> = {};
+  // const reversePattern = config?.reversePattern ?? false;
+
   rules.map((rule) => {
     const { key, msg, clan } = rule;
     const value = formData[key];
@@ -45,20 +57,25 @@ export function validate<T extends FormDataType>(
         }
         break;
       case "pattern":
-        if ((value && rule.pattern.test(value.toString())) !== reversePattern) {
+        // * 匹配成功表示错误
+        if (
+          (value && rule.pattern.test(value.toString())) !==
+          !!rule.reversePattern
+        ) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(msg);
         }
         break;
       default:
+        const _: never = clan;
         throw new Error("Invalid clan");
     }
   });
   return errors;
 }
-export function errorFree(errors: Record<string, string[]>) {
+export function errorFree(errors: Record<string, string[] | undefined>) {
   return (
     // 一旦errArr存在则返回false
-    !Object.values(errors).some((errArr) => errArr.length > 0)
+    !Object.values(errors).some((errArr) => errArr && errArr.length > 0)
   );
 }

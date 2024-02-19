@@ -11,7 +11,7 @@ export const InputPad = defineComponent({
       default: ["2015", "01", "01"] as [string, string, string],
     },
     inputAmount: string().def("0"),
-    handleSubmit: func<() => void>().isRequired,
+    handleSubmit: func<(e: Event) => void>().isRequired,
   },
   emits: ["update:inputAmount", "update:inputDate"],
   setup(props, context) {
@@ -135,8 +135,8 @@ export const InputPad = defineComponent({
       },
       {
         text: "记帐",
-        onClick: () => {
-          props.handleSubmit();
+        onClick: (e: Event) => {
+          props.handleSubmit(e);
           refNumberWithDot.value = false;
           dotNumber.value = 0;
         },

@@ -9,6 +9,7 @@
     "build": "vue-tsc --noEmit --skipLibCheck && vite build",
     "preview": "vite preview",
     "prepare": "pnpm gen-svg-map",
+    "gen-exp-index": "tsx src/scripts/gen-export-index.ts",
     "gen-svg-map": "pnpm run svgo && tsx src/batch/gen-svg-map.ts",
     "svgo": "svgo -f ./src/assets/icons -o ./src/assets/icons/filter --config=./svgo.config.cjs",
     "svgo-color": "svgo -f ./src/assets/icons -o ./src/assets/icons/filter"

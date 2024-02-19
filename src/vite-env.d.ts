@@ -18,8 +18,14 @@ type JSONValue =
 
 type TagKindType = "expenses" | "income";
 type DateScope = "month" | "last_month" | "year" | "custom";
-interface TagType<T extends TagKindType = TagKindType> extends TimeCUD {
+interface ITag<T extends TagKindType = TagKindType> extends TimeCUD {
   id: number;
+  name: string;
+  sign: string;
+  kind: T;
+}
+interface ITagQuery<T extends TagKindType = TagKindType> {
+  [k: string];
   name: string;
   sign: string;
   kind: T;
@@ -33,17 +39,29 @@ interface Resources<T extends unknown> {
   };
 }
 
-interface ItemUserType extends ItemType {
+interface IItemUser extends ItemType {
   user_id: number;
-  tags_id: number[];
+  tag_ids: number[];
   note?: null;
 }
 
 // 这里的 ItemType 是错误的设计,实际上 item 应该拥有一个Tags[] 成员(一般长度为1)存储tag的内容而不是继承, 并且amount应该分开展示
-interface ItemType extends TagType {
+interface ItemType extends ITag {
   /** **单位为分** 为 *100 了的金额 */
   amount: number;
   happen_at: Date | string | null; // read
+}
+interface IItemQuery {
+  [k: string];
+  kind: TagKindType;
+  tag_ids: string; // Array<number>.stringify
+  happen_at: string | null; // Date.toISOString
+  amount: number;
+}
+interface ISignInQuery {
+  [k: string];
+  email: string;
+  code: string;
 }
 interface Resource<T> {
   resource: T;
@@ -57,7 +75,6 @@ interface TimeCUD {
 type OnAxiosError = {
   error_message: string;
 };
-
 type JWTResponse = { jwt: string };
 
 // interface AmountType {
