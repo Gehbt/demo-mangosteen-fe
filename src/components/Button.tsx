@@ -1,4 +1,3 @@
-import { type PropType, defineComponent } from "vue";
 import s from "./Button.module.scss";
 // interface ButtonProps {
 //   onClick?: (e: MouseEvent | TouchEvent) => void;

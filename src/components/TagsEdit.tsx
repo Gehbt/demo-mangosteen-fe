@@ -1,4 +1,3 @@
-import { type Ref, defineComponent, ref, toRaw } from "vue";
 import s from "./TagsEdit.module.scss";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "./Button";
@@ -12,6 +11,7 @@ import { Form, FormItem } from "./Form";
 import { showConfirmDialog, showDialog } from "vant";
 import { httpClient } from "@/shared";
 import { AxiosError } from "axios";
+import { tagRules } from "@/static";
 
 export const TagsEdit = defineComponent({
   name: "TagsEdit",
@@ -114,7 +114,7 @@ export const TagsCreate = defineComponent({
       return;
     }
 
-    const formData = ref({
+    const formData = ref<ITagQuery>({
       kind: kind.value,
       name: "",
       sign: "",
@@ -146,49 +146,23 @@ export const TagsForm = defineComponent({
   name: "TagForm",
   props: {
     id: number(),
-    formData: object<{
-      kind: TagKindType;
-      name: string;
-      sign: string;
-    }>().isRequired,
+    formData: object<ITagQuery>().isRequired,
   },
   setup(props, context) {
     const router = useRouter();
     const kind = useRouteQuery<TagKindType>("kind");
     // todo: 向上传递
     const formData = useVModel(props, "formData", context.emit);
-    const errData: Ref<InvalidateError<typeof formData.value>> = ref({}); // : { name: string; msg: string }[];
+    const errData: Ref<InvalidateError<ITagQuery>> = ref({
+      kind: [],
+      name: [],
+      sign: [],
+    }); // : { name: string; msg: string }[];
     const onSubmit = async (e: Event) => {
-      const rules: RulesType<typeof formData.value> = [
-        {
-          clan: "required",
-          key: "name",
-          msg: "标签名必填",
-          required: true,
-        },
-        {
-          clan: "required",
-          key: "sign",
-          msg: "标签必填",
-          required: true,
-        },
-        {
-          clan: "pattern",
-          key: "name",
-          msg: "标签名太长",
-          pattern: /^.{20,100}$/,
-        },
-        {
-          clan: "pattern",
-          key: "name",
-          msg: "标签名太短",
-          pattern: /^.{1,3}$/,
-        },
-      ];
-      errData.value = validate(formData.value, rules);
+      errData.value = validate(formData.value, tagRules);
       e.preventDefault();
       if (!errorFree(errData.value)) {
-        console.log("errData.value :>> ", toRaw(errData.value));
+        console.log("errData.value :>> ", errData.value);
         return;
       } else if (props.id) {
         const response = await httpClient
@@ -231,7 +205,7 @@ export const TagsForm = defineComponent({
       if (!Number.isSafeInteger(props.id)) {
         return;
       }
-      const response = await httpClient.get<Resource<TagType>>(
+      const response = await httpClient.get<Resource<ITag>>(
         `/tags/${props.id}?kind=${kind.value}`,
         {
           id: props.id,

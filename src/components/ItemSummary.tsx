@@ -1,4 +1,3 @@
-import { defineComponent, type PropType } from "vue";
 import s from "./ItemSummary.module.scss";
 import { Floatbutton } from "./Button";
 import { httpClient } from "@/shared";

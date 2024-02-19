@@ -1,4 +1,3 @@
-import { defineComponent } from "vue";
 import { ChartsControl } from "@/components/statistics/Charts";
 import { TabsTimeLayout, lessRenderSymbol } from "@/layouts/TabsTimeLayout";
 import type { HeadType } from "DefineHeadType";

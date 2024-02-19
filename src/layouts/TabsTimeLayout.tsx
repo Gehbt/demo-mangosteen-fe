@@ -1,4 +1,3 @@
-import { defineComponent, ref } from "vue";
 import { MainLayout } from "@/layouts/MainLayout";
 import s from "./TabsTimeLayout.module.scss";
 import { type ITime, Time } from "@/composables";

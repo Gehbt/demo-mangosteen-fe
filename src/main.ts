@@ -1,4 +1,3 @@
-import { createApp } from "vue";
 import { App } from "./App";
 import "./App.scss";
 import { createRouter } from "vue-router";

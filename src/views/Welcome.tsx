@@ -1,4 +1,4 @@
-import { Transition, type VNode, defineComponent, ref, watchEffect } from "vue";
+import { Transition } from "vue";
 import { RouterView } from "vue-router/auto";
 import s from "./Welcome.module.scss";
 import type { RouteLocationNormalizedLoaded } from "vue-router";

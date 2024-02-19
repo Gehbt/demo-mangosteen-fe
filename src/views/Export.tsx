@@ -1,4 +1,3 @@
-import { defineComponent } from "vue";
 import s from "./Export.module.scss";
 import { ComingSoon } from "@/components/ComingSoon";
 export const Export = defineComponent({

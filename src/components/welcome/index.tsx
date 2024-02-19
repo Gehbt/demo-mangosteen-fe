@@ -1,4 +1,3 @@
-import { defineComponent } from "vue";
 import s from "./index.module.scss";
 import { RouterLink } from "vue-router";
 

@@ -1,4 +1,3 @@
-import { type PropType, computed, defineComponent, ref } from "vue";
 import s from "./InputPad.module.scss";
 import { DatePicker, Popup } from "vant";
 import { useSL } from "@/composables/save_load";
@@ -6,10 +5,11 @@ import { useSL } from "@/composables/save_load";
 export const InputPad = defineComponent({
   name: "InputPad",
   props: {
-    inputDate: {
-      type: Object as PropType<[string, string, string]>,
-      default: ["2015", "01", "01"] as [string, string, string],
-    },
+    inputDate: object<[string, string, string]>().def(["2015", "01", "01"]),
+    // {
+    //   type: Object as PropType<[string, string, string]>,
+    //   default: ["2015", "01", "01"] as [string, string, string],
+    // },
     inputAmount: string().def("0"),
     handleSubmit: func<(e: Event) => void>().isRequired,
   },

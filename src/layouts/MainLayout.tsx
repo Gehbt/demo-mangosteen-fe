@@ -1,4 +1,3 @@
-import { PropType, defineComponent } from "vue";
 import { Navbar } from "@/components/Navbar";
 import s from "./MainLayout.module.scss";
 export const MainLayout = defineComponent({

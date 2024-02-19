@@ -1,4 +1,3 @@
-import { defineComponent, ref } from "vue";
 import s from "./Overlay.module.scss";
 import { RouterLink } from "vue-router/auto";
 import { fetchMe, httpClient } from "@/shared";

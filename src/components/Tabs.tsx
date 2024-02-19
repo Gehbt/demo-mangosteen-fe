@@ -1,4 +1,3 @@
-import { defineComponent } from "vue";
 import { i18nT } from "@/shared/i18n-simple";
 import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({

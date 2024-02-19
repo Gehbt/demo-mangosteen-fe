@@ -1,4 +1,3 @@
-import { defineComponent, type DefineComponent } from "vue";
 import { Center } from "./Center";
 import s from "./ComingSoon.module.scss";
 import { Button } from "./Button";

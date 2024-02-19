@@ -1,4 +1,3 @@
-import { defineComponent } from "vue";
 import s from "./Center.module.scss";
 
 export const Center = defineComponent({

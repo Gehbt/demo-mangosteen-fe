@@ -1,4 +1,3 @@
-import { defineComponent, onMounted, ref } from "vue";
 import s from "./Charts.module.scss";
 import * as echarts from "echarts";
 import { Time } from "@/composables";
