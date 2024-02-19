@@ -2,7 +2,7 @@ import s from "./Overlay.module.scss";
 import { RouterLink } from "vue-router/auto";
 import { fetchMe, httpClient } from "@/shared";
 import type { AxiosError, AxiosResponse } from "axios";
-import { showConfirmDialog } from "vant";
+import { showConfirmDialog, showDialog } from "vant";
 export const Overlay = defineComponent({
   name: "Overlay",
   props: {

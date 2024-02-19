@@ -17,7 +17,6 @@ export const itemsRules: RulesType<IItemQuery> = [
   {
     clan: "pattern",
     key: "amount",
-    reversePattern: true,
     pattern: /^0$/,
     msg: "金额数值不能为0",
   },

@@ -17,6 +17,7 @@ import {
 import { AxiosError } from "axios";
 import { showDialog } from "vant";
 import type { HeadType } from "DefineHeadType";
+import { itemsRules } from "@/static";
 // import type { HeadType } from "DefineHeadType";
 
 export const ItemsList = defineComponent({
@@ -56,49 +57,7 @@ function useTags() {
     refIncomeTags,
   };
 }
-const rules: RulesType<IItemQuery> = [
-  {
-    clan: "required",
-    key: "amount",
-    required: true,
-    msg: "金额必须填写",
-  },
-  {
-    clan: "required",
-    key: "happen_at",
-    required: true,
-    msg: "时间必须填写",
-  },
-  { clan: "required", key: "tag_ids", required: true, msg: "tag_ids必须填写" },
-  {
-    clan: "pattern",
-    key: "amount",
-    reversePattern: true,
-    pattern: /^0$/,
-    msg: "金额数值不能为0",
-  },
-  {
-    clan: "pattern",
-    key: "amount",
-    reversePattern: true,
-    pattern: /^-?\d{1,10}(\.\d{1,2})?$/,
-    msg: "金额数值错误",
-  },
-  {
-    clan: "pattern",
-    key: "kind",
-    msg: "错误的金额种类",
-    pattern: /^expenses|income$/,
-    reversePattern: true,
-  },
-  {
-    clan: "pattern",
-    key: "tag_ids",
-    pattern: /\[\d+(,\s*\d+)*\]/,
-    msg: "错误的标签id",
-    reversePattern: true,
-  },
-];
+
 export const ItemsCreate = defineComponent({
   name: "ItemsCreate",
   head: {
@@ -189,7 +148,7 @@ export const ItemsCreate = defineComponent({
         kind: refSelectedTab.value,
         tag_ids: JSON.stringify([TagIdMap[refSelectedTab.value].value]),
         happen_at: new Date(refDate.value.join("-")).toISOString(),
-        amount: amountFloat.value,
+        amount: amountFloat.value.toString(),
       }));
       const errData: Ref<InvalidateError<IItemQuery>> = ref({
         amount: [],
@@ -198,14 +157,18 @@ export const ItemsCreate = defineComponent({
         tag_ids: [],
       });
 
-      errData.value = validate(formData.value, rules);
+      errData.value = validate(formData.value, itemsRules);
       // DO vaildate
       if (!errorFree(errData.value)) {
+        console.log("formData.value :>> ", formData.value);
+        console.log("errData.value :>> ", errData.value);
+        Reflect.ownKeys({ "123": 1 });
+        showDialog({ message: Object.values(errData.value).join("\n") });
         return;
       }
       e.preventDefault();
       await httpClient
-        .post<Resource<IItemUser>>("/items", formData, {
+        .post<Resource<IItemUser>>("/items", formData.value, {
           _mock: "itemCreate",
           _loading: true,
         })

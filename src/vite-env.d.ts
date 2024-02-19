@@ -56,7 +56,7 @@ interface IItemQuery {
   kind: TagKindType;
   tag_ids: string; // Array<number>.stringify
   happen_at: string | null; // Date.toISOString
-  amount: number;
+  amount: string;
 }
 interface ISignInQuery {
   [k: string];

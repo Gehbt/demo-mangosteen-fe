@@ -9,12 +9,21 @@ import {
   type RulesType,
 } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
-import { refreshMe } from "@/shared/me";
+import { fetchMe, refreshMe } from "@/shared";
 import { AxiosError } from "axios";
 import { emailRules, codeRules } from "@/static";
+import { showDialog } from "vant";
 
 export const SignIn = defineComponent({
   name: "SignIn",
+  beforeRouteEnter: async () => {
+    console.log("enter :>> signin");
+    const router = useRouter();
+    await fetchMe().catch(() => {});
+    showDialog({ message: "已登录" }).finally(() => {
+      router.back();
+    });
+  },
   setup(props, context) {
     const formData = ref({ email: "", code: "" });
     const refErr: Ref<InvalidateError<typeof formData.value>> = ref({});
