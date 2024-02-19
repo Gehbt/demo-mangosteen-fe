@@ -11,6 +11,7 @@ export const Overlay = defineComponent({
     parentPath: string().isRequired,
   },
   setup(props, context) {
+    const route = useRoute();
     const router = useRouter();
     // *使用 SessionStorage 是方便开发实际上应该使用 LocalStorage
     const jwt = useLocalStorage<string | null>("jwt", null);
@@ -74,6 +75,12 @@ export const Overlay = defineComponent({
               <RouterLink to="/export" class={s.action}>
                 <svg-icon class={s.icon} name={svgs.export}></svg-icon>
                 导出数据
+              </RouterLink>
+            </li>
+            <li class={s.last} v-if={route.fullPath !== "/start"}>
+              <RouterLink to="/" class={s.action}>
+                <svg-icon class={s.icon} name={svgs.back2}></svg-icon>
+                返回首页
               </RouterLink>
             </li>
           </ul>

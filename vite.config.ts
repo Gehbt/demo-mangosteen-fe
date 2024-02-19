@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import { resolve } from "path";
+import { dirname, resolve } from "path";
 import Inspect from "vite-plugin-inspect";
 import VueDevTools from "vite-plugin-vue-devtools";
 import AutoImport from "unplugin-auto-import/vite";
@@ -11,6 +11,7 @@ import VueRouter from "unplugin-vue-router/vite";
 import vueMacros from "unplugin-vue-macros/vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import Components from "unplugin-vue-components/vite";
+import { fileURLToPath } from "url";
 
 const pathResolve = (dir: string): string => {
   return resolve(__dirname, ".", dir);
@@ -23,13 +24,15 @@ const alias: Record<string, string> = {
   "@type_svg_map": pathResolve("./src/assets/jsons/type_svg_map.ts"),
   "@emoji_list": pathResolve("./src/assets/jsons/emoji_list.ts"),
 };
-const env = loadEnv("dev", process.cwd(), "LOCAL_");
+const dir = dirname(fileURLToPath(import.meta.url));
+
+const env = loadEnv("dev", dir, "LOCAL_");
 // https://vitejs.dev/config/
 export default defineConfig({
   // base:"/mangosteen-fe/dist/", // build path in github
   plugins: [
     createSvgIconsPlugin({
-      iconDirs: [resolve(process.cwd()), "src/assets/icons/filter"],
+      iconDirs: [dir, "src/assets/icons/filter"],
       symbolId: "icon-[dir]-[name]",
     }),
     VueRouter({

@@ -43,6 +43,11 @@
     > li {
       list-style-type: none;
     }
+    > li.last {
+      width: 100%;
+      bottom: 0;
+      position: absolute;
+    }
   }
   > .icon {
     margin-right: 12px;

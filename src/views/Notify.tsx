@@ -4,6 +4,6 @@ import { ComingSoon } from "@/components/ComingSoon";
 export const Notify = defineComponent({
   name: "Notify",
   setup(props, context) {
-    return () => <ComingSoon />;
+    return () => <ComingSoon name="记账提醒" />;
   },
 });
