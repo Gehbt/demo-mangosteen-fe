@@ -6,9 +6,6 @@ export const Form = defineComponent({
   name: "Form",
   props: {
     onSubmit: func<(e: Event) => void>().isRequired,
-    // {
-    //   type: Function as PropType<(e: Event) => void>,
-    // },
   },
   setup(props, context) {
     return () => (
@@ -22,43 +19,14 @@ export const FormItem = defineComponent({
   name: "FormItem",
   props: {
     modelValue: string().def(""),
-    // {
-    //   type: String as PropType<string>,
-    //   required: true,
-    // },
-    errData: {
-      type: String as PropType<string | undefined>,
-      required: true,
-    },
+    errData: string<string>(),
     label: string(),
-    // {
-    //   type: String as PropType<string>,
-    //   required: false,
-    // },
     clan: string<
       "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
     >().def("input"),
-    // {
-    //   type: String as PropType<
-    //     "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
-    //   >,
-    //   default: "input",
-    //   required: true,
-    // },
     placeholder: string(),
-    // {
-    //   type: String,
-    // },
     onToggle: func<(e?: Event) => Promise<any>>(),
-    // {
-    //   type: Function as PropType<(e?: Event) => Promise<any>>,
-    // },
     countFrom: number().def(60),
-    // {
-    //   type: Number,
-    //   default: 60,
-    //   required: false,
-    // },
   },
   emits: ["update:modelValue", "update:errData"],
   setup(props, context) {

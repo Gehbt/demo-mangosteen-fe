@@ -4,20 +4,8 @@ export const MainLayout = defineComponent({
   name: "MainLayout",
   props: {
     title: string().isRequired,
-    // {
-    //   type: String,
-    //   required: true,
-    // },
     icon: string().isRequired,
-    // {
-    //   type: String,
-    //   required: true,
-    // },
     toggle: func<() => void>(),
-    // {
-    //   type: Function as PropType<() => void>,
-    //   required: false,
-    // },
   },
   setup(props, context) {
     return () => (

@@ -6,8 +6,8 @@ import s from "./Button.module.scss";
 export const Button = defineComponent({
   // inheritAttrs: false,
   props: {
-    onClick: Function as PropType<JSX.IntrinsicElements["button"]["onClick"]>,
-    class: [String, Array] as PropType<string | string[]>,
+    onClick: any<JSX.IntrinsicElements["button"]["onClick"]>(),
+    class: any<string | string[]>(),
     level: string<"primary" | "default" | "danger">().def("default"),
     clan: string<"button" | "submit" | "reset">().def("button"),
     disableByCtx: bool().def(false),
@@ -58,10 +58,6 @@ export const Floatbutton = defineComponent({
   props: {
     iconName: string().def(svgs.round_add),
     onClick: func<(e: MouseEvent | TouchEvent) => void>(),
-    // {
-    //   type: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
-    //   required: false,
-    // },
   },
   setup(props) {
     return () => (

@@ -68,9 +68,6 @@ export const Tab = defineComponent({
   name: "Tab",
   props: {
     name: string<TagKindType | DateScope>(),
-    // {
-    //   type: String as PropType<ItemsCreateName | ItemsListName>,
-    // },
   },
   setup(props, context) {
     return () => <div>{context.slots.default?.()}</div>;

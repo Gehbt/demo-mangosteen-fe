@@ -141,10 +141,7 @@ const ItemSummaryTab = defineComponent({
 const ItemSummaryItem = defineComponent({
   name: "ItemSummaryItem",
   props: {
-    summaryItems: {
-      type: Object as PropType<Ref<ItemType[]>>,
-      required: true,
-    },
+    summaryItems: object<Ref<ItemType[]>>().isRequired,
     doFetch: func<() => Promise<void>>().isRequired,
   },
   emits: ["update:summaryItems"],
