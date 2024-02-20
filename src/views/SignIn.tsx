@@ -11,19 +11,20 @@ import { httpClient } from "@/shared/http";
 import { AxiosError } from "axios";
 import { emailRules, codeRules } from "@/static";
 import { showDialog } from "vant";
-// import { fetchMe, refreshMe } from "@/shared";
-import { useMeStore } from "@/stores";
+import { fetchMe } from "@/composables";
 
 export const SignIn = defineComponent({
   name: "SignIn",
   beforeRouteEnter: async () => {
-    const meStore = useMeStore();
     const router = useRouter();
-
+    // const returnTo = useRouteQuery("return_to", "/start", { mode: "push" });
     try {
-      await meStore.fetchMe;
+      const me = await fetchMe();
+      if (!me) {
+        throw new Error("no login");
+      }
       showDialog({ message: "已登录" }).finally(() => {
-        router.back();
+        router.push("/start");
       });
     } catch (e) {
       console.log("e :>> ", e);
@@ -31,8 +32,7 @@ export const SignIn = defineComponent({
   },
   setup(props, context) {
     const router = useRouter();
-    const meStore = useMeStore();
-    const formData = ref({ email: "", code: "" });
+    const formData = ref<SignInQueryType>({ email: "", code: "" });
     const refErr: Ref<InvalidateError<typeof formData.value>> = ref({});
     const refIsSend = ref(false);
     const jwt = useLocalStorage("jwt", "");
@@ -66,7 +66,7 @@ export const SignIn = defineComponent({
           return;
         } else {
           await httpClient
-            .post<null>(
+            .post(
               "/sendmail",
               {
                 email: email.value,
@@ -97,8 +97,8 @@ export const SignIn = defineComponent({
         if (formData.value.code === "123456") {
           console.log("trick :>> ");
           jwt.value = "testjwt";
-          meStore.refreshMe
-            .then(
+          fetchMe()
+            ?.then(
               () => {
                 router.push(returnTo.value);
               },
@@ -135,13 +135,6 @@ export const SignIn = defineComponent({
             console.log("response :>> ", response);
             console.log("response JWT :>> ", response.data);
             jwt.value = response.data.jwt;
-            // router.push(
-            //   "/sign_in?return_to=" + encodeURIComponent(route.fullPath)
-            // );
-            // const returnTo = route.query["return_to"]?.toString();
-            // console.log("returnTo :>> ", returnTo);
-            // await meStore.fetchMe;
-            // const returnTo = sessionStorage.getItem("returnTo");
             router.push(returnTo.value);
           })
           .catch(whenCodeResponseError);

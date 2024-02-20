@@ -1,9 +1,8 @@
 import s from "./Overlay.module.scss";
 import { RouterLink } from "vue-router/auto";
 import { httpClient } from "@/shared";
-import type { AxiosError } from "axios";
 import { showConfirmDialog } from "vant";
-import { useMeStore } from "@/stores";
+import { fetchMe } from "@/composables";
 
 export const Overlay = defineComponent({
   name: "Overlay",
@@ -14,7 +13,6 @@ export const Overlay = defineComponent({
   setup(props, context) {
     const route = useRoute();
     const router = useRouter();
-    const meStore = useMeStore();
     // *使用 SessionStorage 是方便开发实际上应该使用 LocalStorage
     const jwt = useLocalStorage<string | null>("jwt", null);
     const me = useSessionStorage<UserType | null>("me", null, {
@@ -32,17 +30,31 @@ export const Overlay = defineComponent({
       console.log("overlay onMounted :>> ");
       if (!me.value) {
         console.log("do fetchMe :>> ");
-        me.value = await meStore.fetchMe.catch((err: AxiosError) => {
-          console.log("fetchMe err :>> ", err);
-          return null;
-        });
+        try {
+          me.value = await fetchMe();
+          if (!me.value) {
+            throw new Error("no login");
+          }
+          console.log("me :>> ", me.value);
+        } catch (e) {
+          console.log("fetchMe err :>> ", e);
+          console.log("route.fullPath :>> ", route.fullPath);
+          // router.push(`/sign_in?return_to=${route.fullPath}`);
+        }
       }
     });
     const handleLogout = async () => {
-      await httpClient.head<JWTResponseType>("/logout").then((response) => {
-        // 接收过期的token
-        jwt.value = response.data.jwt;
-      });
+      try {
+        await httpClient.head<JWTResponseType>("/logout").then((response) => {
+          // 接收过期的token
+          console.log("new :>> jwt", response.data.jwt);
+          jwt.value = response.data.jwt;
+          router.push("/start");
+        });
+        // await refreshMe();
+      } catch (e) {
+        console.log("e :>> ", e);
+      }
     };
     return () => (
       <div class={s.overlay}>
@@ -79,7 +91,10 @@ export const Overlay = defineComponent({
                 导出数据
               </RouterLink>
             </li>
-            <li class={s.last} v-if={route.fullPath !== "/start"}>
+            <li
+              class={s.last}
+              v-if={!["/start", "/items"].includes(props.parentPath)}
+            >
               <RouterLink to="/" class={s.action}>
                 <svg-icon class={s.icon} name={svgs.back2}></svg-icon>
                 返回首页
@@ -94,8 +109,7 @@ export const Overlay = defineComponent({
 export const MeCard = defineComponent({
   name: "MeCard",
   props: {
-    meData: object<{ email: string; user_id: number; name: string }>()
-      .isRequired,
+    meData: object<UserType>().isRequired,
   },
   emits: ["signout"],
   setup(props, context) {
@@ -149,31 +163,31 @@ export const OverlayMask = defineComponent({
   },
 });
 
-export const OverlayIcon = defineComponent({
-  name: "OverlayIcon",
-  setup(props, context) {
-    const overlayVisibleRef = ref(false);
-    const toggleOverlay = () => {
-      overlayVisibleRef.value = true;
-    };
-    const blurOverlay = () => {
-      overlayVisibleRef.value = false;
-      console.log("blurOverlay :>> ", overlayVisibleRef.value);
-    };
-    return () => (
-      <>
-        <div onClick={toggleOverlay}>
-          <svg-icon name={svgs.menu} />
-        </div>
-        <div
-          style={{
-            visibility: overlayVisibleRef.value ? "visible" : "hidden",
-          }}
-        >
-          <Overlay parentPath="/start" />
-          <OverlayMask onBlurOverlay={blurOverlay} />
-        </div>
-      </>
-    );
-  },
-});
+// export const OverlayIcon = defineComponent({
+//   name: "OverlayIcon",
+//   setup(props, context) {
+//     const overlayVisibleRef = ref(false);
+//     const toggleOverlay = () => {
+//       overlayVisibleRef.value = true;
+//     };
+//     const blurOverlay = () => {
+//       overlayVisibleRef.value = false;
+//       console.log("blurOverlay :>> ", overlayVisibleRef.value);
+//     };
+//     return () => (
+//       <>
+//         <div onClick={toggleOverlay}>
+//           <svg-icon name={svgs.menu} />
+//         </div>
+//         <div
+//           style={{
+//             visibility: overlayVisibleRef.value ? "visible" : "hidden",
+//           }}
+//         >
+//           <Overlay parentPath="/start" />
+//           <OverlayMask onBlurOverlay={blurOverlay} />
+//         </div>
+//       </>
+//     );
+//   },
+// });
