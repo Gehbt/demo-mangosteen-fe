@@ -2,6 +2,7 @@ import s from "./ItemSummary.module.scss";
 import { Floatbutton } from "./Button";
 import { httpClient } from "@/shared";
 import { Time } from "@/composables";
+import { useItemDataStore } from "@/stores/item";
 export type ItemSummaryType = typeof ItemSummary;
 export const amountToPrice = (amount: number) => (amount / 100).toFixed(2);
 export const ItemSummary = defineComponent({
@@ -13,92 +14,38 @@ export const ItemSummary = defineComponent({
   setup: (props, context) => {
     const router = useRouter();
     // ?TODO: 'custom' call fetch, forget storage, maybe need refact add metadata
-    const itemData = useSessionStorage<ItemType[]>(
-      `item_data_${props.timeLine}`,
-      [],
-      {
-        mergeDefaults: true,
-      }
-    );
-    const capacity = computed(() => itemData.value.length);
-    // ?TODO: compose to one object -- map once
-    const expenses = computed(() => {
-      let summary = 0;
-      if (itemData.value.length === 0) {
-        return 0;
-      } else {
-        itemData.value.map((item) => {
-          if (item.kind === "expenses") {
-            summary += item.amount;
-          }
-        });
-        return summary;
-      }
-    });
-    const income = computed(() => {
-      let summary = 0;
-      if (itemData.value.length === 0) {
-        return 0;
-      } else {
-        itemData.value.map((item) => {
-          if (item.kind === "income") {
-            summary += item.amount;
-          }
-        });
-        return summary;
-      }
-    });
-    //* 实际上 expenses,income,balance 应该由后端查询给出
-    const balance = computed(() => income.value - expenses.value);
-    const fetchItems = async () => {
-      const response = await httpClient.get<Resources<ItemType>>(
-        "/items",
-        {
-          bill_start: props.startDate,
-          bill_end: props.endDate,
-          ownItemNumber: capacity.value,
-        },
-        {
-          _mock: "itemIndex",
-          _loading: true,
-        }
-      );
-      console.log("fetchItems response :>> ", response.data);
-      if (response.data && response.data.resources.length !== 0) {
-        itemData.value.push(...response.data.resources);
-      }
-    };
+    // TODO?
+    const itemStore = useItemDataStore(props.timeLine);
     // onMounted(fetchItemAmount);
     onBeforeMount(() => {
       sessionStorage.setItem("skipStart", "yes");
     });
     onMounted(async () => {
-      if (!itemData.value || itemData.value.length === 0) {
-        fetchItems();
+      if (!itemStore.itemData || itemStore.itemData.length === 0) {
+        itemStore.fetchItems(props.startDate, props.endDate);
       }
     });
     onBeforeUnmount(() => {
       console.log(props.timeLine, " :>> Unmount");
-      itemData.value = [];
+      itemStore.itemData = [];
     });
     return () => (
       <div class={s.wrapper}>
         {/* ?TODO: tab 被挤压 */}
         <ItemSummaryTab
-          expenses={expenses.value}
-          income={income.value}
-          balance={balance.value}
+          expenses={itemStore.summary.expenses}
+          income={itemStore.summary.income}
+          balance={itemStore.balance}
         />
         <ItemSummaryItem
-          summaryItems={itemData}
-          doFetch={fetchItems}
+          summaryItems={itemStore.itemData}
           onUpdate:summaryItems={() => {
-            fetchItems();
+            itemStore.fetchItems(props.startDate, props.endDate);
           }}
         />
 
         <Floatbutton
-          iconName={svgs.round_add}
+          iconName={svgs.edit}
           onClick={() => {
             router.push("/items/create");
           }}
@@ -121,17 +68,18 @@ const ItemSummaryTab = defineComponent({
         <li
           onClick={() => {
             // TODO:只筛选当前选项展示
+            console.log("TODO :>> only this kind");
           }}
         >
-          <span>收入</span>
+          <strong>收入</strong>
           <strong>{amountToPrice(props.income)}</strong>
         </li>
         <li onClick={() => {}}>
-          <span>净收入</span>
+          <strong>净收入</strong>
           <strong>{amountToPrice(props.balance)}</strong>
         </li>
         <li onClick={() => {}}>
-          <span>支出</span>
+          <strong>支出</strong>
           <strong>{amountToPrice(props.expenses)}</strong>
         </li>
       </ul>
@@ -141,15 +89,14 @@ const ItemSummaryTab = defineComponent({
 const ItemSummaryItem = defineComponent({
   name: "ItemSummaryItem",
   props: {
-    summaryItems: object<Ref<ItemType[]>>().isRequired,
-    doFetch: func<() => Promise<void>>().isRequired,
+    summaryItems: array<IItem>().isRequired,
   },
   emits: ["update:summaryItems"],
   setup(props, context) {
     // !USELESS just declare
     return () => (
       <ol class={s.list} id="itemSummaryItemOrderList">
-        {props.summaryItems.value.map((item, index) => (
+        {props.summaryItems.map((item, index) => (
           <li key={index}>
             {/* TODO: replace to item */}
             <div class={s.sign}>
@@ -183,7 +130,7 @@ const ItemSummaryItem = defineComponent({
 export const Money = defineComponent({
   name: "Money",
   props: {
-    item: object<Pick<ItemType, "amount" | "kind">>().isRequired,
+    item: object<Pick<IItem, "amount" | "kind">>().isRequired,
   },
   setup(props, context) {
     return () => (
