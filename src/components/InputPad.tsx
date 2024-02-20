@@ -5,7 +5,10 @@ import { useSL } from "@/composables/save_load";
 export const InputPad = defineComponent({
   name: "InputPad",
   props: {
-    inputDate: object<[string, string, string]>().def(["2015", "01", "01"]),
+    inputDate: {
+      type: Object as PropType<[string, string, string]>,
+      default: ["2015", "01", "01"] as const satisfies string[],
+    },
     inputAmount: string().def("0"),
     handleSubmit: func<(e: Event) => void>().isRequired,
   },

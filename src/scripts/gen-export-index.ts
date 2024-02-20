@@ -5,7 +5,7 @@ import { basename } from "node:path";
 const command = "ls -d ./src/*/";
 // ./src/assets  ./src/components   ./src/layouts  ./src/scripts  ./src/views
 // ./src/batch   ./src/composables  ./src/routes   ./src/shared   ./src/vite_plugins
-const doDir = ["composables", "shared", "mock", "static"];
+const doDir = ["composables", "shared", "mock", "static", "stores"];
 doDir.map((dir) => {
   let exludeFile = ["index", "type", "types.d"];
   const dir_list = readdirSync("./src/" + dir).map((p) => basename(p, ".ts"));

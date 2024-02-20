@@ -1,8 +1,10 @@
 import s from "./Overlay.module.scss";
 import { RouterLink } from "vue-router/auto";
-import { fetchMe, httpClient } from "@/shared";
-import type { AxiosError, AxiosResponse } from "axios";
-import { showConfirmDialog, showDialog } from "vant";
+import { httpClient } from "@/shared";
+import type { AxiosError } from "axios";
+import { showConfirmDialog } from "vant";
+import { useMeStore } from "@/stores";
+
 export const Overlay = defineComponent({
   name: "Overlay",
   props: {
@@ -12,6 +14,7 @@ export const Overlay = defineComponent({
   setup(props, context) {
     const route = useRoute();
     const router = useRouter();
+    const meStore = useMeStore();
     // *使用 SessionStorage 是方便开发实际上应该使用 LocalStorage
     const jwt = useLocalStorage<string | null>("jwt", null);
     const me = useSessionStorage<UserType | null>("me", null, {
@@ -29,7 +32,7 @@ export const Overlay = defineComponent({
       console.log("overlay onMounted :>> ");
       if (!me.value) {
         console.log("do fetchMe :>> ");
-        me.value = await fetchMe().catch((err: AxiosError) => {
+        me.value = await meStore.fetchMe.catch((err: AxiosError) => {
           console.log("fetchMe err :>> ", err);
           return null;
         });

@@ -6,29 +6,35 @@ import {
   type InvalidateError,
   validate,
   errorFree,
-  type RulesType,
 } from "@/composables/validate";
 import { httpClient } from "@/shared/http";
-import { fetchMe, refreshMe } from "@/shared";
 import { AxiosError } from "axios";
 import { emailRules, codeRules } from "@/static";
 import { showDialog } from "vant";
+// import { fetchMe, refreshMe } from "@/shared";
+import { useMeStore } from "@/stores";
 
 export const SignIn = defineComponent({
   name: "SignIn",
   beforeRouteEnter: async () => {
-    console.log("enter :>> signin");
+    const meStore = useMeStore();
     const router = useRouter();
-    await fetchMe().catch(() => {});
-    showDialog({ message: "已登录" }).finally(() => {
-      router.back();
-    });
+
+    try {
+      await meStore.fetchMe;
+      showDialog({ message: "已登录" }).finally(() => {
+        router.back();
+      });
+    } catch (e) {
+      console.log("e :>> ", e);
+    }
   },
   setup(props, context) {
+    const router = useRouter();
+    const meStore = useMeStore();
     const formData = ref({ email: "", code: "" });
     const refErr: Ref<InvalidateError<typeof formData.value>> = ref({});
     const refIsSend = ref(false);
-    const router = useRouter();
     const jwt = useLocalStorage("jwt", "");
     // TODO: use `decodeURIComponent` (?)
     const returnTo = useRouteQuery("return_to", "/start", { mode: "push" });
@@ -91,7 +97,7 @@ export const SignIn = defineComponent({
         if (formData.value.code === "123456") {
           console.log("trick :>> ");
           jwt.value = "testjwt";
-          refreshMe()
+          meStore.refreshMe
             .then(
               () => {
                 router.push(returnTo.value);
@@ -134,7 +140,7 @@ export const SignIn = defineComponent({
             // );
             // const returnTo = route.query["return_to"]?.toString();
             // console.log("returnTo :>> ", returnTo);
-            await refreshMe();
+            // await meStore.fetchMe;
             // const returnTo = sessionStorage.getItem("returnTo");
             router.push(returnTo.value);
           })

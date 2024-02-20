@@ -5,31 +5,12 @@ import { routes } from "@/routes";
 import { history } from "@/routes/history";
 // import "vant/lib/index.css";
 import "virtual:svg-icons-register";
-import { fetchMe, refreshState } from "./shared/me";
 import { createHead, VueHeadMixin } from "@unhead/vue";
-// const history = createWebHashHistory();
-// 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+import { useMeStore } from "./stores";
 const router = createRouter({ history, routes });
-fetchMe();
-router.beforeEach(async (to, from) => {
-  if (
-    ["/", "/start"].includes(to.path) ||
-    to.path.startsWith("/welcome") ||
-    to.path.startsWith("/sign_in")
-  ) {
-    return true;
-  } else {
-    return refreshState!.then(
-      () => {
-        return true;
-      },
-      // TODO: use `URLSearchParams` && `decodeURIComponent`
-      () => "/sign_in?return_to=" + to.path
-    );
-  }
-});
-const app = createApp(App);
+const pinia = createPinia();
 const head = createHead();
+const app = createApp(App);
 
 app.config.errorHandler = (err, instance, info) => {
   // navigator.sendBeacon("url");
@@ -42,10 +23,28 @@ app.config.errorHandler = (err, instance, info) => {
     info
   );
 };
+app.use(pinia);
 app.use(router);
-// 使用 svg-icon 这句很重要{可以用 h , 在setup 返回前 捕获(:=) }不然则是 源代码
-app.component("svg-icon", SvgIcon); // 使用 SvgIcon 是因为 unplugin-vue-components 对 .vue 自动生成
-
 app.use(head);
 app.mixin(VueHeadMixin);
+
+// 使用 svg-icon 这句很重要{可以用 h , 在setup 返回前 捕获(:=) }不然则是 源代码
+app.component("svg-icon", SvgIcon); // 使用 SvgIcon 是因为 unplugin-vue-components 对 .vue 自动生成, 且对tsx无效
+
+const meStore = useMeStore();
+router.beforeEach(async (to, from) => {
+  if (
+    ["/", "/start"].includes(to.path) ||
+    to.path.startsWith("/welcome") ||
+    to.path.startsWith("/sign_in")
+  ) {
+    return () => {};
+  } else {
+    return meStore.fetchMe.then(
+      () => {},
+      // TODO: use `URLSearchParams` && `decodeURIComponent`
+      () => "/sign_in?return_to=" + to.path
+    );
+  }
+});
 app.mount("#app");

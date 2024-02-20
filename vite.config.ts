@@ -95,6 +95,7 @@ export default defineConfig({
             "useMousePressed", // pressEvent in any scope
             "useLocalStorage", // 相比useStorage 更语义化
             "useSessionStorage", // 相比useStorage 更语义化
+            "watchTriggerable", // 一个带触发的watch
           ],
         },
         {
