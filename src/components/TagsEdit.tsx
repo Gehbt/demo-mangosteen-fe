@@ -17,7 +17,7 @@ export const TagsEdit = defineComponent({
   name: "TagsEdit",
   setup(props, context) {
     window.blur();
-    const kind = useRouteQuery<TagKindType>("kind");
+    const kind = useRouteQuery<TagKind>("kind");
     const router = useRouter();
     if (!kind.value) {
       showDialog({ message: "参数不存在" });
@@ -31,7 +31,7 @@ export const TagsEdit = defineComponent({
       return () => <div>tag id="{tag_id.value}"不存在</div>;
     }
     // Maybe FIXME::reduce upcast
-    const formData = ref({
+    const formData = ref<TagQueryType>({
       kind: kind.value,
       name: "",
       sign: "",
@@ -107,14 +107,14 @@ export const TagsCreate = defineComponent({
   name: "TagsCreate",
   setup(props, context) {
     const router = useRouter();
-    const kind = useRouteQuery<TagKindType>("kind");
+    const kind = useRouteQuery<TagKind>("kind");
     if (!kind.value) {
       showDialog({ message: "参数不存在" });
       router.back();
       return;
     }
 
-    const formData = ref<ITagQuery>({
+    const formData = ref<TagQueryType>({
       kind: kind.value,
       name: "",
       sign: "",
@@ -146,14 +146,14 @@ export const TagsForm = defineComponent({
   name: "TagForm",
   props: {
     id: number(),
-    formData: object<ITagQuery>().isRequired,
+    formData: object<TagQueryType>().isRequired,
   },
   setup(props, context) {
     const router = useRouter();
-    const kind = useRouteQuery<TagKindType>("kind");
+    const kind = useRouteQuery<TagKind>("kind");
     // todo: 向上传递
     const formData = useVModel(props, "formData", context.emit);
-    const errData: Ref<InvalidateError<ITagQuery>> = ref({
+    const errData: Ref<InvalidateError<TagQueryType>> = ref({
       kind: [],
       name: [],
       sign: [],

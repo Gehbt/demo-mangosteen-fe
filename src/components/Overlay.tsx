@@ -39,7 +39,7 @@ export const Overlay = defineComponent({
       }
     });
     const handleLogout = async () => {
-      await httpClient.head<JWTResponse>("/logout").then((response) => {
+      await httpClient.head<JWTResponseType>("/logout").then((response) => {
         // 接收过期的token
         jwt.value = response.data.jwt;
       });

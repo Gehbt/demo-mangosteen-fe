@@ -1,6 +1,6 @@
 import type { RulesType } from "@/composables";
 
-export const tagRules: RulesType<ITagQuery> = [
+export const tagRules: RulesType<TagQueryType> = [
   {
     clan: "required",
     key: "name",

@@ -5,7 +5,7 @@ import type { Mock } from "Mock-Type";
 export const mkLineData = (
   n: number,
   config: {
-    kind: TagKindType;
+    kind: TagKind;
     bill_end: string;
     bill_start: string;
     init_amount?: number;
@@ -32,7 +32,7 @@ export const mockLineChart: Mock<Resource<LineChartType>> = (config) => {
     desiredNumber: number;
     bill_start: string;
     bill_end: string;
-    kind: TagKindType;
+    kind: TagKind;
   };
   console.log("bill_start :>> ", bill_start);
   console.log("bill_end :>> ", bill_end);
@@ -53,7 +53,7 @@ export const mockLineChartLess: Mock<Resource<LineChartType>> = (config) => {
     desiredNumber: number;
     bill_start: string;
     bill_end: string;
-    kind: TagKindType;
+    kind: TagKind;
   };
   return {
     data: {

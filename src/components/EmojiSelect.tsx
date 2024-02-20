@@ -1,51 +1,12 @@
+import { emoji_lists } from "@/static";
 import s from "./EmojiSelect.module.scss";
-import {
-  face,
-  hand,
-  person,
-  animal,
-  plant,
-  food,
-  place,
-  transport,
-  time,
-  event,
-  sport,
-  crafts,
-  clothing,
-  sound,
-  equipment,
-  misc2,
-  message,
-  tool,
-  mark,
-} from "@emoji_list";
+
 // function* generateListItems() {
 //   for (let i = 0; i < 100; i++) {
 //     yield <li key={i}>😀</li>;
 //   }
 // }
-const emoji_lists: Array<[string, Readonly<Array<[string, string[]]>>]> = [
-  ["表情", face],
-  ["手势", hand],
-  ["职业", person],
-  ["动物", animal],
-  ["自然", plant],
-  ["食物", food],
-  ["地理", place],
-  ["交通", transport],
-  ["时间", time],
-  ["事件", event],
-  ["运动", sport],
-  ["工艺", crafts],
-  ["衣服", clothing],
-  ["声音", sound],
-  ["装备", equipment],
-  ["金钱", misc2],
-  ["信息", message],
-  ["工具", tool],
-  ["标志", mark],
-];
+
 export const EmojiSelect = defineComponent({
   name: "EmojiSelect",
   props: {

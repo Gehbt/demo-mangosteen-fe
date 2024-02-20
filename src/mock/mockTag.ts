@@ -3,7 +3,7 @@ import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import { fakerZH_CN } from "@faker-js/faker";
 
 const OFFSET = 1;
-const mkTag: <T extends TagKindType>(
+const mkTag: <T extends TagKind>(
   ctxId: number, //* state
   n: number,
   kind: T,
@@ -66,7 +66,7 @@ export const mockTagCreate: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config.data);
   const { kind, name, sign } = config.data as {
     // todo: type define
-    kind: TagKindType;
+    kind: TagKind;
     name: string;
     sign: string;
   };
@@ -89,7 +89,7 @@ export const mockTagCreate: Mock<Resource<ITag>> = (config) => {
 export const mockTagQuery: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config);
   const { kind, id } = config.params as {
-    kind: TagKindType;
+    kind: TagKind;
     id: number;
   };
   return {
@@ -111,7 +111,7 @@ export const mockTagQuery: Mock<Resource<ITag>> = (config) => {
 export const mockTagEdit: Mock<Resource<ITag>> = (config) => {
   console.log("mockTagCreate :>> ", config);
   const { kind, id } = config.params as {
-    kind: TagKindType;
+    kind: TagKind;
     id: number;
   };
   return {

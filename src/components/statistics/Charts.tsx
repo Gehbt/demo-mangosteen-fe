@@ -62,12 +62,12 @@ export const ChartsControl = defineComponent({
     endDate: string().isRequired,
   },
   setup(props, context) {
-    const refCategory = ref<TagKindType>("expenses");
-    watch(refCategory, () => {
-      console.log("refCategory.value :>> ", refCategory.value);
-    });
+    const refCategory = ref<TagKind>("expenses");
+    // watch(refCategory, () => {
+    //   console.log("refCategory.value :>> ", refCategory.value);
+    // });
     const refShowPicker = ref<boolean>(false);
-    const columns: { text: "收入" | "支出"; value: TagKindType }[] = [
+    const columns: { text: "收入" | "支出"; value: TagKind }[] = [
       { text: "支出", value: "expenses" },
       { text: "收入", value: "income" },
     ];
@@ -100,7 +100,7 @@ export const ChartsControl = defineComponent({
               onConfirm={({
                 selectedValues,
               }: {
-                selectedValues: [TagKindType];
+                selectedValues: [TagKind];
               }) => {
                 refCategory.value = selectedValues[0];
                 refShowPicker.value = false;
@@ -123,7 +123,7 @@ export const Charts = defineComponent({
     timeLine: string<DateScope>().isRequired,
     startDate: string().isRequired,
     endDate: string().isRequired,
-    kind: string<TagKindType>().isRequired,
+    kind: string<TagKind>().isRequired,
   },
   setup(props, context) {
     // * line charts
@@ -136,6 +136,7 @@ export const Charts = defineComponent({
       new Time(props.startDate)
     );
     // 为custom日期做缓存
+    // 更好的方式应该是抽象成一个可边长数组然后做切片
     const inCustomTimeLine =
       props.timeLine !== "custom"
         ? props.timeLine

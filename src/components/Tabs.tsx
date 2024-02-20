@@ -4,9 +4,7 @@ export const Tabs = defineComponent({
   name: "Tabs",
   props: {
     classPrefix: string().def(""),
-    selected: string<
-      TagKindType | DateScope
-    >() /* v-model:selected !== selected */,
+    selected: string<TagKind | DateScope>() /* v-model:selected !== selected */,
     lessRender: bool().def(false),
   },
   emits: ["update:selected"],
@@ -37,7 +35,7 @@ export const Tabs = defineComponent({
                   }
                 >
                   {/* as DateScope/TagKindType just for mapping */}
-                  {i18nT[item.props?.name as DateScope | TagKindType]}
+                  {i18nT[item.props?.name as DateScope | TagKind]}
                 </li>
               ))}
             </ol>
@@ -67,7 +65,7 @@ export const Tabs = defineComponent({
 export const Tab = defineComponent({
   name: "Tab",
   props: {
-    name: string<TagKindType | DateScope>(),
+    name: string<TagKind | DateScope>(),
   },
   setup(props, context) {
     return () => <div>{context.slots.default?.()}</div>;

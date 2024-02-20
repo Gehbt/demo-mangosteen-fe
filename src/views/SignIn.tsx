@@ -128,7 +128,7 @@ export const SignIn = defineComponent({
         refIsSend.value = true;
 
         await httpClient
-          .post<JWTResponse>("/session", formData.value, {
+          .post<JWTResponseType>("/session", formData.value, {
             _loading: true,
           })
           .then(async (response) => {

@@ -1,5 +1,5 @@
 export type ItemsCreateName = "支出" | "收入";
-export const i18nTagKind: Record<TagKindType, ItemsCreateName> = {
+export const i18nTagKind: Record<TagKind, ItemsCreateName> = {
   expenses: "支出",
   income: "收入",
 } as const;

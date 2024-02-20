@@ -48,7 +48,7 @@ function mkItem(
     bill_start: string;
   }
 ) {
-  return Array.from<ItemType>({ length: n }).map(
+  return Array.from<IItem>({ length: n }).map(
     (_, index) =>
       ({
         amount: window.parseFloat(
@@ -64,12 +64,12 @@ function mkItem(
           })
           .toISOString(),
         name: fakerZH_CN.commerce.product(),
-      } as ItemType)
+      } as IItem)
   );
 }
 
-export const mockItemIndex: Mock<Resources<ItemType>> = (
-  config: AxiosRequestConfig<Resources<ItemType>>
+export const mockItemIndex: Mock<Resources<IItem>> = (
+  config: AxiosRequestConfig<Resources<IItem>>
 ) => {
   console.log("itemIndex json :>> ", config.params);
   const { bill_end, bill_start, ownItemNumber } = config.params as {
@@ -94,7 +94,7 @@ export const mockItemIndex: Mock<Resources<ItemType>> = (
       pager,
     },
     status: 200,
-  } as AxiosResponse<Resources<ItemType>>;
+  } as AxiosResponse<Resources<IItem>>;
 };
 
 // export const mockItemIndexAmount: Mock<Resource<any>> = (

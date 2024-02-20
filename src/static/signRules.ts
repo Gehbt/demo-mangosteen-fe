@@ -15,7 +15,7 @@ export const emailRules = [
     pattern:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
-] as const satisfies RulesType<ISignInQuery>;
+] as const satisfies RulesType<SignInQueryType>;
 export const codeRules = [
   {
     key: "code",
@@ -30,4 +30,4 @@ export const codeRules = [
     pattern: /^(.{6})$/,
     reversePattern: true,
   },
-] as const satisfies RulesType<ISignInQuery>;
+] as const satisfies RulesType<SignInQueryType>;

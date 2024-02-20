@@ -1,6 +1,6 @@
 import type { RulesType } from "@/composables";
 
-export const itemsRules: RulesType<IItemQuery> = [
+export const itemsRules: RulesType<ItemQueryType> = [
   {
     clan: "required",
     key: "amount",

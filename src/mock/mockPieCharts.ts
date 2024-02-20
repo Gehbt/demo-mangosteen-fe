@@ -15,7 +15,7 @@ const mkPieData = (n = 5, config?: {}) =>
   }));
 export const mockPieChart: Mock<Resource<PieChartTypeOne[]>> = (config) => {
   const { kind } = config.params as {
-    kind: TagKindType;
+    kind: TagKind;
   };
   console.log("kind :>> ", kind);
   return {

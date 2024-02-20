@@ -29,11 +29,11 @@ export const ItemsList = defineComponent({
 function useTags() {
   const refExpensesTags = ref<ITag<"expenses">[]>([]);
   const refIncomeTags = ref<ITag<"income">[]>([]);
-  const tagKindTransfer: Record<TagKindType, Ref<ITag[]>> = {
+  const tagKindTransfer: Record<TagKind, Ref<ITag[]>> = {
     expenses: refExpensesTags,
     income: refIncomeTags,
   };
-  const fetchTags = async (kind: TagKindType) => {
+  const fetchTags = async (kind: TagKind) => {
     const response_tags = await httpClient.get<Resources<ITag>>(
       "/tags",
       {
@@ -65,10 +65,10 @@ export const ItemsCreate = defineComponent({
   } as HeadType,
   setup(props, context) {
     const router = useRouter();
-    const refSelectedTab = ref<TagKindType>("expenses");
+    const refSelectedTab = ref<TagKind>("expenses");
     const refExpTagId = ref<number>(0);
     const refIncTagId = ref<number>(0);
-    const TagIdMap: Record<TagKindType, Ref<number>> = {
+    const TagIdMap: Record<TagKind, Ref<number>> = {
       expenses: refExpTagId,
       income: refIncTagId,
     };
@@ -139,18 +139,18 @@ export const ItemsCreate = defineComponent({
         refIncomeTags.value = income_tags.value;
       }
     });
-    const updateSelected = (tabName: TagKindType) =>
+    const updateSelected = (tabName: TagKind) =>
       (refSelectedTab.value = tabName);
     const amountFloat = computed(() => parseFloat(refAmount.value));
     const handleSubmit = async (e: Event) => {
-      const formData: ComputedRef<IItemQuery> = computed(() => ({
+      const formData: ComputedRef<ItemQueryType> = computed(() => ({
         // 带下划线的名字是数据库风格
         kind: refSelectedTab.value,
         tag_ids: JSON.stringify([TagIdMap[refSelectedTab.value].value]),
         happen_at: new Date(refDate.value.join("-")).toISOString(),
         amount: amountFloat.value.toString(),
       }));
-      const errData: Ref<InvalidateError<IItemQuery>> = ref({
+      const errData: Ref<InvalidateError<ItemQueryType>> = ref({
         amount: [],
         happen_at: [],
         kind: [],
@@ -254,9 +254,9 @@ export const ItemsCreate = defineComponent({
 const TagGrid = defineComponent({
   name: "TagGrid",
   props: {
-    kind: string<TagKindType>().isRequired,
+    kind: string<TagKind>().isRequired,
     tagsSrc: object<Ref<ITag[]>>().isRequired,
-    doFetch: func<(kind: TagKindType) => Promise<void>>().isRequired,
+    doFetch: func<(kind: TagKind) => Promise<void>>().isRequired,
     selected: number(),
   },
   emits: ["update:selected"],
@@ -277,7 +277,6 @@ const TagGrid = defineComponent({
         `/tags/${tag.id}/edit?return_to=${route.fullPath}&kind=${tag.kind}`
       );
     };
-
     const onTouchStart = (e: TouchEvent, tag: ITag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;
       timer.value = window.setTimeout(() => {
