@@ -6,6 +6,7 @@ import { httpClient, i18nT } from "@/shared";
 import { mkLineData } from "@/mock";
 import { Picker, Popup } from "vant";
 const amountPad = (config: {
+  // ?TODO: 默认时区为标准时间而不是北京时间
   startDate: string;
   endDate: string;
   desiredNumber: number;

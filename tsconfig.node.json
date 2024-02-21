@@ -11,10 +11,9 @@
   },
   "include": [
     "vite.config.ts",
+    "vite.build.config.ts",
     "src/batch/*.ts",
     "./env.d.ts",
-    "./src/batch",
-    "./src/scripts",
     "src/scripts/gen-export-index.ts" // "./src/assets"
   ]
 }

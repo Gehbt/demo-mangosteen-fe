@@ -1,5 +1,5 @@
 import { Transition } from "vue";
-import { RouterView } from "vue-router/auto";
+import { RouterView } from "vue-router";
 import s from "./Welcome.module.scss";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { Direction, useSwiper } from "@/composables/swiper";
@@ -9,9 +9,8 @@ import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
   beforeRouteEnter() {
-    const router = useRouter();
     if (localStorage.getItem("skipWelcome") === "yes") {
-      router.replace("/start");
+      window.location.hash += "#/start";
     }
   },
   setup() {
@@ -135,3 +134,4 @@ export const Welcome2 = defineComponent({
     );
   },
 });
+export default Welcome;

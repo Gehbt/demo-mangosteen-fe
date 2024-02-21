@@ -1,5 +1,5 @@
 import s from "./Items.module.scss";
-import { RouterView } from "vue-router/auto";
+import { RouterView } from "vue-router";
 
 export const Items = defineComponent({
   name: "Items",
@@ -11,3 +11,4 @@ export const Items = defineComponent({
     );
   },
 });
+export default Items;

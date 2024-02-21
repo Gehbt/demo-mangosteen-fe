@@ -2,16 +2,15 @@ import { Button, Floatbutton } from "@/components/Button";
 import s from "./Start.module.scss";
 import { Center } from "@/components/Center";
 import { Overlay, OverlayMask } from "@/components/Overlay";
-import { RouterLink } from "vue-router/auto";
+import { RouterLink } from "vue-router";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Transition } from "vue";
 
 export const Start = defineComponent({
   name: "Start",
   beforeRouteEnter() {
-    const router = useRouter();
     if (sessionStorage.getItem("skipStart") === "yes") {
-      router.replace("/items");
+      window.location.hash = "#/items";
     }
   },
   setup(props, context) {
@@ -53,3 +52,4 @@ export const Start = defineComponent({
     );
   },
 });
+export default Start;

@@ -6,3 +6,4 @@ export const Export = defineComponent({
     return () => <ComingSoon name="导出" />;
   },
 });
+export default Export;

@@ -2,6 +2,7 @@
 /// <reference path="./typed-router.d.ts" />
 /// <reference path="./auto-imports.d.ts" />
 /// <reference types="unplugin-vue-macros/macros-global" />
+/// <reference types="vue-types" />
 import "vue-router";
 declare module "vue-router" {
   interface RouteMeta {

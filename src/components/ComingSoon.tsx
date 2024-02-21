@@ -12,7 +12,7 @@ export const ComingSoon = defineComponent({
       <div>
         <h1 class={s.text}>{props.name}</h1>
         <Center class={s.pig_wrapper}>
-          <SvgIcon name={svgs.piggy2} class={s.pig} />
+          <svg-icon name={svgs.piggy2} class={s.pig} />
         </Center>
         <p class={s.text}>敬请期待</p>
         <p class={s.text}>

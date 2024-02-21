@@ -1,15 +1,15 @@
 import { ItemsCreate, ItemsList } from "@/components/ItemsList";
 import { SwiperView } from "@/components/Swiper";
 import { TagsCreate, TagsEdit } from "@/components/TagsEdit";
-import { Export } from "@/views/Export";
-import { Items } from "@/views/Items";
-import { Notify } from "@/views/Notify";
-import { SignIn } from "@/views/SignIn";
-import { Start } from "@/views/Start";
-import { Statistics } from "@/views/Statistics";
-import { Tag } from "@/views/Tag";
+// import { Export } from "@/views/Export";
+// import { Items } from "@/views/Items";
+// import { Notify } from "@/views/Notify";
+// import { SignIn } from "@/views/SignIn";
+// import { Start } from "@/views/Start";
+// import { Statistics } from "@/views/Statistics";
+// import { Tag } from "@/views/Tag";
+// import { Welcome } from "@views/Welcome";
 import { W1, WFooter, W2, W3, W4, WEndFooter } from "@components/welcome";
-import { Welcome, Welcome2 } from "@views/Welcome";
 import type { RouteRecordRaw } from "vue-router";
 const WelcomeTable: RouteRecordRaw[] = [
   {
@@ -48,7 +48,7 @@ export const routes: RouteRecordRaw[] = [
   // { path: "/about", component: Bar },
   {
     path: "/welcome",
-    component: Welcome,
+    component: async () => import("@/views/Welcome"),
     children: [
       {
         name: "w",
@@ -60,18 +60,18 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: "/statistics",
-    component: async () => Statistics,
+    component: async () => import("@/views/Statistics"),
     name: "statistics",
   },
   {
     name: "start",
     path: "/start",
-    component: Start,
+    component: () => import("@/views/Start"),
   },
   {
     name: "items",
     path: "/items",
-    component: Items,
+    component: import("@/views/Items"),
     children: [
       {
         name: "itemsList",
@@ -88,7 +88,7 @@ export const routes: RouteRecordRaw[] = [
   {
     name: "tags",
     path: "/tags",
-    component: Tag,
+    component: () => import("@/views/Tag"),
     redirect: "/items",
     children: [
       {
@@ -106,16 +106,16 @@ export const routes: RouteRecordRaw[] = [
   {
     name: "signIn",
     path: "/sign_in",
-    component: SignIn,
+    component: () => import("@/views/SignIn"),
   },
   {
     name: "Export",
     path: "/export",
-    component: Export,
+    component: () => import("@/views/Export"),
   },
   {
     name: "Notify",
     path: "/notify",
-    component: Notify,
+    component: () => import("@/views/Notify"),
   },
 ];

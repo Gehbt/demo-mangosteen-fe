@@ -162,7 +162,6 @@ export const ItemsCreate = defineComponent({
       if (!errorFree(errData.value)) {
         console.log("formData.value :>> ", formData.value);
         console.log("errData.value :>> ", errData.value);
-        Reflect.ownKeys({ "123": 1 });
         showDialog({ message: Object.values(errData.value).join("\n") });
         return;
       }

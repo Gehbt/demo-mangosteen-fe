@@ -6,3 +6,4 @@ export const Notify = defineComponent({
     return () => <ComingSoon name="记账提醒" />;
   },
 });
+export default Notify;

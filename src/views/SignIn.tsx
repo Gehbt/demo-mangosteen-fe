@@ -16,15 +16,13 @@ import { fetchMe } from "@/composables";
 export const SignIn = defineComponent({
   name: "SignIn",
   beforeRouteEnter: async () => {
-    const router = useRouter();
-    // const returnTo = useRouteQuery("return_to", "/start", { mode: "push" });
     try {
       const me = await fetchMe();
       if (!me) {
         throw new Error("no login");
       }
       showDialog({ message: "已登录" }).finally(() => {
-        router.push("/start");
+        window.location.hash = "#/start";
       });
     } catch (e) {
       console.log("e :>> ", e);
@@ -198,3 +196,4 @@ export const SignIn = defineComponent({
     );
   },
 });
+export default SignIn;

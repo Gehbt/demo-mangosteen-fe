@@ -1,8 +1,9 @@
 import s from "./Overlay.module.scss";
-import { RouterLink } from "vue-router/auto";
+import { RouterLink } from "vue-router";
 import { httpClient } from "@/shared";
 import { showConfirmDialog } from "vant";
 import { fetchMe } from "@/composables";
+import { AxiosError } from "axios";
 
 export const Overlay = defineComponent({
   name: "Overlay",
@@ -36,10 +37,12 @@ export const Overlay = defineComponent({
             throw new Error("no login");
           }
           console.log("me :>> ", me.value);
-        } catch (e) {
+        } catch (e: any) {
           console.log("fetchMe err :>> ", e);
           console.log("route.fullPath :>> ", route.fullPath);
-          // router.push(`/sign_in?return_to=${route.fullPath}`);
+          if (e instanceof AxiosError && e.response?.status === 401) {
+            router.push(`/sign_in?return_to=${route.fullPath}`);
+          }
         }
       }
     });
@@ -49,7 +52,8 @@ export const Overlay = defineComponent({
           // 接收过期的token
           console.log("new :>> jwt", response.data.jwt);
           jwt.value = response.data.jwt;
-          router.push("/start");
+          // router.push("/sign_in");
+          window.location.reload();
         });
         // await refreshMe();
       } catch (e) {
@@ -68,7 +72,7 @@ export const Overlay = defineComponent({
           onSignout={async () => {
             me.value = null;
             await handleLogout();
-            router.push("/start");
+            router.replace("/start");
           }}
         />
         <nav>

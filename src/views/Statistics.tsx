@@ -11,3 +11,4 @@ export const Statistics = defineComponent({
     return () => <TabsTimeLayout comp={ChartsControl} title="统计图表" />;
   },
 });
+export default Statistics;

@@ -1,6 +1,5 @@
 import s from "./ItemSummary.module.scss";
 import { Floatbutton } from "./Button";
-import { httpClient } from "@/shared";
 import { Time } from "@/composables";
 import { useItemDataStore } from "@/stores/item";
 export type ItemSummaryType = typeof ItemSummary;
