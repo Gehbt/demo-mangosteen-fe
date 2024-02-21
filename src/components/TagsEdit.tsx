@@ -41,7 +41,6 @@ export const TagsEdit = defineComponent({
       await httpClient.delete(
         `/tags${tag_id_number.value}`,
         {
-          // TODO: mock
           with_item: withItem.toString(),
         },
         {
@@ -63,7 +62,7 @@ export const TagsEdit = defineComponent({
               class={[s.formItem, s.btn]}
               clan="button"
               onClick={() => {
-                // TODO:
+                // ??TODO:
                 console.log("Form summit :>> ");
               }}
             >
@@ -74,7 +73,7 @@ export const TagsEdit = defineComponent({
             <Button
               level="danger"
               class={[s.btn, s.removeTags]}
-              // TODO:
+              // ?TODO: to real
               onClick={async () => {
                 showConfirmDialog({ message: "是否删除?" }).then(() => {
                   onDelete({ withItem: false });
@@ -87,7 +86,7 @@ export const TagsEdit = defineComponent({
             <Button
               level="danger"
               class={[s.btn, s.removeAll]}
-              // TODO:
+              // ?TODO: to real
               onClick={async () => {
                 showConfirmDialog({ message: "是否删除?" }).then(() => {
                   onDelete({ withItem: true });
@@ -130,7 +129,7 @@ export const TagsCreate = defineComponent({
             clan="button"
             class={[s.formItem, s.btn]}
             onClick={() => {
-              // TODO:
+              // ??TODO:
               console.log("Form summit :>> ");
               // refForm.value?.submit();
             }}

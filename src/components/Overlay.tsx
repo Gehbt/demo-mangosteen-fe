@@ -40,7 +40,9 @@ export const Overlay = defineComponent({
         } catch (e: any) {
           console.log("fetchMe err :>> ", e);
           console.log("route.fullPath :>> ", route.fullPath);
-          if (e instanceof AxiosError && e.response?.status === 401) {
+          if (["/start"].includes(route.fullPath)) {
+            return;
+          } else if (e instanceof AxiosError && e.response?.status === 401) {
             router.push(`/sign_in?return_to=${route.fullPath}`);
           }
         }
@@ -52,12 +54,12 @@ export const Overlay = defineComponent({
           // 接收过期的token
           console.log("new :>> jwt", response.data.jwt);
           jwt.value = response.data.jwt;
-          // router.push("/sign_in");
-          window.location.reload();
         });
         // await refreshMe();
       } catch (e) {
         console.log("e :>> ", e);
+      } finally {
+        window.location.reload();
       }
     };
     return () => (
