@@ -58,15 +58,26 @@ export const routes: RouteRecordRaw[] = [
       ...WelcomeTable,
     ],
   },
-  {
-    path: "/statistics",
-    component: async () => import("@/views/Statistics"),
-    name: "statistics",
-  },
+
   {
     name: "start",
     path: "/start",
     component: () => import("@/views/Start"),
+  },
+  {
+    name: "signIn",
+    path: "/sign_in",
+    component: () => import("@/views/SignIn"),
+  },
+  {
+    name: "Export",
+    path: "/export",
+    component: () => import("@/views/Export"),
+  },
+  {
+    name: "Notify",
+    path: "/notify",
+    component: () => import("@/views/Notify"),
   },
   {
     name: "items",
@@ -104,18 +115,14 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    name: "signIn",
-    path: "/sign_in",
-    component: () => import("@/views/SignIn"),
+    path: "/statistics",
+    component: async () => import("@/views/Statistics"),
+    name: "statistics",
   },
   {
-    name: "Export",
-    path: "/export",
-    component: () => import("@/views/Export"),
-  },
-  {
-    name: "Notify",
-    path: "/notify",
-    component: () => import("@/views/Notify"),
+    name: "NotFound",
+    //使用正则的方式，匹配任意的
+    path: "/:path(.*)",
+    component: () => import("@/components/NotFound.vue"),
   },
 ];

@@ -7,12 +7,17 @@ import { VueRouterAutoImports } from "unplugin-vue-router";
 import VueRouter from "unplugin-vue-router/vite";
 import vueMacros from "unplugin-vue-macros/vite";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-import Components from "unplugin-vue-components/vite";
 import { fileURLToPath } from "url";
 import packageJson from "./package.json";
 import { visualizer } from "rollup-plugin-visualizer";
+import { analyzer } from "vite-bundle-analyzer";
 
+import { brotliCompress } from "zlib";
+import { promisify } from "util";
+import gzipPlugin from "rollup-plugin-gzip";
 const _dirs = dirname(fileURLToPath(import.meta.url));
+
+const brotliPromise = promisify(brotliCompress);
 // const env = loadEnv("dev", _dirs, "LOCAL_");
 const pathResolve = (dir: string): string => {
   return resolve(_dirs, ".", dir);
@@ -66,6 +71,7 @@ export default defineConfig({
             "useRefHistory", // ref change memo
             "useLocalStorage", // 相比useStorage 更语义化
             "useSessionStorage", // 相比useStorage 更语义化
+            "useThrottleFn",
           ],
         },
         {
@@ -95,15 +101,23 @@ export default defineConfig({
             "number",
             "array",
             "integer",
-            "symbol",
             "object",
-            "nullable",
           ],
         },
       ],
     }),
-    visualizer(),
+    gzipPlugin({
+      customCompression: (content) => brotliPromise(Buffer.from(content)),
+      fileName: ".br",
+    }),
+    // import.meta.env.MODE !== "prod" &&
+    visualizer({
+      emitFile: true,
+      filename: "stats.html",
+      brotliSize: true,
+    }),
     // 仅用于manualChunks是函数的形式
+    // analyzer(),
     splitVendorChunkPlugin(),
   ],
   resolve: {
@@ -127,8 +141,6 @@ export default defineConfig({
             return "echarts";
           } else if (id.includes("vant")) {
             return "vant";
-          } else if (id.includes("lodash-es")) {
-            return "lodash-es";
           } else if (id.includes("faker") || id.includes("mock")) {
             return "mock";
           } else if (id.includes("node_modules")) {

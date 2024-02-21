@@ -1,5 +1,15 @@
 import s from "./Charts.module.scss";
-import * as echarts from "echarts";
+import { type EChartsOption } from "echarts";
+import * as echarts from "echarts/core";
+import { LineChart as ELineChart, PieChart as EPieChart } from "echarts/charts";
+import {
+  GridComponent,
+  TooltipComponent,
+  DataZoomComponent,
+  LegendComponent,
+} from "echarts/components";
+import { UniversalTransition, LabelLayout } from "echarts/features";
+import { CanvasRenderer } from "echarts/renderers";
 import { Time } from "@/composables";
 import { amountToPrice } from "../ItemSummary";
 import { httpClient, i18nT } from "@/shared";
@@ -92,6 +102,7 @@ export const ChartsControl = defineComponent({
             startDate={props.startDate}
             endDate={props.endDate}
             kind={refCategory.value}
+            // !因为当前的数据切换是重绘,所以动画失效
             key={refCategory.value}
           ></Charts>
           <Popup position="bottom" v-model:show={refShowPicker.value}>
@@ -244,6 +255,14 @@ export const LineChart = defineComponent({
     data: array<[string, string]>().isRequired,
   },
   setup(props, context) {
+    echarts.use([
+      GridComponent,
+      TooltipComponent,
+      DataZoomComponent,
+      ELineChart,
+      CanvasRenderer,
+      UniversalTransition,
+    ]);
     const refLine = ref<HTMLDivElement>();
     // !chart对象不能使用ref引用
     // ?但可以用 shallowRef
@@ -257,9 +276,10 @@ export const LineChart = defineComponent({
         return;
       }
       lineChart.value = echarts.init(refLine.value);
-      const option = computed<echarts.EChartsOption>(
+      const option = computed<EChartsOption>(
         () =>
           ({
+            animation: true,
             grid: {
               left: "0px",
               top: "20px",
@@ -274,6 +294,7 @@ export const LineChart = defineComponent({
                 const [date, price] = item[0].value as [string, number];
                 return `${new Time(date).format("YYYY年MM月DD日")} ￥${price}`;
               },
+              confine: true,
             },
             dataZoom: [
               {
@@ -321,7 +342,7 @@ export const LineChart = defineComponent({
                 type: "line",
               },
             ],
-          } as echarts.EChartsOption)
+          } as EChartsOption)
       );
       lineChart.value.setOption(option.value);
       // 更新触发重绘
@@ -343,18 +364,28 @@ export const PieChart = defineComponent({
     data: array<PieChartViewTypeOne>(),
   },
   setup(props, context) {
+    echarts.use([
+      TooltipComponent,
+      LegendComponent,
+      EPieChart,
+      CanvasRenderer,
+      // LabelLayout,
+    ]);
     const refPie = ref<HTMLDivElement>();
     const pieChart = shallowRef<echarts.ECharts>();
     onMounted(() => {
+      // 找不到对应HTMLElement
       if (refPie.value === undefined) {
         return;
       }
       pieChart.value = echarts.init(refPie.value);
       // 使用刚指定的配置项和数据显示图表。
-      const pieOption = computed<echarts.EChartsOption>(
+      const pieOption = computed<EChartsOption>(
         () =>
           ({
+            animation: true,
             tooltip: {
+              confine: true,
               trigger: "item",
               formatter: (item: {
                 value: number;
@@ -365,6 +396,7 @@ export const PieChart = defineComponent({
                   item.value
                 )}</strong> (${item.percent}%)`;
               },
+              extraCssText: "margin-bottom: 10px",
             },
             legend: {
               top: "0%",
@@ -398,7 +430,7 @@ export const PieChart = defineComponent({
                 data: props.data,
               },
             ],
-          } as echarts.EChartsOption)
+          } as EChartsOption)
       );
       pieChart.value.setOption(pieOption.value);
       watch(pieOption, () => {
@@ -429,7 +461,12 @@ export const BarChart = defineComponent({
       <div class={s.demo3}>
         {barDataView.value.map(({ tag, amount, percent }) => {
           return (
-            <div class={s.topItem}>
+            <div
+              class={s.topItem}
+              onClick={() => {
+                // ?TODO: 添加样式
+              }}
+            >
               <div class={s.sign}>{tag.sign}</div>
               <div class={s.bar_wrapper}>
                 <div class={s.bar_text}>

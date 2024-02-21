@@ -1,5 +1,4 @@
 // ?vue的hooks 可以存在组件之外, react的不可以
-import { throttle } from "lodash-es";
 type Point = { x: number; y: number };
 export enum Direction {
   o = "0",
@@ -66,7 +65,7 @@ export const useSwiper = (
     };
     options?.afterMove?.(e);
   };
-  const onTouching_Throttle = throttle(onTouching, 1000, { trailing: false });
+  const onTouching_Throttle = useThrottleFn(onTouching, 1000, false);
   const onTouchEnd = (e: TouchEvent) => {
     options?.beforeEnd?.(e);
     isSwiping.value = false;

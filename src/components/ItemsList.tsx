@@ -10,9 +10,9 @@ import { Button } from "./Button";
 import {
   time,
   type InvalidateError,
-  type RulesType,
   validate,
   errorFree,
+  useLonePress,
 } from "@/composables";
 import { AxiosError } from "axios";
 import { showDialog } from "vant";
@@ -49,7 +49,7 @@ function useTags() {
     if (response_tags.data) {
       tagKindTransfer[kind].value.push(...response_tags.data.resources);
     }
-    return; // TODO:return kind?
+    return; // ??TODO:return kind?
   };
   return {
     fetchTags,
@@ -265,40 +265,16 @@ const TagGrid = defineComponent({
     const onSelect = (id: number) => {
       context.emit("update:selected", id);
     };
-    // longPress Event
-    const timer = ref<number>();
-    const currentTag = ref<HTMLDivElement>();
+
     const longPressAct = (tag: ITag) => {
       console.log("longPress :>> ", tag);
-      // console.log("router.currentRoute.value :>> ", router.currentRoute.value);
-      // TODO: use `URLSearchParams` && `decodeURIComponent`
+      // ?TODO: use `URLSearchParams` && `decodeURIComponent`
       router.push(
         `/tags/${tag.id}/edit?return_to=${route.fullPath}&kind=${tag.kind}`
       );
     };
-    const onTouchStart = (e: TouchEvent, tag: ITag) => {
-      currentTag.value = e.currentTarget as HTMLDivElement;
-      timer.value = window.setTimeout(() => {
-        longPressAct(tag);
-      }, 500);
-    };
-    const pointedElement = ref<HTMLDivElement>();
-    const onTouchMove = (e: TouchEvent) => {
-      pointedElement.value = document.elementFromPoint(
-        e.touches[0].clientX,
-        e.touches[0].clientY
-      ) as HTMLDivElement;
-      if (
-        pointedElement.value !== currentTag.value &&
-        currentTag.value?.contains(pointedElement.value) === false
-      ) {
-        clearTimeout(timer.value);
-      }
-    };
-
-    const onTouchEnd = () => {
-      clearTimeout(timer.value);
-    };
+    const { onTouchStart, onTouchMove, onTouchEnd } =
+      useLonePress(longPressAct);
 
     return () => (
       <>

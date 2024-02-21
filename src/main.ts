@@ -13,17 +13,6 @@ const pinia = createPinia();
 const head = createHead();
 const app = createApp(App);
 
-app.config.errorHandler = (err, instance, info) => {
-  // navigator.sendBeacon("url");
-  console.log(
-    "unhandled error:",
-    err,
-    ",\ninstance Name:",
-    instance?.$options.name,
-    ",\ninfo:",
-    info
-  );
-};
 app.use(pinia);
 app.use(router);
 app.use(head);
@@ -52,4 +41,21 @@ router.beforeEach(async (to, from) => {
     );
   }
 });
+router.afterEach((to, from, failure) => {
+  if (failure) {
+    console.log(failure.from, "-->", failure.to);
+    console.log("failed navigation", failure.message);
+  }
+});
+app.config.errorHandler = (err, instance, info) => {
+  // navigator.sendBeacon("url");
+  console.log(
+    "unhandled error:",
+    err,
+    ",\ninstance Name:",
+    instance?.$options.name,
+    ",\ninfo:",
+    info
+  );
+};
 app.mount("#app");

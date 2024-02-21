@@ -102,6 +102,7 @@ export default defineConfig({
             "useLocalStorage", // 相比useStorage 更语义化
             "useSessionStorage", // 相比useStorage 更语义化
             "watchTriggerable", // 一个带触发的watch
+            "useThrottleFn", // 替代 lodash的throttle
           ],
         },
         {

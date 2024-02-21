@@ -3,7 +3,6 @@ import { RouterView } from "vue-router";
 import s from "./Welcome.module.scss";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import { Direction, useSwiper } from "@/composables/swiper";
-import { throttle } from "lodash-es";
 import { W1, W2, W3, W4, WEndFooter, WFooter } from "@/components/welcome";
 import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
@@ -23,7 +22,7 @@ export const Welcome = defineComponent({
     });
     // 还可以使用 对象(对象替代switch同样的思路)
     // ?TODO: 使用router.go(1 | -1)(缓存)
-    const toNextPage = throttle(
+    const toNextPage = useThrottleFn(
       (dire_effect: number) => {
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
@@ -35,7 +34,7 @@ export const Welcome = defineComponent({
         }
       },
       500,
-      { trailing: false }
+      false
     );
     watchEffect(() => {
       if (isSwiping.value) {
