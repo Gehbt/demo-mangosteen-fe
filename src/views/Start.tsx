@@ -8,13 +8,14 @@ import { Transition } from "vue";
 
 export const Start = defineComponent({
   name: "Start",
-  beforeRouteEnter() {
-    if (sessionStorage.getItem("skipStart") === "yes") {
-      window.location.hash = "#/items";
-    }
-  },
   setup(props, context) {
     const route = useRoute();
+    const router = useRouter();
+    onBeforeMount(() => {
+      if (sessionStorage.getItem("skipStart") === "yes") {
+        router.replace("/items");
+      }
+    });
     const overlayVisibleRef = ref(false);
     const toggleOverlay = () => {
       overlayVisibleRef.value = true;

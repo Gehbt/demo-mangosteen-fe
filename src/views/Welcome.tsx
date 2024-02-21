@@ -8,15 +8,16 @@ import { W1, W2, W3, W4, WEndFooter, WFooter } from "@/components/welcome";
 import { Swipe, SwipeItem } from "vant";
 export const Welcome = defineComponent({
   name: "Welcome",
-  beforeRouteEnter() {
-    if (localStorage.getItem("skipWelcome") === "yes") {
-      window.location.hash += "#/start";
-    }
-  },
   setup() {
-    const main = ref<HTMLDivElement>();
     const route = useRoute();
     const router = useRouter();
+    onBeforeMount(() => {
+      if (localStorage.getItem("skipWelcome") === "yes") {
+        router.replace("/start");
+      }
+    });
+    const main = ref<HTMLDivElement>();
+
     const { isSwiping, direction } = useSwiper(main, {
       beforeStart: (e) => e.preventDefault(),
     });
@@ -27,10 +28,6 @@ export const Welcome = defineComponent({
         const index = parseInt(
           route.path.match(/\/welcome\/(\d+)/)?.[1] ?? "0"
         );
-        // [1,2,3,4]
-        // if (index <= 3 && index >= 2) {
-        //   router.replace(`/welcome/${index + dire_effect}`);
-        // } else
         if (index === 4) {
           router.push("/start");
         } else {

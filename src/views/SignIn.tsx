@@ -15,21 +15,21 @@ import { fetchMe } from "@/composables";
 
 export const SignIn = defineComponent({
   name: "SignIn",
-  beforeRouteEnter: async () => {
-    try {
-      const me = await fetchMe();
-      if (!me) {
-        throw new Error("no login");
-      }
-      showDialog({ message: "已登录" }).finally(() => {
-        window.location.hash = "#/start";
-      });
-    } catch (e) {
-      console.log("e :>> ", e);
-    }
-  },
   setup(props, context) {
     const router = useRouter();
+    onBeforeMount(async () => {
+      try {
+        const me = await fetchMe();
+        if (!me) {
+          throw new Error("no login");
+        }
+        showDialog({ message: "已登录" }).finally(() => {
+          router.replace("/start");
+        });
+      } catch (e) {
+        console.log("e :>> ", e);
+      }
+    });
     const formData = ref<SignInQueryType>({ email: "", code: "" });
     const refErr: Ref<InvalidateError<typeof formData.value>> = ref({});
     const refIsSend = ref(false);
