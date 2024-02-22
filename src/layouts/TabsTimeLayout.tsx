@@ -12,8 +12,13 @@ export const lessRenderSymbol = Symbol("lessRender") as InjectionKey<boolean>;
 export const TabsTimeLayout = defineComponent({
   name: "TabsTimeLayout",
   props: {
-    comp: object<ChartsType | ItemSummaryType>().isRequired,
-    title: string().isRequired,
+    comp: {
+      type: Object as PropType<ChartsType | ItemSummaryType>,
+      required: true,
+    },
+    // object<ChartsType | ItemSummaryType>().isRequired,
+    title: { type: String, required: true },
+    // string().isRequired,
   },
   setup(props, context) {
     const lessRender = inject(lessRenderSymbol, false);

@@ -122,21 +122,6 @@ export default defineConfig({
         {
           superjson: [["default", "superjson"]],
         },
-        {
-          from: "vue-types",
-          imports: [
-            "any",
-            "func",
-            "bool",
-            "string",
-            "number",
-            "array",
-            "integer",
-            "symbol",
-            "object",
-            "nullable",
-          ],
-        },
         // {
         //   from: "@components/SvgIcon.tsx",
         //   imports: [["SvgIcons", "SvgIconTsx"]],

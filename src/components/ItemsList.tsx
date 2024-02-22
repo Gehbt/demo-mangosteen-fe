@@ -253,10 +253,17 @@ export const ItemsCreate = defineComponent({
 const TagGrid = defineComponent({
   name: "TagGrid",
   props: {
-    kind: string<TagKind>().isRequired,
-    tagsSrc: object<Ref<ITag[]>>().isRequired,
-    doFetch: func<(kind: TagKind) => Promise<void>>().isRequired,
-    selected: number(),
+    kind: { type: String as PropType<TagKind>, required: true },
+    // string<TagKind>().isRequired,
+    tagsSrc: { type: Object as PropType<Ref<ITag[]>>, required: true },
+    // object<Ref<ITag[]>>().isRequired,
+    doFetch: {
+      type: Function as PropType<(kind: TagKind) => Promise<void>>,
+      required: true,
+    },
+    // func<(kind: TagKind) => Promise<void>>().isRequired,
+    selected: Number,
+    // number(),
   },
   emits: ["update:selected"],
   setup(props, context) {

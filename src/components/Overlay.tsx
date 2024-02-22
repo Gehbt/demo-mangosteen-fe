@@ -8,8 +8,10 @@ import { AxiosError } from "axios";
 export const Overlay = defineComponent({
   name: "Overlay",
   props: {
-    status: bool(),
-    parentPath: string().isRequired,
+    status: Boolean,
+    // bool(),
+    parentPath: { type: String, required: true },
+    // string().isRequired,
   },
   setup(props, context) {
     const route = useRoute();
@@ -115,7 +117,8 @@ export const Overlay = defineComponent({
 export const MeCard = defineComponent({
   name: "MeCard",
   props: {
-    meData: object<UserType>().isRequired,
+    meData: { type: Object as PropType<UserType>, required: true },
+    // object<UserType>().isRequired,
   },
   emits: ["signout"],
   setup(props, context) {

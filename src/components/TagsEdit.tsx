@@ -144,8 +144,10 @@ export const TagsCreate = defineComponent({
 export const TagsForm = defineComponent({
   name: "TagForm",
   props: {
-    id: number(),
-    formData: object<TagQueryType>().isRequired,
+    id: Number,
+    // number(),
+    formData: { type: Object as PropType<TagQueryType>, required: true },
+    // object<TagQueryType>().isRequired,
   },
   setup(props, context) {
     const router = useRouter();

@@ -3,9 +3,12 @@ import s from "./Tabs.module.scss";
 export const Tabs = defineComponent({
   name: "Tabs",
   props: {
-    classPrefix: string().def(""),
-    selected: string<TagKind | DateScope>() /* v-model:selected !== selected */,
-    lessRender: bool().def(false),
+    classPrefix: { type: String, default: "" },
+    // string().def(""),
+    selected: { type: String as PropType<TagKind | DateScope> },
+    // string<TagKind | DateScope>() /* v-model:selected !== selected */,
+    lessRender: { type: Boolean, default: false },
+    // bool().def(false),
   },
   emits: ["update:selected"],
   setup(props, context) {
@@ -65,7 +68,8 @@ export const Tabs = defineComponent({
 export const Tab = defineComponent({
   name: "Tab",
   props: {
-    name: string<TagKind | DateScope>(),
+    name: { type: String as PropType<TagKind | DateScope> },
+    // string<TagKind | DateScope>(),
   },
   setup(props, context) {
     return () => <div>{context.slots.default?.()}</div>;

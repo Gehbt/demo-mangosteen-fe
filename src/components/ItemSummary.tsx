@@ -6,9 +6,21 @@ export type ItemSummaryType = typeof ItemSummary;
 export const amountToPrice = (amount: number) => (amount / 100).toFixed(2);
 export const ItemSummary = defineComponent({
   props: {
-    timeLine: string<DateScope>().isRequired,
-    startDate: string().isRequired,
-    endDate: string().isRequired,
+    timeLine: {
+      type: String as PropType<DateScope>,
+      required: true,
+    },
+    // string<DateScope>().isRequired,
+    startDate: {
+      type: String,
+      required: true,
+    },
+    // string().isRequired,
+    endDate: {
+      type: String,
+      required: true,
+    },
+    // string().isRequired,
   },
   setup: (props, context) => {
     const router = useRouter();
@@ -57,9 +69,12 @@ export const ItemSummary = defineComponent({
 const ItemSummaryTab = defineComponent({
   name: "ItemSummaryTab",
   props: {
-    expenses: number().isRequired,
-    income: number().isRequired,
-    balance: number().isRequired,
+    expenses: { type: Number, required: true },
+    // number().isRequired,
+    income: { type: Number, required: true },
+    // number().isRequired,
+    balance: { type: Number, required: true },
+    // number().isRequired,
   },
   setup(props, context) {
     return () => (
@@ -88,7 +103,8 @@ const ItemSummaryTab = defineComponent({
 const ItemSummaryItem = defineComponent({
   name: "ItemSummaryItem",
   props: {
-    summaryItems: array<IItem>().isRequired,
+    summaryItems: { type: Array as PropType<IItem[]>, required: true },
+    // array<IItem>().isRequired,
   },
   emits: ["update:summaryItems"],
   setup(props, context) {
@@ -129,7 +145,11 @@ const ItemSummaryItem = defineComponent({
 export const Money = defineComponent({
   name: "Money",
   props: {
-    item: object<Pick<IItem, "amount" | "kind">>().isRequired,
+    item: {
+      type: Object as PropType<Pick<IItem, "amount" | "kind">>,
+      required: true,
+    },
+    // object<Pick<IItem, "amount" | "kind">>().isRequired,
   },
   setup(props, context) {
     return () => (

@@ -68,9 +68,12 @@ const mergePaddingSafe = (src: LineChartType, pad: LineChartType) => {
 export const ChartsControl = defineComponent({
   name: "ChartsControl",
   props: {
-    timeLine: string<DateScope>().isRequired,
-    startDate: string().isRequired,
-    endDate: string().isRequired,
+    timeLine: { type: String as PropType<DateScope>, required: true },
+    // string<DateScope>().isRequired,
+    startDate: { type: String, required: true },
+    // string().isRequired,
+    endDate: { type: String, required: true },
+    // string().isRequired,
   },
   setup(props, context) {
     const refCategory = ref<TagKind>("expenses");
@@ -132,10 +135,14 @@ export const ChartsControl = defineComponent({
 export const Charts = defineComponent({
   name: "Charts",
   props: {
-    timeLine: string<DateScope>().isRequired,
-    startDate: string().isRequired,
-    endDate: string().isRequired,
-    kind: string<TagKind>().isRequired,
+    timeLine: { type: String as PropType<DateScope>, required: true },
+    // string<DateScope>().isRequired,
+    startDate: { type: String, required: true },
+    // string().isRequired,
+    endDate: { type: String, required: true },
+    // string().isRequired,
+    kind: { type: String as PropType<TagKind>, required: true },
+    // string<TagKind>().isRequired,
   },
   setup(props, context) {
     // * line charts
@@ -252,7 +259,8 @@ export type ChartsType = typeof ChartsControl;
 export const LineChart = defineComponent({
   name: "LineChart",
   props: {
-    data: array<[string, string]>().isRequired,
+    data: { type: Array as PropType<LineChartViewType>, required: true },
+    // array<[string, string]>().isRequired,
   },
   setup(props, context) {
     echarts.use([
@@ -361,7 +369,11 @@ export const LineChart = defineComponent({
 export const PieChart = defineComponent({
   name: "PieChart",
   props: {
-    data: array<PieChartViewTypeOne>(),
+    data: {
+      type: Array as PropType<PieChartViewType>,
+      required: true,
+    },
+    // array<PieChartViewTypeOne>(),
   },
   setup(props, context) {
     echarts.use([
@@ -447,7 +459,8 @@ export const PieChart = defineComponent({
 export const BarChart = defineComponent({
   name: "BarChart",
   props: {
-    data: array<BarChartTypeOne>().isRequired,
+    data: { type: Array as PropType<BarChartType>, required: true },
+    // array<BarChartTypeOne>().isRequired,
   },
   setup(props, context) {
     const barDataView = computed(() => {

@@ -5,7 +5,11 @@ import { Button } from "./Button";
 export const Form = defineComponent({
   name: "Form",
   props: {
-    onSubmit: func<(e: Event) => void>().isRequired,
+    onSubmit: {
+      type: Function as PropType<(e: Event) => void>,
+      required: true,
+    },
+    // func<(e: Event) => void>().isRequired,
   },
   setup(props, context) {
     return () => (
@@ -18,15 +22,33 @@ export const Form = defineComponent({
 export const FormItem = defineComponent({
   name: "FormItem",
   props: {
-    modelValue: string().def(""),
-    errData: string<string>(),
-    label: string(),
-    clan: string<
-      "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
-    >().def("input"),
-    placeholder: string(),
-    onToggle: func<(e?: Event) => Promise<any>>(),
-    countFrom: number().def(60),
+    modelValue: {
+      type: String,
+      default: "",
+    },
+    // string().def(""),
+    errData: String,
+    // string(),
+    label: String,
+    // string(),
+    clan: {
+      type: String as PropType<
+        "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+      >,
+      default: "input",
+    },
+    // string<
+    //   "input" | "emoji" | "custom" | "date" | "smsCaptcha" | "email"
+    // >().def("input"),
+    placeholder: String,
+    // string(),
+    onToggle: Function as PropType<(e?: Event) => Promise<any>>,
+    // func<(e?: Event) => Promise<any>>(),
+    countFrom: {
+      type: Number,
+      default: 60,
+    },
+    // number().def(60),
   },
   emits: ["update:modelValue", "update:errData"],
   setup(props, context) {
@@ -205,8 +227,13 @@ export const FormItem = defineComponent({
 export const EmojiLabel = defineComponent({
   name: "EmojiLabel",
   props: {
-    label: string(),
-    emojiValue: string().def(""),
+    label: String,
+    // string(),
+    emojiValue: {
+      type: String,
+      default: "",
+    },
+    // string().def(""),
   },
   emits: ["update:emojiValue"],
   setup(props, context) {

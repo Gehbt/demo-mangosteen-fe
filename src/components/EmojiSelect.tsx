@@ -10,8 +10,12 @@ import s from "./EmojiSelect.module.scss";
 export const EmojiSelect = defineComponent({
   name: "EmojiSelect",
   props: {
-    class: any<string | string[]>().def(""),
-    modelValue: string(),
+    class: {
+      type: [String, Array] as PropType<string | string[]>,
+      required: true,
+    },
+    // any<string | string[]>().def(""),
+    modelValue: String,
   },
   emits: ["update:modelValue"],
   setup(props, context) {

@@ -9,8 +9,16 @@ export const InputPad = defineComponent({
       type: Object as PropType<[string, string, string]>,
       default: ["2015", "01", "01"] as const satisfies string[],
     },
-    inputAmount: string().def("0"),
-    handleSubmit: func<(e: Event) => void>().isRequired,
+    inputAmount: {
+      type: String,
+      default: "0",
+    },
+    // string().def("0"),
+    handleSubmit: {
+      type: Function as PropType<(e: Event) => void>,
+      required: true,
+    },
+    // func<(e: Event) => void>().isRequired,
   },
   emits: ["update:inputAmount", "update:inputDate"],
   setup(props, context) {

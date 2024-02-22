@@ -6,12 +6,32 @@ import s from "./Button.module.scss";
 export const Button = defineComponent({
   // inheritAttrs: false,
   props: {
-    onClick: any<JSX.IntrinsicElements["button"]["onClick"]>(),
-    class: any<string | string[]>(),
-    level: string<"primary" | "default" | "danger">().def("default"),
-    clan: string<"button" | "submit" | "reset">().def("button"),
-    disableByCtx: bool().def(false),
-    selfDisciplineMode: bool().def(false),
+    onClick: {
+      type: Function as PropType<JSX.IntrinsicElements["button"]["onClick"]>,
+    },
+    // any<JSX.IntrinsicElements["button"]["onClick"]>(),
+    class: [String, Array] as PropType<string | string[]>,
+    // any<string | string[]>(),
+    level: {
+      type: String as PropType<"primary" | "default" | "danger">,
+      default: "default",
+    },
+    // string<"primary" | "default" | "danger">().def("default"),
+    clan: {
+      type: String as PropType<"button" | "submit" | "reset">,
+      default: "button",
+    },
+    // string<"button" | "submit" | "reset">().def("button"),
+    disableByCtx: {
+      type: Boolean,
+      default: false,
+    },
+    // bool().def(false),
+    selfDisciplineMode: {
+      type: Boolean,
+      default: false,
+    },
+    // bool().def(false),
   },
   name: "Button",
   setup(props, context) {
@@ -56,8 +76,13 @@ export const Button = defineComponent({
 export const Floatbutton = defineComponent({
   name: "Floatbutton",
   props: {
-    iconName: string().def(svgs.round_add),
-    onClick: func<(e: MouseEvent | TouchEvent) => void>(),
+    iconName: {
+      type: String,
+      default: svgs.round_add,
+    },
+    // string().def(svgs.round_add),
+    onClick: Function as PropType<(e: MouseEvent | TouchEvent) => void>,
+    // func<(e: MouseEvent | TouchEvent) => void>(),
   },
   setup(props) {
     return () => (

@@ -31,8 +31,7 @@
     "vant": "^4.8.3",
     "vite-plugin-svgo": "^1.4.0",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5",
-    "vue-types": "^5.1.1"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",

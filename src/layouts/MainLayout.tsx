@@ -3,9 +3,12 @@ import s from "./MainLayout.module.scss";
 export const MainLayout = defineComponent({
   name: "MainLayout",
   props: {
-    title: string().isRequired,
-    icon: string().isRequired,
-    toggle: func<() => void>(),
+    title: { type: String, required: true },
+    // string().isRequired,
+    icon: { type: String, required: true },
+    // string().isRequired,
+    toggle: Function as PropType<() => void>,
+    // func<() => void>(),
   },
   setup(props, context) {
     return () => (

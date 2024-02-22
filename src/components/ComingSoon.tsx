@@ -4,7 +4,11 @@ import { Button } from "./Button";
 export const ComingSoon = defineComponent({
   name: "ComingSoon",
   props: {
-    name: string().isRequired,
+    name: {
+      type: String,
+      required: true,
+    },
+    // string().isRequired,
   },
   setup: (props, context) => {
     const router = useRouter();
