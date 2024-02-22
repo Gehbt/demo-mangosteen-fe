@@ -13,7 +13,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import { Time } from "@/composables";
 import { amountToPrice } from "../ItemSummary";
 import { httpClient, i18nT } from "@/shared";
-import { mkLineData } from "@/mock";
+import { mkLineData } from "@/shared";
 import { Picker, Popup } from "vant";
 const amountPad = (config: {
   // ?TODO: 默认时区为标准时间而不是北京时间

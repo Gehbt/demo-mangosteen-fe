@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    // "composite": true, // build 时开
+    "composite": true, // build 时开
+    "declaration": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],

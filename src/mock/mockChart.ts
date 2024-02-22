@@ -2,7 +2,8 @@ import { Time } from "@/composables";
 import { fakerZH_CN } from "@faker-js/faker";
 import { type AxiosResponse } from "axios";
 import type { Mock } from "Mock-Type";
-export const mkLineData = (
+// 保留,已有自己的版本
+const mkLineData = (
   n: number,
   config: {
     kind: TagKind;
